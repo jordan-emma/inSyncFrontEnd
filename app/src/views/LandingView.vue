@@ -1,6 +1,7 @@
 <template>
   <div class="background">
   <div class="container">
+    <button class="rounded-button" id="logOut" @click="logOut">Log Out</button>
     <div class="name">
       <h1>INSYNC</h1>
     </div>
@@ -25,6 +26,14 @@
     gap: 0.625rem;              
   }
 
+  #logOut{
+    position: absolute; 
+    top: 1rem; 
+    left: 1rem; 
+    margin: 0; 
+    font-weight: 600;
+    font-size: 1.25rem;
+  }
 
 </style>
 
@@ -33,6 +42,9 @@ export default {
 methods: {
 togglePlay() {
       this.$router.push('/play');
+    },
+logOut() {
+      this.$router.push('/login');
     }
 }
 }
