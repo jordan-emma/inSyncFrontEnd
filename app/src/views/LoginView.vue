@@ -4,7 +4,7 @@
       <h1>Welcome to Insync</h1>
     </div>
 
-    <form name="loginForm" @reset="resetFields" @submit.prevent="handleSubmit">
+    <form name="loginForm" @reset="resetFields" >
       <div class="form-group">
         <label for="name" v-show="showNameField">Name:</label>
         <input id="name" type="text" v-model="name" v-show="showNameField"/>
@@ -17,16 +17,22 @@
         <label for="password">Password:</label>
         <input id="password" type="password" v-model="password"/>
       </div>
-      <div>
-        <p class="createAccount" @click="showNameField = true">Create Account</p>
+      <div v-if="!showNameField">
+        <p class="createAccount" @click="toggleCreateAccount">Create Account</p>
       </div>
       <div class="button-group">
-        <button class="btn btn-outline-dark" type="submit">Login</button>
+        <button class="btn btn-outline-dark" type="submit">
+          {{ showNameField ? 'Create Account' : 'Login' }}
+        </button>
         <button class="btn btn-outline-dark" type="reset">Reset</button>
+        <button v-if="showNameField" class="btn btn-outline-dark" type="button" @click="showNameField = false">Back</button>
       </div>
     </form>
   </div>
 </template>
+
+
+
 
 <style>
 body, html {
@@ -104,9 +110,10 @@ body, html {
 }
 
 .createAccount {
-  color: blue;
+  color: palevioletred;
   cursor: pointer;
   text-decoration: underline;
+  font-weight: bold;
 }
 </style>
 
@@ -122,8 +129,13 @@ export default {
   },
   methods: {
     resetFields() {
+      this.name = '';
       this.email = ''; 
       this.password = '';
+    },
+    toggleCreateAccount() {
+      this.showNameField = true;
+      this.resetFields();
     }
   }
 }
