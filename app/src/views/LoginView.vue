@@ -36,7 +36,7 @@
 </template>
 
 
-<style>
+<style scoped>
 .background {
   background-image: url('../images/logo2.avif'); 
   background-size: contain;
