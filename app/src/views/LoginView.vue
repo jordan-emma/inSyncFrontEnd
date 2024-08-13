@@ -17,10 +17,14 @@
         <label for="password">Password:</label>
         <input id="password" type="password" v-model="password"/>
       </div>
+      <div class="form-group" v-show="showConfirmPasswordField">
+        <label for="confirmPassword">Confirm Password:</label>
+        <input id="confirmPassword" type="password" v-model="confirmPassword"/>
+      </div>
       <div class="button-group">
         <button v-if="!showNameField" class="rounded-button" type="button" @click="toggleCreateAccount">Create Account</button>
         <button class="rounded-button" type="submit">
-          {{ showNameField ? 'Create Account' : 'Login' }}
+          {{ showNameField && showConfirmPasswordField ? 'Create Account' : 'Login' }}
         </button>
         <button class="rounded-button" type="reset">Reset</button>
         <button v-if="showNameField" class="rounded-button" type="button" @click="showNameField = false">Login</button>
@@ -35,6 +39,9 @@
 .background {
   background-image: url('../images/logo2.avif'); 
   background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: white;
 }
 
 .container {
@@ -43,6 +50,7 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh; 
+  padding: 1rem;
 }
 
 .name {
@@ -86,23 +94,46 @@ form {
 
 .button-group {
   display: flex;
-  justify-content: center;
+  flex-direction: row; 
+  flex-wrap: wrap; 
+  align-items: center;
   width: 100%;
   margin-top: 1rem;
-}
-
-.button-group button {
-  margin: 0.5rem;
-  cursor: pointer; 
+  gap: 0.5rem;
 }
 
 .rounded-button {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  padding: 0.75rem 1.5rem;
   font-size: 1.4rem;
+  border-radius: 0.5rem;
+  background-color: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  height: 4rem; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  text-align: center; 
 }
 
+.rounded-button:hover {
+  background-color: white; 
+  color: black; 
+}
+
+@media (max-width: 600px) {
+  .button-group {
+    flex-direction: column; 
+    align-items: center; 
+  }
+  .background {
+    background-size: cover;
+  }
+}
 </style>
+
 
 
 <script>
@@ -112,7 +143,9 @@ export default {
       name: '',
       email: '',
       password: '',
-      showNameField: false 
+      confirmPassword: '',
+      showNameField: false,
+      showConfirmPasswordField: false,
     }
   },
   methods: {
@@ -120,9 +153,11 @@ export default {
       this.name = '';
       this.email = ''; 
       this.password = '';
+      this.confirmPassword ='';
     },
     toggleCreateAccount() {
       this.showNameField = true;
+      this.showConfirmPasswordField = true;
       this.resetFields();
     }
   }
