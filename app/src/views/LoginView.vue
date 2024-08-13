@@ -39,7 +39,7 @@ body, html {
   justify-content: center;
   align-items: center;
   background-color: white;
-  background-image: url('/logo2.avif'); 
+  background-image: url('../images/logo2.avif'); 
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
