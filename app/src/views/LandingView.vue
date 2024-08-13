@@ -1,5 +1,8 @@
 <template>
   <div class="background-container">
+    <modal :show="showModal" @close="toggleModal">
+      <h1>Hello</h1>
+    </modal>
     <div class="spinning-background"></div>
     <div class="content">
       <button class="rounded-button" id="logOut" @click="logOut">Log Out</button>
@@ -8,7 +11,7 @@
       </div>
       <div class="button-container">
         <button class="rounded-button" @click="togglePlay">PLAY</button>
-        <button class="rounded-button">HOW TO PLAY</button>
+        <button class="rounded-button" @click="toggleModal">HOW TO PLAY</button>
       </div>
     </div>
   </div>
@@ -75,14 +78,26 @@
 }
 </style>
 
+<script setup>
+import modal from '../components/modal.vue'
+</script>
+
 <script>
 export default {
+data() {
+  return {
+    showModal: false
+  }
+},
 methods: {
   togglePlay() {
     this.$router.push('/play');
   },
   logOut() {
     this.$router.push('/login');
+  }, 
+  toggleModal() { 
+    this.showModal=!this.showModal; 
   }
 }
 }
