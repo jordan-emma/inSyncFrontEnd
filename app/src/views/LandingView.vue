@@ -6,7 +6,6 @@
     <div class="button-container">
       <button class="rounded-button">PLAY</button>
       <button class="rounded-button">HOW TO PLAY</button>
-      <button class="rounded-button"></button>
     </div>
   </div>
 </template>

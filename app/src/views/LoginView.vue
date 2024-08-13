@@ -52,44 +52,45 @@ body, html {
   justify-content: center;
   height: 100vh;
   width: 100%;
+  padding: 2rem;
 }
 
 .welcome h1 {
   background-color: rgba(255, 255, 255, 0.3);
   color: #000;
-  padding: 15px;
-  border-radius: 5px;
+  padding: 1rem;
+  border-radius: 0.5rem;
   font-weight: bold;
-  font-size: 2em;
-  margin-bottom: 20px;
+  font-size: 2rem;
+  margin-bottom: 1.25rem;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-bottom: 15px;
+  margin-bottom: 1rem;
   width: 100%;
   max-width: 300px;
   background-color: rgba(255, 255, 255, 0.3);
-  padding: 15px;
-  border-radius: 5px;
+  padding: 1rem;
+  border-radius: 0.5rem;
 }
 
 .form-group label {
   color: #000;
   font-weight: bold;
-  font-size: 1.2em;
-  margin-bottom: 5px;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
 }
 
 .form-group input {
   width: 100%;
   box-sizing: border-box;
-  font-size: 1em;
+  font-size: 1rem;
   border: 1px solid #ddd; 
-  border-radius: 5px; 
-  padding: 8px; 
+  border-radius: 0.5rem; 
+  padding: 0.5rem; 
   outline: none; 
 }
 
@@ -97,11 +98,11 @@ body, html {
   display: flex;
   justify-content: center;
   width: 100%;
-  margin-top: 15px;
+  margin-top: 1rem;
 }
 
 .button-group button {
-  margin: 5px;
+  margin: 0.5rem;
   cursor: pointer; 
 }
 
