@@ -1,36 +1,37 @@
 <template>
   <div class="background">
-  <div class="container">
-    <div class="name">
-      <h1>Insync</h1>
+    <div class="container">
+      <div class="name">
+        <h1>Insync</h1>
+      </div>
+      <form name="loginForm" @reset="resetFields" @submit.prevent="handleSubmit">
+        <div class="form-group" v-show="showNameField">
+          <label for="name">Name:</label>
+          <input id="name" type="text" v-model.trim="name" />
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input id="email" type="text" v-model.trim="email"/>
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input id="password" type="password" v-model.trim="password"/>
+        </div>
+        <div class="form-group" v-show="showConfirmPasswordField">
+          <label for="confirmPassword">Confirm Password:</label>
+          <input id="confirmPassword" type="password" v-model.trim="confirmPassword"/>
+          <p v-if="!passwordsMatch && showConfirmPasswordField" class="error-message">Passwords do not match</p>
+        </div>
+        <div class="button-group">
+          <button v-if="!showNameField" class="rounded-button" type="button" @click="toggleCreateAccount">Create Account</button>
+          <button class="rounded-button" :disabled="!isFormValid" type="submit">
+            {{ showNameField && showConfirmPasswordField ? 'Create Account' : 'Login' }}
+          </button>
+          <button class="rounded-button" type="reset">Reset</button>
+          <button v-if="showNameField" class="rounded-button" type="button" @click="goToLogin">Login</button>
+        </div>
+      </form>
     </div>
-    <form name="loginForm" @reset="resetFields">
-      <div class="form-group" v-show="showNameField">
-        <label for="name">Name:</label>
-        <input id="name" type="text" v-model="name" />
-      </div>
-      <div class="form-group">
-        <label for="email">Email:</label>
-        <input id="email" type="text" v-model="email"/>
-      </div>
-      <div class="form-group">
-        <label for="password">Password:</label>
-        <input id="password" type="password" v-model="password"/>
-      </div>
-      <div class="form-group" v-show="showConfirmPasswordField">
-        <label for="confirmPassword">Confirm Password:</label>
-        <input id="confirmPassword" type="password" v-model="confirmPassword"/>
-      </div>
-      <div class="button-group">
-        <button v-if="!showNameField" class="rounded-button" type="button" @click="toggleCreateAccount">Create Account</button>
-        <button class="rounded-button" type="submit">
-          {{ showNameField && showConfirmPasswordField ? 'Create Account' : 'Login' }}
-        </button>
-        <button class="rounded-button" type="reset">Reset</button>
-        <button v-if="showNameField" class="rounded-button" type="button" @click="showNameField = false">Login</button>
-      </div>
-    </form>
-  </div>
   </div>
 </template>
 
@@ -132,6 +133,12 @@ form {
     background-size: cover;
   }
 }
+
+.error-message {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
 </style>
 
 
@@ -148,17 +155,40 @@ export default {
       showConfirmPasswordField: false,
     }
   },
+  computed: {
+    isFormValid() {
+      if (!this.showNameField) {
+        return true; 
+      }
+      const isValid = this.name && this.email && this.password && this.confirmPassword;
+      const passwordsMatch = this.passwordsMatch;
+      return isValid && passwordsMatch;
+    },
+    passwordsMatch() {
+      return this.password === this.confirmPassword;
+    }
+  },
   methods: {
     resetFields() {
       this.name = '';
       this.email = ''; 
       this.password = '';
-      this.confirmPassword ='';
+      this.confirmPassword = '';
     },
     toggleCreateAccount() {
       this.showNameField = true;
       this.showConfirmPasswordField = true;
       this.resetFields();
+    },
+    goToLogin() {
+      this.showNameField = false;
+      this.showConfirmPasswordField = false;
+      this.resetFields();
+    },
+    handleSubmit() {
+      if (this.isFormValid) {
+        alert('Form submitted!');
+      }
     }
   }
 }
