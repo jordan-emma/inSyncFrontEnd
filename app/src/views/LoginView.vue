@@ -3,8 +3,7 @@
     <div class="welcome">
       <h1>Welcome to Insync</h1>
     </div>
-
-    <form name="loginForm" @reset="resetFields" >
+    <form name="loginForm" @reset="resetFields">
       <div class="form-group">
         <label for="name" v-show="showNameField">Name:</label>
         <input id="name" type="text" v-model="name" v-show="showNameField"/>
@@ -17,21 +16,17 @@
         <label for="password">Password:</label>
         <input id="password" type="password" v-model="password"/>
       </div>
-      <div v-if="!showNameField">
-        <p class="createAccount" @click="toggleCreateAccount">Create Account</p>
-      </div>
       <div class="button-group">
+        <button v-if="!showNameField" class="btn btn-outline-dark" type="button" @click="toggleCreateAccount">Create Account</button>
         <button class="btn btn-outline-dark" type="submit">
           {{ showNameField ? 'Create Account' : 'Login' }}
         </button>
         <button class="btn btn-outline-dark" type="reset">Reset</button>
-        <button v-if="showNameField" class="btn btn-outline-dark" type="button" @click="showNameField = false">Back</button>
+        <button v-if="showNameField" class="btn btn-outline-dark" type="button" @click="showNameField = false">Login</button>
       </div>
     </form>
   </div>
 </template>
-
-
 
 
 <style>
@@ -107,15 +102,11 @@ body, html {
 
 .button-group button {
   margin: 5px;
+  cursor: pointer; 
 }
 
-.createAccount {
-  color: palevioletred;
-  cursor: pointer;
-  text-decoration: underline;
-  font-weight: bold;
-}
 </style>
+
 
 <script>
 export default {
