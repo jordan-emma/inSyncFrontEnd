@@ -5,7 +5,7 @@
         <h1>Insync</h1>
       </div>
       <form name="loginForm" @reset="resetFields" @submit.prevent="handleSubmit">
-        <div class="form-group" v-show="showNameField">
+        <div class="form-group" v-show="showSignUpField">
           <label for="name">Name:</label>
           <input id="name" type="text" v-model.trim="name" />
         </div>
@@ -17,18 +17,18 @@
           <label for="password">Password:</label>
           <input id="password" type="password" v-model.trim="password"/>
         </div>
-        <div class="form-group" v-show="showConfirmPasswordField">
+        <div class="form-group" v-show="showSignUpField">
           <label for="confirmPassword">Confirm Password:</label>
           <input id="confirmPassword" type="password" v-model.trim="confirmPassword"/>
-          <p v-if="!passwordsMatch && showConfirmPasswordField" class="error-message">Passwords do not match</p>
+          <p v-if="!passwordsMatch && showSignUpField" class="error-message">Passwords do not match</p>
         </div>
         <div class="button-group">
-          <button v-if="!showNameField" class="rounded-button" type="button" @click="toggleCreateAccount">Create Account</button>
+          <button v-if="!showSignUpField" class="rounded-button" type="button" @click="toggleCreateAccount">Create Account</button>
           <button class="rounded-button" :disabled="!isFormValid" type="submit">
-            {{ showNameField && showConfirmPasswordField ? 'Create Account' : 'Login' }}
+            {{ showSignUpField ? 'Create Account' : 'Login' }}
           </button>
           <button class="rounded-button" type="reset">Reset</button>
-          <button v-if="showNameField" class="rounded-button" type="button" @click="goToLogin">Login</button>
+          <button v-if="showSignUpField" class="rounded-button" type="button" @click="goToLogin">Login</button>
         </div>
       </form>
     </div>
@@ -151,13 +151,12 @@ export default {
       email: '',
       password: '',
       confirmPassword: '',
-      showNameField: false,
-      showConfirmPasswordField: false,
+      showSignUpField: false,
     }
   },
   computed: {
     isFormValid() {
-      if (!this.showNameField) {
+      if (!this.showSignUpField) {
         return true; 
       }
       const isValid = this.name && this.email && this.password && this.confirmPassword;
@@ -176,13 +175,11 @@ export default {
       this.confirmPassword = '';
     },
     toggleCreateAccount() {
-      this.showNameField = true;
-      this.showConfirmPasswordField = true;
+      this.showSignUpField = true;
       this.resetFields();
     },
     goToLogin() {
-      this.showNameField = false;
-      this.showConfirmPasswordField = false;
+      this.showSignUpField = false;
       this.resetFields();
     },
     handleSubmit() {

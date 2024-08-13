@@ -112,7 +112,6 @@
   background-color: black; 
   color: white; 
 }
-
 </style>
 
 <script>
