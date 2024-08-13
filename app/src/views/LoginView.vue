@@ -4,9 +4,9 @@
       <h1>Insync</h1>
     </div>
     <form name="loginForm" @reset="resetFields">
-      <div class="form-group">
-        <label for="name" v-show="showNameField">Name:</label>
-        <input id="name" type="text" v-model="name" v-show="showNameField"/>
+      <div class="form-group" v-show="showNameField">
+        <label for="name">Name:</label>
+        <input id="name" type="text" v-model="name" />
       </div>
       <div class="form-group">
         <label for="email">Email:</label>
