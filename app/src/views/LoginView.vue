@@ -18,12 +18,12 @@
         <input id="password" type="password" v-model="password"/>
       </div>
       <div class="button-group">
-        <button v-if="!showNameField" class="btn btn-outline-dark" type="button" @click="toggleCreateAccount">Create Account</button>
-        <button class="btn btn-outline-dark" type="submit">
+        <button v-if="!showNameField" class="rounded-button" type="button" @click="toggleCreateAccount">Create Account</button>
+        <button class="rounded-button" type="submit">
           {{ showNameField ? 'Create Account' : 'Login' }}
         </button>
-        <button class="btn btn-outline-dark" type="reset">Reset</button>
-        <button v-if="showNameField" class="btn btn-outline-dark" type="button" @click="showNameField = false">Login</button>
+        <button class="rounded-button" type="reset">Reset</button>
+        <button v-if="showNameField" class="rounded-button" type="button" @click="showNameField = false">Login</button>
       </div>
     </form>
   </div>
@@ -32,16 +32,33 @@
 
 
 <style>
-
-.background{
+.background {
   background-image: url('../images/logo2.avif'); 
   background-size: contain;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh; 
+}
+
+.name {
+  margin-bottom: 2rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: flex-start; 
   margin-bottom: 1rem;
   width: 100%;
   max-width: 300px;
@@ -77,6 +94,12 @@
 .button-group button {
   margin: 0.5rem;
   cursor: pointer; 
+}
+
+.rounded-button {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-size: 1.4rem;
 }
 
 </style>
