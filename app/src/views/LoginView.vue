@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <div class="welcome">
-      <h1>Welcome to Insync</h1>
+    <div class="name">
+      <h1>Insync</h1>
     </div>
     <form name="loginForm" @reset="resetFields">
       <div class="form-group">
@@ -30,40 +30,6 @@
 
 
 <style>
-body, html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: white;
-  background-image: url('../images/logo2.avif'); 
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  width: 100%;
-  padding: 2rem;
-}
-
-.welcome h1 {
-  background-color: rgba(255, 255, 255, 0.3);
-  color: #000;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  font-weight: bold;
-  font-size: 2rem;
-  margin-bottom: 1.25rem;
-}
 
 .form-group {
   display: flex;
