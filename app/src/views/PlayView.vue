@@ -1,7 +1,8 @@
 <template>
+  <div class="background">
   <div class="container">
     <div class="back">
-      <button>Back</button>
+      <button @click="toggleBack">Back</button>
     </div>
     <div class="underlineButtonContainer">
       <button class="underlineButton" @click="toggleJoinGame">Join Game</button>
@@ -19,11 +20,12 @@
       <button class="rounded-button">Let's Play</button>
     </div>
   </div>
+  </div>
 </template>
 
 
-<style>
-body {
+<style scoped>
+.background {
   background-image: url('../images/playBackground9.webp'); 
   background-size: cover; 
 }
@@ -126,6 +128,9 @@ export default {
     },
     toggleJoinGame() {
       this.showRoomCodeField = true;
+    }, 
+    toggleBack() {
+      this.$router.push('/landing');
     }
   }
 }

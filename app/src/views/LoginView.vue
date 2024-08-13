@@ -1,4 +1,5 @@
 <template>
+  <div class="background">
   <div class="container">
     <div class="name">
       <h1>Insync</h1>
@@ -26,10 +27,16 @@
       </div>
     </form>
   </div>
+  </div>
 </template>
 
 
 <style>
+
+.background{
+  background-image: url('../images/logo2.avif'); 
+  background-size: contain;
+}
 
 .form-group {
   display: flex;
