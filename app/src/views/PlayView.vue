@@ -4,22 +4,23 @@
       <button>Back</button>
     </div>
     <div class="underlineButtonContainer">
-      <button class="underlineButton">Join Game</button>
-      <button class="underlineButton">Host Game</button>
+      <button class="underlineButton" @click="toggleJoinGame">Join Game</button>
+      <button class="underlineButton" @click="toggleHostGame">Host Game</button>
     </div>
-      <div class="form-group">
-        <label for="roomCode">Room code:</label>
-        <input id="roomCode" type="text"/>
-      </div>
-      <div class="form-group">
-        <label for="yourName">Your name:</label>
-        <input id="yourName" type="text"/>
-      </div>
+    <div v-if="showRoomCodeField" class="form-group">
+      <label for="roomCode">Room code:</label>
+      <input id="roomCode" type="text"/>
+    </div>
+    <div class="form-group">
+      <label for="yourName">Your name:</label>
+      <input id="yourName" type="text"/>
+    </div>
     <div class="button-container">
-      <button class="rounded-button">JOIN GAME</button>
+      <button class="rounded-button">Let's Play</button>
     </div>
   </div>
 </template>
+
 
 <style>
 body {
@@ -109,4 +110,23 @@ body {
   background-color: black; 
   color: white; 
 }
+
 </style>
+
+<script>
+export default {
+  data() {
+    return {
+      showRoomCodeField: true 
+    }
+  },
+  methods: {
+    toggleHostGame() {
+      this.showRoomCodeField = false;
+    },
+    toggleJoinGame() {
+      this.showRoomCodeField = true;
+    }
+  }
+}
+</script>
