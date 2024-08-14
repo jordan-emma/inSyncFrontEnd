@@ -17,7 +17,7 @@
       <input id="yourName" type="text"/>
     </div>
     <div class="button-container">
-      <button class="rounded-button">Let's Play</button>
+      <button class="rounded-button" @click="togglePlay">Let's Play</button>
     </div>
   </div>
   </div>
@@ -40,6 +40,9 @@ export default {
     }, 
     toggleBack() {
       this.$router.push('/landing');
+    },
+    togglePlay() {
+      this.$router.push('/lobby');
     }
   }
 }
@@ -47,55 +50,10 @@ export default {
 
 <style scoped>
 .background {
-  background-image: url('../images/playBackground9.webp'); 
+  background-image: url('../images/background.jpg'); 
   background-size: cover; 
 }
 
-.back {
-  position: absolute; 
-  top: 1rem; 
-  left: 1rem; 
-  margin: 0; 
-}
-
-.back button {
-  background: transparent; 
-  border: none; 
-  padding: 0.625rem 1.25rem; 
-  font-size: 1.2rem; 
-  font-weight: 800; 
-  color: black; 
-  text-decoration: underline; 
-  text-decoration-thickness: 2px; 
-  border-radius: 1.25rem; 
-  cursor: pointer; 
-  transition: background-color 0.3s ease, color 0.3s ease; 
-  outline: none; 
-}
-
-.back button:hover {
-  background-color: black; 
-  color: white; 
-}
-
-.underlineButton{ 
-  background: transparent; 
-  border: none; 
-  padding-bottom: 1rem;
-  padding-top: 0.5rem; 
-  font-size: 1.5rem; 
-  font-weight: 600; 
-  color: black; 
-  text-decoration: underline;
-  text-decoration-thickness: 4px; 
-  text-align: center;
-  cursor: pointer; 
-  transition: background-color 0.3s ease, color 0.3s ease; 
-  opacity: 1; 
-  width: 10rem; 
-  outline: none; 
-  border-radius: 1.25rem;
-}
 .underlineButtonContainer{
   gap: 0.5em; 
 }
