@@ -22,6 +22,7 @@
           <input id="confirmPassword" type="password" v-model.trim="confirmPassword"/>
           <p v-if="!passwordsMatch && showSignUpField" class="error-message">Passwords do not match</p>
         </div>
+          <p v-if="!showSignUpField && !isLoginValid" class="error-message">Please enter email and password</p>
         <div class="button-group">
           <button v-if="!showSignUpField" class="rounded-button" type="button" @click="toggleView('signUp')">Create Account</button>
           <button class="rounded-button" :disabled="!isFormValid" type="submit">
@@ -52,12 +53,9 @@ export default {
   },
   isFormValid() {
     if (!this.showSignUpField) {
-      return true; 
+      return this.email.trim() && this.password.trim() !== ''; 
     }
-    const isValid = this.name.trim() !== '' &&
-                    this.email.trim() !== '' &&
-                    this.password.trim() !== '' &&
-                    this.confirmPassword.trim() !== '';
+    const isValid = this.name.trim() && this.email.trim() && this.password.trim() && this.confirmPassword.trim() != '';
     const passwordsMatch = this.passwordsMatch;
     return isValid && passwordsMatch;
   }
