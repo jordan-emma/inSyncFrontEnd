@@ -1,24 +1,15 @@
-@import './base.css';
-
-body, html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: white;
-  background-image: url('../images/logo2.avif'); 
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
 .name {
   color: black;
   font-size: xx-large;
   font-weight: bolder;
+}
+
+.background{
+  height: 100vh; 
+  width: 100vw;
+  background-color: white;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .container {
@@ -32,17 +23,75 @@ body, html {
 }
 
 .rounded-button {
-  background-color: black; 
-  color: white;              
-  border: none;             
-  border-radius: 1.5625rem;       
-  padding: 0.625rem 1.25rem;        
-  font-size: 1rem;           
-  cursor: pointer;           
-  transition: background-color 0.3s ease; 
-  width: 12.5rem;
+  background: black; 
+  border: none; 
+  padding-bottom: 1rem;
+  padding-top: 1rem; 
+  font-size: 1.5rem; 
+  font-weight: 600; 
+  color: white;  
+  text-align: center;
+  cursor: pointer; 
+  transition: background-color 0.3s ease, color 0.3s ease; 
+  opacity: 1; 
+  width: 10rem; 
+  outline: none; 
+  border-radius: 1.25rem;
 }
 
 .rounded-button:hover {
   background-color: darkgrey 
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; 
+  margin-bottom: 1rem;
+  width: 100%;
+  max-width: 300px;
+  background-color: rgba(255, 255, 255, 0.3);
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.form-group label {
+  color: #000;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.form-group input {
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 1rem;
+  border: 1px solid #ddd; 
+  border-radius: 0.5rem; 
+  padding: 0.5rem; 
+  outline: none; 
+}
+
+body{
+  min-height: 100vh;
+  margin: 0;
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue',
+    sans-serif;
 }
