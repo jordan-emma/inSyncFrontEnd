@@ -23,12 +23,12 @@
           <p v-if="!passwordsMatch && showSignUpField" class="error-message">Passwords do not match</p>
         </div>
         <div class="button-group">
-          <button v-if="!showSignUpField" class="rounded-button" type="button" @click="toggleCreateAccount">Create Account</button>
+          <button v-if="!showSignUpField" class="rounded-button" type="button" @click="toggleView('signUp')">Create Account</button>
           <button class="rounded-button" :disabled="!isFormValid" type="submit">
             {{ showSignUpField ? 'Create Account' : 'Login' }}
           </button>
           <button class="rounded-button" type="reset">Reset</button>
-          <button v-if="showSignUpField" class="rounded-button" type="button" @click="goToLogin">Login</button>
+          <button v-if="showSignUpField" class="rounded-button" type="button" @click="toggleView('login')">Login</button>
         </div>
       </form>
     </div>
@@ -103,27 +103,6 @@ form {
   gap: 0.5rem;
 }
 
-.rounded-button {
-  padding: 0.75rem 1.5rem;
-  font-size: 1.4rem;
-  border-radius: 0.5rem;
-  background-color: black;
-  color: white;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  height: 4rem; 
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  text-align: center; 
-}
-
-.rounded-button:hover {
-  background-color: white; 
-  color: black; 
-}
-
 @media (max-width: 600px) {
   .button-group {
     flex-direction: column; 
@@ -155,18 +134,21 @@ export default {
     }
   },
   computed: {
-    isFormValid() {
-      if (!this.showSignUpField) {
-        return true; 
-      }
-      const isValid = this.name && this.email && this.password && this.confirmPassword;
-      const passwordsMatch = this.passwordsMatch;
-      return isValid && passwordsMatch;
-    },
-    passwordsMatch() {
-      return this.password === this.confirmPassword;
-    }
+  passwordsMatch() {
+    return this.password === this.confirmPassword;
   },
+  isFormValid() {
+    if (!this.showSignUpField) {
+      return true; 
+    }
+    const isValid = this.name.trim() !== '' &&
+                    this.email.trim() !== '' &&
+                    this.password.trim() !== '' &&
+                    this.confirmPassword.trim() !== '';
+    const passwordsMatch = this.passwordsMatch;
+    return isValid && passwordsMatch;
+  }
+},
   methods: {
     resetFields() {
       this.name = '';
@@ -174,12 +156,8 @@ export default {
       this.password = '';
       this.confirmPassword = '';
     },
-    toggleCreateAccount() {
-      this.showSignUpField = true;
-      this.resetFields();
-    },
-    goToLogin() {
-      this.showSignUpField = false;
+    toggleView(view) {
+      this.showSignUpField = (view === 'signUp');
       this.resetFields();
     },
     handleSubmit() {
