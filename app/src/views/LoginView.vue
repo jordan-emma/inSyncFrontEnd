@@ -35,6 +35,52 @@
   </div>
 </template>
 
+<script>
+export default {
+  data() {
+    return {
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      showSignUpField: false,
+    }
+  },
+  computed: {
+  passwordsMatch() {
+    return this.password === this.confirmPassword;
+  },
+  isFormValid() {
+    if (!this.showSignUpField) {
+      return true; 
+    }
+    const isValid = this.name.trim() !== '' &&
+                    this.email.trim() !== '' &&
+                    this.password.trim() !== '' &&
+                    this.confirmPassword.trim() !== '';
+    const passwordsMatch = this.passwordsMatch;
+    return isValid && passwordsMatch;
+  }
+},
+  methods: {
+    resetFields() {
+      this.name = '';
+      this.email = ''; 
+      this.password = '';
+      this.confirmPassword = '';
+    },
+    toggleView(view) {
+      this.showSignUpField = (view === 'signUp');
+      this.resetFields();
+    },
+    handleSubmit() {
+      if (this.isFormValid) {
+        alert('Form submitted!');
+      }
+    }
+  }
+}
+</script>
 
 <style scoped>
 .background {
@@ -84,52 +130,3 @@
   margin-top: 0.5rem;
 }
 </style>
-
-
-
-<script>
-export default {
-  data() {
-    return {
-      name: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-      showSignUpField: false,
-    }
-  },
-  computed: {
-  passwordsMatch() {
-    return this.password === this.confirmPassword;
-  },
-  isFormValid() {
-    if (!this.showSignUpField) {
-      return true; 
-    }
-    const isValid = this.name.trim() !== '' &&
-                    this.email.trim() !== '' &&
-                    this.password.trim() !== '' &&
-                    this.confirmPassword.trim() !== '';
-    const passwordsMatch = this.passwordsMatch;
-    return isValid && passwordsMatch;
-  }
-},
-  methods: {
-    resetFields() {
-      this.name = '';
-      this.email = ''; 
-      this.password = '';
-      this.confirmPassword = '';
-    },
-    toggleView(view) {
-      this.showSignUpField = (view === 'signUp');
-      this.resetFields();
-    },
-    handleSubmit() {
-      if (this.isFormValid) {
-        alert('Form submitted!');
-      }
-    }
-  }
-}
-</script>

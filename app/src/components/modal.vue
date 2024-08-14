@@ -6,6 +6,27 @@
   </div>
 </template>
 
+<script>
+  export default { 
+    props: {
+      show: {
+        type: Boolean,
+        default: false
+      }
+    }, 
+    methods: {
+      close(e){
+    
+        if(e.target.className === "container"){ 
+          this.$emit('close'); 
+        }
+
+      }
+
+    }
+  }
+</script>
+
 <style scoped>
 
 .container{
@@ -35,24 +56,3 @@
 }
 
 </style>
-
-<script>
-  export default { 
-    props: {
-      show: {
-        type: Boolean,
-        default: false
-      }
-    }, 
-    methods: {
-      close(e){
-    
-        if(e.target.className === "container"){ 
-          this.$emit('close'); 
-        }
-
-      }
-
-    }
-  }
-</script>

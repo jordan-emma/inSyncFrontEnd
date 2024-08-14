@@ -24,6 +24,27 @@
 </template>
 
 
+<script>
+export default {
+  data() {
+    return {
+      showRoomCodeField: true 
+    }
+  },
+  methods: {
+    toggleHostGame() {
+      this.showRoomCodeField = false;
+    },
+    toggleJoinGame() {
+      this.showRoomCodeField = true;
+    }, 
+    toggleBack() {
+      this.$router.push('/landing');
+    }
+  }
+}
+</script>
+
 <style scoped>
 .background {
   background-image: url('../images/playBackground9.webp'); 
@@ -84,24 +105,3 @@
   color: white; 
 }
 </style>
-
-<script>
-export default {
-  data() {
-    return {
-      showRoomCodeField: true 
-    }
-  },
-  methods: {
-    toggleHostGame() {
-      this.showRoomCodeField = false;
-    },
-    toggleJoinGame() {
-      this.showRoomCodeField = true;
-    }, 
-    toggleBack() {
-      this.$router.push('/landing');
-    }
-  }
-}
-</script>

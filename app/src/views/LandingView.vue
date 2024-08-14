@@ -25,6 +25,31 @@
   </div>
 </template>
 
+<script setup>
+import modal from '../components/modal.vue'
+</script>
+
+<script>
+export default {
+  data() {
+    return {
+      showModal: false
+    }
+  },
+  methods: {
+    togglePlay() {
+      this.$router.push('/play');
+    },
+    logOut() {
+      this.$router.push('/login');
+    }, 
+    toggleModal() { 
+      this.showModal=!this.showModal; 
+    }
+ }
+}
+</script>
+
 <style scoped>
 .background-container {
     position: relative;
@@ -98,28 +123,3 @@ p {
   margin: 1rem 2rem;
 }
 </style>
-
-<script setup>
-import modal from '../components/modal.vue'
-</script>
-
-<script>
-export default {
-  data() {
-    return {
-      showModal: false
-    }
-  },
-  methods: {
-    togglePlay() {
-      this.$router.push('/play');
-    },
-    logOut() {
-      this.$router.push('/login');
-    }, 
-    toggleModal() { 
-      this.showModal=!this.showModal; 
-    }
- }
-}
-</script>
