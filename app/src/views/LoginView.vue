@@ -83,24 +83,15 @@ export default {
       this.resetFields()
     },
     async handleSubmit() {
-      if (this.isFormValid) {
-        let url = 'login'
-        this.$axios.post(url, {
-          email: this.email,
-          password: this.password
-        }).then((response) => {
-          if (response.status === 200) {
-            this.$axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
-            return this.$axios.get('user')
-          }
-        }).then((response) => {
-          if (response.status === 200) {
-            this.userStore.setUser(response.data)
-            this.$router.push('/landing')
-          }
-        }).catch((error) => {
-          console.log(error)
-        })
+      if (!this.isFormValid) {
+        return // todo set error message
+      }
+      try{
+        this.userStore.login(this.email, this.password)
+        this.$router.push('/landing')
+      } catch (error) {
+        // todo set error message
+        console.error(error)
       }
     }
   }
