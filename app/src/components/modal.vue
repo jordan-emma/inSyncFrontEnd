@@ -1,5 +1,5 @@
 <template>
-  <div class ="container" v-if="show" @click="close">
+  <div class="container" v-if="show" @click="close">
     <div class="content">
       <slot></slot>
     </div>
@@ -17,9 +17,19 @@
 }
 
 .content{
-  height: 40vh; 
-  width: 40vw;
+  height: 50vh; 
+  width: 60vw;
   background-color: white;
+  border-radius: 6rem;
+  box-shadow:
+    -10px 10px 20px 5px rgba(255, 105, 180, 0.6), 
+    -15px 15px 30px 10px rgba(255, 165, 0, 0.6), 
+    -20px 20px 40px 15px rgba(255, 255, 0, 0.6), 
+    -25px 25px 50px 20px rgba(0, 255, 0, 0.6),
+    -30px 30px 60px 25px rgba(0, 191, 255, 0.7), 
+    -35px 35px 70px 30px rgba(255, 20, 147, 0.6); 
+  font-family: 'Comic Sans MS', cursive, sans-serif; 
+  font-size: 0.98rem; 
 }
 
 </style>

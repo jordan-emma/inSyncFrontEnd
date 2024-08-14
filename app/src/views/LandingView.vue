@@ -1,7 +1,14 @@
 <template>
-  <div class="background-container">
+  <div class="background-container" >
     <modal :show="showModal" @close="toggleModal">
-      <h1>Hello</h1>
+      <h1 style="text-decoration: underline wavy black 3px; text-underline-offset: 0.7rem; font-weight: 600; margin: 2rem;">How to Play</h1>
+      <p style="margin-top: 1rem; margin-left: 2rem; margin-bottom: 1rem; margin-right: 2rem;"><b>Objective: </b>Team up with your crew to spin the dial and hit the hidden bullseye!</p>
+      <p style="margin-top: 1rem; margin-left: 2rem; margin-bottom: 1rem; margin-right: 2rem;"><b>The Catch: </b>The target is sneaky—it’s hiding in a new spot each round, and you’ll have to guess where it is.</p>
+      <p style="margin-top: 1rem; margin-left: 2rem; margin-bottom: 1rem; margin-right: 2rem;"><b>The Perk:  </b>One of your teammates has a special power—they know exactly where the target is! But there’s a twist: they can only drop a hint using a scale between two opposite ideas. Imagine a spectrum from “Sweet to Sour.” If the target is leaning towards “Sweet,” the clue might be something like “honey”—sweet, but not sugar-overload sweet.</p>
+      <p style="margin-top: 1rem; margin-left: 2rem; margin-bottom: 1rem; margin-right: 2rem;">Every round, a new teammate gives the clue, and the rest of you get to chat, debate, and strategize while the clue giver stays as cool as a cucumber.</p>
+      <p style="margin-top: 1rem; margin-left: 2rem; margin-bottom: 1rem; margin-right: 2rem;">When you’re all set, everyone taps “Ready,” and the big reveal happens—where’s the target?</p>
+      <p style="margin-top: 1rem; margin-left: 2rem; margin-bottom: 1rem; margin-right: 2rem;">The closer you are to the center, the more points you rack up!</p>
+      <p style="margin-top: 1rem; margin-left: 2rem; margin-bottom: 1rem; margin-right: 2rem;">And remember, it’s all about teamwork—either you all win together, or you face the challenge again. Let the fun begin!</p>
     </modal>
     <div class="spinning-background"></div>
     <div class="content">
