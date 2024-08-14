@@ -30,6 +30,8 @@
     -35px 35px 70px 30px rgba(255, 20, 147, 0.6); 
   font-family: 'Comic Sans MS', cursive, sans-serif; 
   font-size: 0.98rem; 
+  overflow-y: auto;
+  padding-bottom: 2em; 
 }
 
 </style>
