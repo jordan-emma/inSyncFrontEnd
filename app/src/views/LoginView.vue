@@ -11,25 +11,28 @@
         </div>
         <div class="form-group">
           <label for="email">Email:</label>
-          <input id="email" type="text" v-model.trim="email"/>
+          <input id="email" type="text" v-model.trim="email" />
         </div>
         <div class="form-group">
           <label for="password">Password:</label>
-          <input id="password" type="password" v-model.trim="password"/>
+          <input id="password" type="password" v-model.trim="password" />
         </div>
         <div class="form-group" v-show="showSignUpField">
           <label for="confirmPassword">Confirm Password:</label>
-          <input id="confirmPassword" type="password" v-model.trim="confirmPassword"/>
+          <input id="confirmPassword" type="password" v-model.trim="confirmPassword" />
           <p v-if="!passwordsMatch && showSignUpField" class="error-message">Passwords do not match</p>
         </div>
-          <p v-if="!showSignUpField && !isFormValid" class="error-message">Please enter email and password</p>
+        <p v-if="!showSignUpField && !isFormValid" class="error-message">Please enter email and password</p>
         <div class="button-group">
-          <button v-if="!showSignUpField" class="rounded-button" type="button" @click="toggleView('signUp')">Create Account</button>
+          <button v-if="!showSignUpField" class="rounded-button" type="button" @click="toggleView('signUp')">Create
+            Account
+          </button>
           <button class="rounded-button" :disabled="!isFormValid" type="submit">
             {{ showSignUpField ? 'Create Account' : 'Login' }}
           </button>
           <button class="rounded-button" type="reset">Reset</button>
-          <button v-if="showSignUpField" class="rounded-button" type="button" @click="toggleView('login')">Login</button>
+          <button v-if="showSignUpField" class="rounded-button" type="button" @click="toggleView('login')">Login
+          </button>
         </div>
       </form>
     </div>
@@ -37,48 +40,67 @@
 </template>
 
 <script>
+import { useUserStore } from '@/stores/user.js'
+
 export default {
   data() {
     return {
+      userStore: useUserStore(),
       name: '',
       email: '',
       password: '',
       confirmPassword: '',
-      showSignUpField: false,
+      showSignUpField: false
     }
   },
   computed: {
-  passwordsMatch() {
-    return this.password === this.confirmPassword;
+    passwordsMatch() {
+      return this.password === this.confirmPassword
+    },
+    isFormValid() {
+
+      if ((this.email.trim() && !this.password.trim()) || (!this.email.trim() && this.password.trim())) {
+        return false
+      }
+      if (!this.showSignUpField) {
+        return true
+      }
+
+      const isValid = this.name.trim() && this.email.trim() && this.password.trim() && this.confirmPassword.trim() != ''
+      const passwordsMatch = this.passwordsMatch
+      return isValid && passwordsMatch
+    }
   },
-  isFormValid() {
-
-    if ((this.email.trim() && !this.password.trim()) || (!this.email.trim() && this.password.trim())) {
-      return false;
-    }
-    if (!this.showSignUpField) {
-      return true;
-    }
-
-    const isValid = this.name.trim() && this.email.trim() && this.password.trim() && this.confirmPassword.trim() != '';
-    const passwordsMatch = this.passwordsMatch;
-    return isValid && passwordsMatch;
-  }
-},
   methods: {
     resetFields() {
-      this.name = '';
-      this.email = ''; 
-      this.password = '';
-      this.confirmPassword = '';
+      this.name = ''
+      this.email = ''
+      this.password = ''
+      this.confirmPassword = ''
     },
     toggleView(view) {
-      this.showSignUpField = (view === 'signUp');
-      this.resetFields();
+      this.showSignUpField = (view === 'signUp')
+      this.resetFields()
     },
-    handleSubmit() {
+    async handleSubmit() {
       if (this.isFormValid) {
-        alert('Form submitted!');
+        let url = 'login'
+        this.$axios.post(url, {
+          email: this.email,
+          password: this.password
+        }).then((response) => {
+          if (response.status === 200) {
+            this.$axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
+            return this.$axios.get('user')
+          }
+        }).then((response) => {
+          if (response.status === 200) {
+            this.userStore.setUser(response.data)
+            this.$router.push('/landing')
+          }
+        }).catch((error) => {
+          console.log(error)
+        })
       }
     }
   }
@@ -87,7 +109,7 @@ export default {
 
 <style scoped>
 .background {
-  background-image: url('../images/logo2.avif'); 
+  background-image: url('../images/logo2.avif');
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
@@ -99,7 +121,7 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh; 
+  min-height: 100vh;
   padding: 1rem;
 }
 
@@ -109,8 +131,8 @@ export default {
 
 .button-group {
   display: flex;
-  flex-direction: row; 
-  flex-wrap: wrap; 
+  flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
   width: 100%;
   margin-top: 1rem;
@@ -119,9 +141,10 @@ export default {
 
 @media (max-width: 600px) {
   .button-group {
-    flex-direction: column; 
-    align-items: center; 
+    flex-direction: column;
+    align-items: center;
   }
+
   .background {
     background-size: cover;
   }
