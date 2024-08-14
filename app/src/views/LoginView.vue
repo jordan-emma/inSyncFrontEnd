@@ -58,41 +58,6 @@
   margin-bottom: 2rem;
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start; 
-  margin-bottom: 1rem;
-  width: 100%;
-  max-width: 300px;
-  background-color: rgba(255, 255, 255, 0.3);
-  padding: 1rem;
-  border-radius: 0.5rem;
-}
-
-.form-group label {
-  color: #000;
-  font-weight: bold;
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-}
-
-.form-group input {
-  width: 100%;
-  box-sizing: border-box;
-  font-size: 1rem;
-  border: 1px solid #ddd; 
-  border-radius: 0.5rem; 
-  padding: 0.5rem; 
-  outline: none; 
-}
-
 .button-group {
   display: flex;
   flex-direction: row; 
