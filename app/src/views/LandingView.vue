@@ -92,21 +92,21 @@ import modal from '../components/modal.vue'
 
 <script>
 export default {
-data() {
-  return {
-    showModal: false
-  }
-},
-methods: {
-  togglePlay() {
-    this.$router.push('/play');
+  data() {
+    return {
+      showModal: false
+    }
   },
-  logOut() {
-    this.$router.push('/login');
-  }, 
-  toggleModal() { 
-    this.showModal=!this.showModal; 
-  }
-}
+  methods: {
+    togglePlay() {
+      this.$router.push('/play');
+    },
+    logOut() {
+      this.$router.push('/login');
+    }, 
+    toggleModal() { 
+      this.showModal=!this.showModal; 
+    }
+ }
 }
 </script>
