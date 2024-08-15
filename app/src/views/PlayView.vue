@@ -5,8 +5,10 @@
       <button @click="toggleBack">Back</button>
     </div>
     <div class="underlineButtonContainer">
-      <button class="underlineButton" @click="toggleJoinGame">Join Game</button>
-      <button class="underlineButton" @click="toggleHostGame">Host Game</button>
+      <button v-if="showRoomCodeField" class="currentPageButton" @click="toggleJoinGame">Join Game</button>
+      <button v-if="!showRoomCodeField" class="underlineButton" @click="toggleJoinGame">Join Game</button>
+      <button v-if="showRoomCodeField" class="underlineButton" @click="toggleHostGame">Host Game</button>
+      <button v-if="!showRoomCodeField" class="currentPageButton" @click="toggleHostGame">Host Game</button>
     </div>
     <div v-if="showRoomCodeField" class="form-group">
       <label for="roomCode">Room code:</label>
@@ -74,8 +76,7 @@ export default {
       let code = await this.$gameStore.joinGame(this.name, this.code);
       console.log(code);
     }
-  }
-  
+}
 </script>
 
 <style scoped>
@@ -92,4 +93,24 @@ export default {
   background-color: black; 
   color: white; 
 }
+
+.currentPageButton {
+  background-color: black; 
+  color: white; 
+  border: none; 
+  padding-bottom: 1rem;
+  padding-top: 0.5rem; 
+  font-size: 1.5rem; 
+  font-weight: 600; 
+  text-decoration: underline;
+  text-decoration-thickness: 4px; 
+  text-align: center;
+  cursor: pointer; 
+  transition: background-color 0.3s ease, color 0.3s ease; 
+  opacity: 1; 
+  width: 10rem; 
+  outline: none; 
+  border-radius: 1.25rem;
+}
+
 </style>
