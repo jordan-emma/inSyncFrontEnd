@@ -16,7 +16,7 @@
       <div class="name">
         <h1>INSYNC</h1>
       </div>
-      <p>Hi, {{ userStore.name }}!</p>
+      <p>Hi, {{ $userStore.name }}!</p>
       <div class="button-container">
         <button class="rounded-button" @click="togglePlay">PLAY</button>
         <button class="rounded-button" @click="toggleModal">HOW TO PLAY</button>
@@ -31,11 +31,9 @@ import modal from '../components/modal.vue'
 </script>
 
 <script>
-import { useUserStore } from '@/stores/user.js'
 export default {
   data() {
     return {
-      userStore: useUserStore(),
       showModal: false
     }
   },

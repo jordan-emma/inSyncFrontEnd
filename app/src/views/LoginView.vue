@@ -40,12 +40,10 @@
 </template>
 
 <script>
-import { useUserStore } from '@/stores/user.js'
 
 export default {
   data() {
     return {
-      userStore: useUserStore(),
       name: '',
       email: '',
       password: '',
@@ -87,7 +85,7 @@ export default {
         return // todo set error message
       }
       try{
-        this.userStore.login(this.email, this.password)
+        this.$userStore.login(this.email, this.password)
         this.$router.push('/landing')
       } catch (error) {
         // todo set error message

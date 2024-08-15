@@ -25,18 +25,14 @@
 
 
 <script>
-import { useUserStore } from '@/stores/user.js'
-import { gameStore } from '@/stores/game.js'
 export default {
   created(){
     if(this.name === ''){
-      this.name = this.userStore.name;
+      this.name = this.$userStore.name;
     }
   },
   data() {
     return {
-      userStore: useUserStore(),
-      gameStore: gameStore(),
       showRoomCodeField: true,
       name: '',
       code: '',
@@ -60,7 +56,7 @@ export default {
       }
     },
     async createGame() {
-      let code = await this.gameStore.hostGame(this.name);
+      let code = await this.$gameStore.hostGame(this.name);
       console.log(code);
     },
     async joinGame() {
@@ -68,7 +64,7 @@ export default {
         console.log("Invalid code");
         return;
       }
-      let code = await this.gameStore.joinGame(this.name, this.code);
+      let code = await this.$gameStore.joinGame(this.name, this.code);
       console.log(code);
     }
   }
