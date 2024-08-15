@@ -15,7 +15,6 @@
     </div>
     <div class="button-container">
       <button class="rounded-button">START GAME</button>
-      <button class="rounded-button" @click="listPlayers">GET PLAYERS</button>
     </div>
   </div>
 </template>
@@ -67,11 +66,15 @@ export default {
       catch(e){
         console.log(e); 
       }
-    },    
+    },  
+    playerRefresh(){
+      setInterval(this.listPlayers, 1000)
+    },  
   },
   async created() {
     const imageOptions = await Promise.all(this.images);
     this.randomImage = imageOptions[Math.floor(Math.random() * imageOptions.length)].default;
+    this.playerRefresh(); 
   }, 
 };
 
