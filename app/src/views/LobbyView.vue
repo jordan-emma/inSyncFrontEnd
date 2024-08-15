@@ -42,15 +42,18 @@ export default {
   computed: {
     playerList() {
   const playerNames = this.$gameStore.playerNames;
+  const hostName = this.$gameStore.hostPlayerName; 
 
-  if (playerNames.length === 0) {
+  const filteredPlayerNames = playerNames.filter(name => name !== hostName);
+
+  if (filteredPlayerNames.length === 0) {
     return '';
-  } else if (playerNames.length === 1) {
-    return playerNames[0];
-  } else if (playerNames.length === 2) {
-    return playerNames.join(' and ');
+  } else if (filteredPlayerNames.length === 1) {
+    return filteredPlayerNames[0];
+  } else if (filteredPlayerNames.length === 2) {
+    return filteredPlayerNames.join(' and ');
   } else {
-    return playerNames.slice(0, -1).join(', ') + ', and ' + playerNames[playerNames.length - 1];
+    return filteredPlayerNames.slice(0, -1).join(', ') + ', and ' + filteredPlayerNames[filteredPlayerNames.length - 1];
   }
 }, 
   },
