@@ -5,8 +5,12 @@ export const gameStore = defineStore('game', {
   state: () => ({ game: null, players: [] }),
   getters: {
     code: (state) => state.game?.game_code, 
-    playerNames: (state) => state.players.map(i => i.display_name)
-  },
+    playerNames: (state) => state.players.map(i => i.display_name), 
+    hostPlayerName: (state) => {
+      const host = state.players.find(player => player.host === true);
+      return host ? host.display_name : null;
+    },
+      },
   actions:{
     async hostGame(display_name) {
       let response = await axios.post('game', {display_name})
@@ -25,7 +29,6 @@ export const gameStore = defineStore('game', {
       return game_code;
     }, 
     async getPlayers(){
-      console.log('Getting Players....')
       let response = await axios.get(`game/${this.game.id}/players`)
       if (response.status !== 200){
         throw 'Failed to get players'

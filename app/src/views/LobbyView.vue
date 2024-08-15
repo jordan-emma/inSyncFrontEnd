@@ -11,6 +11,7 @@
       <img :src="randomImage" alt="Profile Picture" class="rounded-image"/>
     </div>
     <div>
+      <p> Host: {{ $gameStore.hostPlayerName }}</p>
       <p> {{ playerList }} </p>
     </div>
     <div class="button-container">
@@ -51,14 +52,13 @@ export default {
   } else {
     return playerNames.slice(0, -1).join(', ') + ', and ' + playerNames[playerNames.length - 1];
   }
-}
+}, 
   },
   methods: {
     toggleBack(){
       this.$router.push('/play');
     },
     async listPlayers(){
-      console.log('Im here');
       try{
         let playerData = await this.$gameStore.getPlayers(); 
         console.log(playerData); 
@@ -105,6 +105,7 @@ export default {
 
   h2, h4{
     color: white;
+    text-align: center;
   }
 
   p{
@@ -112,7 +113,8 @@ export default {
     margin-top: 0.6rem;
     font-size: 1.7rem;
     font-weight: 700; 
-    color:white
+    color:white;
+    text-align: center; 
   }
 
 </style>
