@@ -16,6 +16,7 @@
       <div class="name">
         <h1>INSYNC</h1>
       </div>
+      <p>Hi, {{ $userStore.name }}!</p>
       <div class="button-container">
         <button class="rounded-button" @click="togglePlay">PLAY</button>
         <button class="rounded-button" @click="toggleModal">HOW TO PLAY</button>
