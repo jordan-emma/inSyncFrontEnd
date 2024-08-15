@@ -10,8 +10,12 @@
     <div class="profilePicture">
       <img :src="randomImage" alt="Profile Picture" class="rounded-image"/>
     </div>
+    <div>
+      <h4></h4>
+    </div>
     <div class="button-container">
       <button class="rounded-button">START GAME</button>
+      <button class="rounded-button" @click="listPlayers">GET PLAYERS</button>
     </div>
   </div>
 </template>
@@ -38,7 +42,17 @@ export default {
   methods: {
     toggleBack(){
       this.$router.push('/play');
-    }
+    },
+    async listPlayers(){
+      console.log('Im here');
+      try{
+        let playerData = await this.$gameStore.getPlayers(); 
+        console.log(playerData); 
+      }
+      catch(e){
+        console.log(e); 
+      }
+    },    
   },
   async created() {
     const imageOptions = await Promise.all(this.images);
