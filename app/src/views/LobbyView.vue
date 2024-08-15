@@ -5,7 +5,7 @@
     </div>
     <div class="name">
       <h2>Lobby</h2>
-      <h4>Your room code is ****</h4>
+      <h4>Your room code is {{ $gameStore.code }}</h4>
     </div>
     <div class="profilePicture">
       <img :src="randomImage" alt="Profile Picture" class="rounded-image"/>
@@ -19,6 +19,7 @@
 <script>
 
 export default {
+
   data() {
     return {
       images: [

@@ -56,8 +56,15 @@ export default {
       }
     },
     async createGame() {
-      let code = await this.$gameStore.hostGame(this.name);
-      console.log(code);
+      try{
+        let code = await this.$gameStore.hostGame(this.name);
+        this.$router.push('/lobby');
+      } 
+      catch(e){
+          console.log(e);
+          alert('Failed to make game'); 
+        }
+      }    
     },
     async joinGame() {
       if(this.code.length !== 6){
@@ -68,7 +75,7 @@ export default {
       console.log(code);
     }
   }
-}
+  
 </script>
 
 <style scoped>
