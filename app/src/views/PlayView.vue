@@ -10,14 +10,14 @@
     </div>
     <div v-if="showRoomCodeField" class="form-group">
       <label for="roomCode">Room code:</label>
-      <input id="roomCode" type="text"/>
+      <input id="roomCode" type="text" v-model="code"/>
     </div>
     <div class="form-group">
       <label for="yourName">Your name:</label>
-      <input id="yourName" type="text"/>
+      <input id="yourName" type="text" v-model="name" />
     </div>
     <div class="button-container">
-      <button class="rounded-button">Let's Play</button>
+      <button class="rounded-button" @click="startGame">Let's Play</button>
     </div>
   </div>
   </div>
@@ -26,9 +26,16 @@
 
 <script>
 export default {
+  created(){
+    if(this.name === ''){
+      this.name = this.$userStore.name;
+    }
+  },
   data() {
     return {
-      showRoomCodeField: true 
+      showRoomCodeField: true,
+      name: '',
+      code: '',
     }
   },
   methods: {
@@ -40,6 +47,25 @@ export default {
     }, 
     toggleBack() {
       this.$router.push('/landing');
+    },
+    async startGame() {
+      if(this.showRoomCodeField) {
+        await this.joinGame();
+      } else {
+        await this.createGame();
+      }
+    },
+    async createGame() {
+      let code = await this.$gameStore.hostGame(this.name);
+      console.log(code);
+    },
+    async joinGame() {
+      if(this.code.length !== 6){
+        console.log("Invalid code");
+        return;
+      }
+      let code = await this.$gameStore.joinGame(this.name, this.code);
+      console.log(code);
     }
   }
 }

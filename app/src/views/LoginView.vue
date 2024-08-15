@@ -37,6 +37,7 @@
 </template>
 
 <script>
+
 export default {
   data() {
     return {
@@ -76,9 +77,16 @@ export default {
       this.showSignUpField = (view === 'signUp');
       this.resetFields();
     },
-    handleSubmit() {
-      if (this.isFormValid) {
-        alert('Form submitted!');
+    async handleSubmit() {
+      if (!this.isFormValid) {
+        return // todo set error message
+      }
+      try{
+        this.$userStore.login(this.email, this.password)
+        this.$router.push('/landing')
+      } catch (error) {
+        // todo set error message
+        console.error(error)
       }
     }
   }
@@ -87,7 +95,7 @@ export default {
 
 <style scoped>
 .background {
-  background-image: url('../images/logo2.avif'); 
+  background-image: url('../images/logo2.avif');
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
@@ -99,7 +107,7 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh; 
+  min-height: 100vh;
   padding: 1rem;
 }
 
@@ -109,8 +117,8 @@ export default {
 
 .button-group {
   display: flex;
-  flex-direction: row; 
-  flex-wrap: wrap; 
+  flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
   width: 100%;
   margin-top: 1rem;
@@ -119,8 +127,8 @@ export default {
 
 @media (max-width: 600px) {
   .button-group {
-    flex-direction: column; 
-    align-items: center; 
+    flex-direction: column;
+    align-items: center;
   }
   .background {
     background-size: cover;
