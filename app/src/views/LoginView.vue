@@ -18,8 +18,8 @@
           <input id="password" type="password" v-model.trim="password" />
         </div>
         <div class="form-group" v-show="showSignUpField">
-          <label for="confirmPassword">Confirm Password:</label>
-          <input id="confirmPassword" type="password" v-model.trim="confirmPassword" />
+          <label for="confirm_password">Confirm Password:</label>
+          <input id="confirm_password" type="password" v-model.trim="confirm_password" />
           <p v-if="!passwordsMatch && showSignUpField" class="error-message">Passwords do not match</p>
         </div>
         <p v-if="!showSignUpField && !isFormValid" class="error-message">Please enter email and password</p>
@@ -47,13 +47,13 @@ export default {
       name: '',
       email: '',
       password: '',
-      confirmPassword: '',
+      confirm_password: '',
       showSignUpField: false
     }
   },
   computed: {
     passwordsMatch() {
-      return this.password === this.confirmPassword
+      return this.password === this.confirm_password
     },
     isFormValid() {
 
@@ -64,7 +64,7 @@ export default {
         return true
       }
 
-      const isValid = this.name.trim() && this.email.trim() && this.password.trim() && this.confirmPassword.trim() != ''
+      const isValid = this.name.trim() && this.email.trim() && this.password.trim() && this.confirm_password.trim() != ''
       const passwordsMatch = this.passwordsMatch
       return isValid && passwordsMatch
     }
@@ -74,7 +74,7 @@ export default {
       this.name = ''
       this.email = ''
       this.password = ''
-      this.confirmPassword = ''
+      this.confirm_password = ''
     },
     toggleView(view) {
       this.showSignUpField = (view === 'signUp')
@@ -85,7 +85,11 @@ export default {
         return // todo set error message
       }
       try{
-        this.$userStore.login(this.email, this.password)
+        if (this.showSignUpField){
+          await  this.$userStore.signUp(this.name, this.email, this.password, this.confirm_password)
+        } else {
+            await this.$userStore.login(this.email, this.password)
+        }
         this.$router.push('/landing')
       } catch (error) {
         // todo set error message
@@ -94,6 +98,7 @@ export default {
     }
   }
 }
+
 </script>
 
 <style scoped>
