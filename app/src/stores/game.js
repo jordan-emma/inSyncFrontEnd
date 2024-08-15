@@ -4,7 +4,8 @@ import axios from 'axios'
 export const gameStore = defineStore('game', {
   state: () => ({ game: null, players: [] }),
   getters: {
-    code: (state) => state.game?.game_code
+    code: (state) => state.game?.game_code, 
+    playerNames: (state) => state.players.map(i => i.display_name)
   },
   actions:{
     async hostGame(display_name) {

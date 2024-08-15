@@ -11,7 +11,7 @@
       <img :src="randomImage" alt="Profile Picture" class="rounded-image"/>
     </div>
     <div>
-      <h4></h4>
+      <p> {{ playerList }} </p>
     </div>
     <div class="button-container">
       <button class="rounded-button">START GAME</button>
@@ -38,6 +38,21 @@ export default {
       ],
       randomImage: ''
     };
+  },
+  computed: {
+    playerList() {
+  const playerNames = this.$gameStore.playerNames;
+
+  if (playerNames.length === 0) {
+    return '';
+  } else if (playerNames.length === 1) {
+    return playerNames[0];
+  } else if (playerNames.length === 2) {
+    return playerNames.join(' and ');
+  } else {
+    return playerNames.slice(0, -1).join(', ') + ', and ' + playerNames[playerNames.length - 1];
+  }
+}
   },
   methods: {
     toggleBack(){
@@ -68,7 +83,7 @@ export default {
     display: flex;
     justify-content: center; 
     align-items: center; 
-    margin: 2rem;
+    margin-top: 2rem;
   }
 
   .rounded-image {
@@ -76,7 +91,8 @@ export default {
     width: 7.8125rem; 
     height: 7.8125rem;
     object-fit: cover; 
-    border: 5px solid #000;
+    border: 5px solid white;
+    margin-bottom: 1em; 
   }
 
   .container{
@@ -86,6 +102,14 @@ export default {
 
   h2, h4{
     color: white;
+  }
+
+  p{
+    margin-bottom: 2em;
+    margin-top: 0.6rem;
+    font-size: 1.7rem;
+    font-weight: 700; 
+    color:white
   }
 
 </style>
