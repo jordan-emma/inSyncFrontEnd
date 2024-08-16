@@ -1,5 +1,6 @@
 <template>
   <div class="purpleBackground">
+  <div class="container">
     <div class="back">
       <button @click="toggleBack">Back</button>
     </div>
@@ -17,6 +18,7 @@
     <div class="button-container">
       <button class="rounded-button">START GAME</button>
     </div>
+  </div>
   </div>
 </template>
 
@@ -98,6 +100,11 @@ export default {
     object-fit: cover; 
     border: 5px solid white;
     margin-bottom: 1em; 
+  }
+
+  .container{
+    background-image: url('../images/background.jpg');
+    background-size: cover; 
   }
 
   h2, h4{
