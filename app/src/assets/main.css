@@ -147,3 +147,10 @@ body{
   outline: none; 
   border-radius: 1.25rem;
 }
+
+.pageHeading{
+  color: white;
+  text-align: center;
+  font-size: xx-large;
+  font-weight: bolder;
+}
