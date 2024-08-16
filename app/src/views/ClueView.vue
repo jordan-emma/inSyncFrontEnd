@@ -1,4 +1,7 @@
 <template>
+  <div class="purpleBackground">
+    
+  </div>
 
 </template>
 
