@@ -5,8 +5,10 @@
       <button @click="toggleBack">Back</button>
     </div>
     <div class="underlineButtonContainer">
-      <button class="underlineButton" @click="toggleJoinGame">Join Game</button>
-      <button class="underlineButton" @click="toggleHostGame">Host Game</button>
+      <button v-if="showRoomCodeField" class="currentPageButton" @click="toggleJoinGame">Join Game</button>
+      <button v-if="!showRoomCodeField" class="underlineButton" @click="toggleJoinGame">Join Game</button>
+      <button v-if="showRoomCodeField" class="underlineButton" @click="toggleHostGame">Host Game</button>
+      <button v-if="!showRoomCodeField" class="currentPageButton" @click="toggleHostGame">Host Game</button>
     </div>
     <div v-if="showRoomCodeField" class="form-group">
       <label for="roomCode">Room code:</label>
@@ -56,8 +58,15 @@ export default {
       }
     },
     async createGame() {
-      let code = await this.$gameStore.hostGame(this.name);
-      console.log(code);
+      try{
+        let code = await this.$gameStore.hostGame(this.name);
+        this.$router.push('/lobby');
+      } 
+      catch(e){
+          console.log(e);
+          alert('Failed to make game'); 
+        }
+      }    
     },
     async joinGame() {
       if(this.code.length !== 6){
@@ -67,51 +76,32 @@ export default {
       let code = await this.$gameStore.joinGame(this.name, this.code);
       console.log(code);
     }
-  }
 }
 </script>
 
 <style scoped>
 .background {
-  background-image: url('../images/playBackground9.webp'); 
+  background-image: url('../images/background.jpg');
   background-size: cover; 
 }
 
-.back {
-  position: absolute; 
-  top: 1rem; 
-  left: 1rem; 
-  margin: 0; 
+.underlineButtonContainer{
+  gap: 0.5em; 
 }
 
-.back button {
-  background: transparent; 
-  border: none; 
-  padding: 0.625rem 1.25rem; 
-  font-size: 1.2rem; 
-  font-weight: 800; 
-  color: black; 
-  text-decoration: underline; 
-  text-decoration-thickness: 2px; 
-  border-radius: 1.25rem; 
-  cursor: pointer; 
-  transition: background-color 0.3s ease, color 0.3s ease; 
-  outline: none; 
-}
-
-.back button:hover {
+.underlineButton:hover {
   background-color: black; 
   color: white; 
 }
 
-.underlineButton{ 
-  background: transparent; 
+.currentPageButton {
+  background-color: black; 
+  color: white; 
   border: none; 
   padding-bottom: 1rem;
   padding-top: 0.5rem; 
   font-size: 1.5rem; 
   font-weight: 600; 
-  color: black; 
   text-decoration: underline;
   text-decoration-thickness: 4px; 
   text-align: center;
@@ -122,12 +112,5 @@ export default {
   outline: none; 
   border-radius: 1.25rem;
 }
-.underlineButtonContainer{
-  gap: 0.5em; 
-}
 
-.underlineButton:hover {
-  background-color: black; 
-  color: white; 
-}
 </style>

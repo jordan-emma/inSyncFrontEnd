@@ -81,6 +81,7 @@ form {
 body{
   min-height: 100vh;
   margin: 0;
+  overflow: hidden;
   font-family:
     Inter,
     -apple-system,
@@ -94,4 +95,50 @@ body{
     'Droid Sans',
     'Helvetica Neue',
     sans-serif;
+}
+
+.back {
+  position: absolute; 
+  top: 1rem; 
+  left: 1rem; 
+  margin: 0; 
+}
+
+.back button {
+  background: transparent; 
+  border: none; 
+  padding: 0.625rem 1.25rem; 
+  font-size: 1.2rem; 
+  font-weight: 800; 
+  color: white; 
+  text-decoration: underline; 
+  text-decoration-thickness: 2px; 
+  border-radius: 1.25rem; 
+  cursor: pointer; 
+  transition: background-color 0.3s ease, color 0.3s ease; 
+  outline: none; 
+}
+
+.back button:hover {
+  background-color: black; 
+  color: white; 
+}
+
+.underlineButton{ 
+  background: transparent; 
+  border: none; 
+  padding-bottom: 1rem;
+  padding-top: 0.5rem; 
+  font-size: 1.5rem; 
+  font-weight: 600; 
+  color: white; 
+  text-decoration: underline;
+  text-decoration-thickness: 4px; 
+  text-align: center;
+  cursor: pointer; 
+  transition: background-color 0.3s ease, color 0.3s ease; 
+  opacity: 1; 
+  width: 10rem; 
+  outline: none; 
+  border-radius: 1.25rem;
 }

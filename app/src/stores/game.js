@@ -2,10 +2,14 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 
 export const gameStore = defineStore('game', {
-  state: () => ({ game: null }),
+  state: () => ({ game: null, players: [] }),
   getters: {
-    code: (state) => state.game?.game_code
-  },
+    code: (state) => state.game?.game_code, 
+    playerNames: (state) => state.players.map(i => i.display_name), 
+    hostPlayerName: (state) => {
+      return state.players.find(player => player.host === true)?.display_name || null;
+    },
+      },
   actions:{
     async hostGame(display_name) {
       let response = await axios.post('game', {display_name})
@@ -20,8 +24,17 @@ export const gameStore = defineStore('game', {
       if (response.status !== 200){
         throw 'Failed to join game'
       }
-      this.game = {game_code};
+      this.game = response.data;
       return game_code;
-    }
+    }, 
+    async getPlayers(){
+      let response = await axios.get(`game/${this.game.id}/players`)
+      if (response.status !== 200){
+        throw 'Failed to get players'
+      }
+      this.players = response.data; 
+      return response.data; 
+    }, 
+
   }
 })

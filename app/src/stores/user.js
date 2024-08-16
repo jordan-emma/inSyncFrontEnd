@@ -21,6 +21,18 @@ export const userStore = defineStore('user', {
       }
       this.user = response.data
     },
+    async signUp(name, email, password, confirm_password) {
+      let response = await axios.post('signup', {name, email, password, confirm_password})
+      if (response.status !== 201){
+        throw 'Failed to sign up'
+      }
+      axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
+      response = await axios.get('user')
+      if (response.status !== 200){
+        throw 'Failed to get user data'
+      }
+      this.user = response.data
+    },
   }
 })
 
