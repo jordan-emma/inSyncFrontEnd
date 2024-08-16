@@ -15,10 +15,11 @@
     </div>
     <div class="button-container">
       <button class="rounded-button">New Scale</button>
-      <button class="rounded-button">Submit</button>
+      <button v-if="clueNumber < 3" class="rounded-button" @click="changeClueNumber">Next Clue</button>
+      <button v-if="clueNumber === 3" class="rounded-button">Submit</button>
     </div>
     <div>
-      <h2>1/3</h2>
+      <h2>{{clueNumber}}/3</h2>
     </div>
     </div>
   </div>
@@ -29,7 +30,13 @@
     data() {
       return {
         clue: 'Your clue...',
+        clueNumber: 1, 
       };
+    }, 
+    methods: {
+      changeClueNumber() {
+        this.clueNumber ++; 
+      }
     }
   }
 </script>
