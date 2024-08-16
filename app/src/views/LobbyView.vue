@@ -41,21 +41,21 @@ export default {
   },
   computed: {
     playerList() {
-  const playerNames = this.$gameStore.playerNames;
-  const hostName = this.$gameStore.hostPlayerName; 
+      const playerNames = this.$gameStore.playerNames;
+      const hostName = this.$gameStore.hostPlayerName; 
 
-  const filteredPlayerNames = playerNames.filter(name => name !== hostName);
+      const filteredPlayerNames = playerNames.filter(name => name !== hostName);
 
-  if (filteredPlayerNames.length === 0) {
-    return '';
-  } else if (filteredPlayerNames.length === 1) {
-    return filteredPlayerNames[0];
-  } else if (filteredPlayerNames.length === 2) {
-    return filteredPlayerNames.join(' and ');
-  } else {
-    return filteredPlayerNames.slice(0, -1).join(', ') + ', and ' + filteredPlayerNames[filteredPlayerNames.length - 1];
-  }
-}, 
+        if (filteredPlayerNames.length === 0) {
+          return '';
+        } else if (filteredPlayerNames.length === 1) {
+          return filteredPlayerNames[0];
+        } else if (filteredPlayerNames.length === 2) {
+          return filteredPlayerNames.join(' and ');
+        } else {
+          return filteredPlayerNames.slice(0, -1).join(', ') + ', and ' + filteredPlayerNames[filteredPlayerNames.length - 1];
+        }
+    }, 
   },
   methods: {
     toggleBack(){
@@ -64,7 +64,6 @@ export default {
     async listPlayers(){
       try{
         let playerData = await this.$gameStore.getPlayers(); 
-        console.log(playerData); 
       }
       catch(e){
         console.log(e); 
