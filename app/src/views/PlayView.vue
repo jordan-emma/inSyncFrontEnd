@@ -1,5 +1,5 @@
 <template>
-  <div class="background">
+  <div class="purpleBackground">
   <div class="container">
     <div class="back">
       <button @click="toggleBack">Back</button>
@@ -80,10 +80,6 @@ export default {
 </script>
 
 <style scoped>
-.background {
-  background-image: url('../images/background.jpg');
-  background-size: cover; 
-}
 
 .underlineButtonContainer{
   gap: 0.5em; 
