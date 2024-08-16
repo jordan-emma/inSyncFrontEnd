@@ -16,7 +16,7 @@
       <p> {{ playerList }} </p>
     </div>
     <div class="button-container">
-      <button class="rounded-button">START GAME</button>
+      <button v-if="hosting" class="rounded-button" @click="goToClues">START GAME</button>
     </div>
   </div>
   </div>
@@ -38,7 +38,7 @@ export default {
         import('@/images/character7.jpg'),
         import('@/images/character8.jpg')
       ],
-      randomImage: ''
+      randomImage: '', 
     };
   },
   computed: {
@@ -58,6 +58,9 @@ export default {
           return filteredPlayerNames.slice(0, -1).join(', ') + ', and ' + filteredPlayerNames[filteredPlayerNames.length - 1];
         }
     }, 
+    hosting(){
+      return this.$gameStore.hostPlayerId === this.$userStore.id; 
+    }
   },
   methods: {
     toggleBack(){
@@ -74,6 +77,9 @@ export default {
     playerRefresh(){
       setInterval(this.listPlayers, 1000)
     },  
+    goToClues(){
+      this.$router.push('/clue');
+    },
   },
   async created() {
     const imageOptions = await Promise.all(this.images);

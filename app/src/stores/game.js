@@ -9,6 +9,9 @@ export const gameStore = defineStore('game', {
     hostPlayerName: (state) => {
       return state.players.find(player => player.host === true)?.display_name || null;
     },
+    hostPlayerId: (state) => {
+      return state.players.find(player => player.host === true)?.player_id || null;
+    },
       },
   actions:{
     async hostGame(display_name) {

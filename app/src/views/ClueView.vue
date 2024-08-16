@@ -36,6 +36,9 @@
     methods: {
       changeClueNumber() {
         this.clueNumber ++; 
+      }, 
+      toggleBack(){
+        this.$router.push('/lobby');
       }
     }
   }

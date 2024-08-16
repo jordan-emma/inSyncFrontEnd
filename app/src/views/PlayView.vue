@@ -66,16 +66,18 @@ export default {
           console.log(e);
           alert('Failed to make game'); 
         }
-      }    
-    },
-    async joinGame() {
+      }, 
+      async joinGame() {
       if(this.code.length !== 6){
         console.log("Invalid code");
         return;
       }
       let code = await this.$gameStore.joinGame(this.name, this.code);
-      console.log(code);
-    }
+      this.$router.push('/lobby');
+    }, 
+
+    },
+
 }
 </script>
 
