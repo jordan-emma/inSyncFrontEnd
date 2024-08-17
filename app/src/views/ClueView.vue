@@ -9,7 +9,7 @@
       </div>
       <div class="slider-wrapper">
         <p>Scale</p>
-          <Slider :min="0" :max="100" v-model="sliderValue" />
+        <Slider :min="0" :max="100" v-model="sliderValue" :disabled="disableSlider" /> 
         <p>Scale</p>
       </div>
       <div>
@@ -17,15 +17,15 @@
       </div>
       <div class="form-group">
         <input id="clueField" type="text" v-model="clue"/>
-    </div>
-    <div class="button-container">
-      <button class="rounded-button">New Scale</button>
-      <button v-if="clueNumber < 3" class="rounded-button" @click="changeClueNumber">Next Clue</button>
-      <button v-if="clueNumber === 3" class="rounded-button">Submit</button>
-    </div>
-    <div>
-      <h2>{{clueNumber}}/3</h2>
-    </div>
+      </div>
+      <div class="button-container">
+        <button class="rounded-button">New Scale</button>
+        <button v-if="clueNumber < 3" class="rounded-button" @click="changeClueNumber">Next Clue</button>
+        <button v-if="clueNumber === 3" class="rounded-button">Submit</button>
+      </div>
+      <div>
+        <h2>{{clueNumber}}/3</h2>
+      </div>
     </div>
   </div>
 </template>
@@ -41,7 +41,8 @@ export default {
     return {
       clue: 'Your clue...',
       clueNumber: 1,
-      sliderValue: 50
+      sliderValue: 50,
+      disableSlider: true,
     };
   },
   methods: {

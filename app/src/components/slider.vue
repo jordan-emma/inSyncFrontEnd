@@ -1,13 +1,12 @@
 <template>
-    <div class="slider-container">
-      <input 
-        type="range" 
-        :min="min" 
-        :max="max" 
-        :value="modelValue" 
-        @input="updateValue"
-      />
-    </div>
+    <input
+      type="range"
+      :min="min"
+      :max="max"
+      :value="modelValue"
+      @input="updateValue"
+      :disabled="disabled" 
+    />
   </template>
   
   <script>
@@ -25,15 +24,22 @@
       modelValue: {
         type: Number,
         default: 0
+      },
+      disabled: { 
+        type: Boolean,
+        default: false
       }
     },
     methods: {
       updateValue(event) {
-        this.$emit('update:modelValue', Number(event.target.value));
+        if (!this.disabled) {
+          this.$emit('update:modelValue', Number(event.target.value));
+        }
       }
     }
   }
   </script>
+  
   
   <style scoped>
 .slider-container {
