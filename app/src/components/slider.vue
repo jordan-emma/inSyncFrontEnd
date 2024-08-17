@@ -101,4 +101,20 @@ body, html {
     justify-content: center; 
 }
 
+.slider-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+  width: 40vw; 
+}
+
+.slider-wrapper h4 {
+  margin: 0; 
+  padding: 0 1em; 
+  color: white;
+  font-weight: 500;
+  font-size: 1.5em;
+}
+
+
 </style>

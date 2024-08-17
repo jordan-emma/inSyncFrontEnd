@@ -7,8 +7,12 @@
       <div class="pageHeading">
         <h2>Type a Clue</h2>
       </div>
+      <div class="slider-wrapper">
+        <h4>Scale</h4>
+          <Slider :min="0" :max="100" v-model="sliderValue" />
+        <h4>Scale</h4>
+      </div>
       <div>
-        <Slider :min="0" :max="100" v-model="sliderValue" />
         <p>Value: {{ sliderValue }}</p>
       </div>
       <div class="form-group">
@@ -67,21 +71,46 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-items: center;
   justify-content: center;
   height: 100vh;
   width: 100vw;
 }
 
-  @media (max-width: 600px) {
-  .container {
-    width: 80vw; 
-    height: 100vh; 
-    align-items: center;
-    align-content: center;
-    justify-content: center;
-    display: flex; 
+.slider-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 80%; 
+  max-width: 600px; 
+  margin: 1rem 0; 
+}
+
+.slider-wrapper h4 {
+  margin: 0;
+  padding: 0 1em; 
+  color: white;
+  font-weight: 500;
+  font-size: 1.2em; 
+}
+
+@media (max-width: 600px) {
+  .slider-wrapper {
+    width: 90%; 
+  }
+
+  .slider-wrapper h4 {
+    font-size: 1em; 
   }
 }
+
+.button-container {
+  gap: 1rem;
+  display: flex;
+}
+
+h2, p {
+  color: white;
+}
+
 
 </style>
