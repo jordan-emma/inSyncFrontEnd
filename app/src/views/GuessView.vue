@@ -5,26 +5,18 @@
         <button @click="toggleBack">Back</button>
       </div>
       <div class="pageHeading">
-        <h2>Type a Clue</h2>
+        <h2>This is where the clue provided goes</h2>
       </div>
       <div class="slider-wrapper">
         <p>Scale</p>
-        <Slider :min="0" :max="100" v-model="sliderValue" :disabled="disableSlider" /> 
+        <Slider :min="0" :max="100" v-model="sliderValue"/> 
         <p>Scale</p>
       </div>
-      <div>
-        <p>Value: {{ sliderValue }}</p>
-      </div>
-      <div class="form-group">
-        <input id="clueField" type="text" v-model="clue"/>
-      </div>
       <div class="button-container">
-        <button class="rounded-button">New Scale</button>
-        <button v-if="clueNumber < 3" class="rounded-button" @click="changeClueNumber">Next Clue</button>
-        <button v-if="clueNumber === 3" class="rounded-button">Submit</button>
+        <button class="rounded-button" @click="changeClueNumber">Submit</button>
       </div>
       <div>
-        <h2>{{clueNumber}}/3</h2>
+        <h2>{{clueNumber}}/{{ totalCluesProvided }}</h2>
       </div>
     </div>
   </div>
@@ -39,18 +31,18 @@ export default {
   },
   data() {
     return {
-      clue: 'Your clue...',
       clueNumber: 1,
+      totalCluesProvided: 'total clues provided',
       sliderValue: 50,
-      disableSlider: true,
+      disableSlider: false,
     };
   },
   methods: {
-    changeClueNumber() {
-      this.clueNumber++;
-    },
     toggleBack() {
       this.$router.push('/lobby');
+    }, 
+    changeClueNumber() {
+      this.clueNumber++;
     }
   }
 }
@@ -71,6 +63,7 @@ export default {
 .button-container {
   gap: 1rem;
   display: flex;
+  padding-top: 2em; 
 }
 
 h2, p {
