@@ -8,9 +8,9 @@
         <h2>Type a Clue</h2>
       </div>
       <div class="slider-wrapper">
-        <h4>Scale</h4>
+        <p>Scale</p>
           <Slider :min="0" :max="100" v-model="sliderValue" />
-        <h4>Scale</h4>
+        <p>Scale</p>
       </div>
       <div>
         <p>Value: {{ sliderValue }}</p>
@@ -85,12 +85,12 @@ export default {
   margin: 1rem 0; 
 }
 
-.slider-wrapper h4 {
+.slider-wrapper p {
   margin: 0;
   padding: 0 1em; 
   color: white;
   font-weight: 500;
-  font-size: 1.2em; 
+  font-size: 1.5em; 
 }
 
 @media (max-width: 600px) {
