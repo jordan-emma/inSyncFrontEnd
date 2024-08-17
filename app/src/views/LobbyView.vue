@@ -1,9 +1,9 @@
 <template>
   <div class="purpleBackground">
   <div class="container">
-    <div class="back">
+    <!-- <div class="back">
       <button @click="toggleBack">Back</button>
-    </div>
+    </div> -->
     <div class="name">
       <h2>Lobby</h2>
       <h4>Your room code is {{ $gameStore.code }}</h4>
@@ -112,10 +112,10 @@ export default {
     margin-bottom: 1em; 
   }
 
-  .container{
+  /* .container{
     background-image: url('../images/background.jpg');
     background-size: cover; 
-  }
+  } */
 
   h2, h4{
     color: white;

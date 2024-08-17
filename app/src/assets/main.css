@@ -15,6 +15,10 @@
 .purpleBackground{
   background-image: url('../images/background.jpg');
   background-size: cover; 
+  height: 100vh; 
+  width: 100vw;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .container {
@@ -26,7 +30,6 @@
   justify-content: center;
   height: 100vh;
   width: 100vw;
-  padding: 2rem;
 }
 
 .rounded-button {
@@ -91,7 +94,7 @@ body{
   align-items: center;
   align-content: center;
   justify-content: center;
-  margin: 0;
+  margin: auto;
   overflow: hidden;
   font-family:
     Inter,

@@ -8,9 +8,9 @@
         <h2>Type a Clue</h2>
       </div>
       <div v-if = "gotClue" class="slider-wrapper">
-        <p>{{ clueObject.high }}</p>
+        <p class="clueScalePhrase1">{{ clueObject.high }}</p>
         <Slider :min="0" :max="clueObject.max_value" :modelValue="clueObject.value" :disabled="disableSlider" /> 
-        <p>{{ clueObject.low }}</p>
+        <p class="clueScalePhrase2">{{ clueObject.low }}</p>
       </div>
       <div class="form-group">
         <input id="clueField" type="text" v-model="clue"/>
