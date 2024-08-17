@@ -31,7 +31,13 @@ import modal from '../components/modal.vue'
 </script>
 
 <script>
+import { io } from 'socket.io-client'
+
 export default {
+  created() {
+    const socket = io.connect('http://localhost:5000'); // Replace with your server's address
+
+  },
   data() {
     return {
       showModal: false

@@ -15,7 +15,7 @@ export const userStore = defineStore('user', {
         throw 'Failed to log in'
       }
       axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
-      response = await axios.get('user')
+      response = await axios.get('player')
       if (response.status !== 200){
         throw 'Failed to get user data'
       }
@@ -27,7 +27,7 @@ export const userStore = defineStore('user', {
         throw 'Failed to sign up'
       }
       axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
-      response = await axios.get('user')
+      response = await axios.get('player')
       if (response.status !== 200){
         throw 'Failed to get user data'
       }
