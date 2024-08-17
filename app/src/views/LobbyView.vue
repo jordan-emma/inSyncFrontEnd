@@ -38,7 +38,8 @@ export default {
         import('@/images/character7.jpg'),
         import('@/images/character8.jpg')
       ],
-      randomImage: '', 
+      randomImage: '',
+      pollUsers: null
     };
   },
   computed: {
@@ -75,7 +76,7 @@ export default {
       }
     },  
     playerRefresh(){
-      setInterval(this.listPlayers, 1000)
+      return setInterval(this.listPlayers, 1000)
     },  
     goToClues(){
       this.$router.push('/clue');
@@ -84,8 +85,11 @@ export default {
   async created() {
     const imageOptions = await Promise.all(this.images);
     this.randomImage = imageOptions[Math.floor(Math.random() * imageOptions.length)].default;
-    this.playerRefresh(); 
-  }, 
+    this.pollUsers = this.playerRefresh();
+  },
+  beforeUnmount(){
+    clearInterval(this.pollUsers);
+  }
 };
 
 </script>
