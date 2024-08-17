@@ -18,7 +18,7 @@
       <div class="button-container">
         <button class="rounded-button">New Scale</button>
         <button v-if="clueNumber < 3" class="rounded-button" @click="changeClueNumber">Next Clue</button>
-        <button v-if="clueNumber === 3" class="rounded-button">Submit</button>
+        <button v-if="clueNumber === 3" class="rounded-button" @click="goToGuess">Submit</button>
       </div>
       <div>
         <h2>{{clueNumber}}/3</h2>
@@ -32,7 +32,7 @@ import Slider from '../components/slider.vue';
 
 export default {
   created(){
-      //this.getClue(); 
+      this.getClue(); 
     },
   components: {
     Slider
@@ -48,7 +48,7 @@ export default {
         value: 7, 
         max_value: 10, 
       },
-      gotClue: true, 
+      gotClue: false, 
     };
   },
   methods: {
@@ -68,6 +68,9 @@ export default {
         this.sliderValue = response.data.value;
         this.gotClue = true; 
     }, 
+    goToGuess(){ 
+      this.$router.push('/guess');
+    }
   }
 }
 </script>
