@@ -8,9 +8,9 @@
         <h2>Type a Clue</h2>
       </div>
       <div class="slider-wrapper">
-        <p>Scale</p>
+        <p>{{ clueObject.high }}</p>
         <Slider :min="0" :max="100" v-model="sliderValue" :disabled="disableSlider" /> 
-        <p>Scale</p>
+        <p>{{ clueObject.low }}</p>
       </div>
       <div>
         <p>Value: {{ sliderValue }}</p>
@@ -34,6 +34,9 @@
 import Slider from '../components/slider.vue'; 
 
 export default {
+  created(){
+      this.getClue(); 
+    },
   components: {
     Slider
   },
@@ -43,6 +46,7 @@ export default {
       clueNumber: 1,
       sliderValue: 50,
       disableSlider: true,
+      clueObject: {},
     };
   },
   methods: {
@@ -51,7 +55,14 @@ export default {
     },
     toggleBack() {
       this.$router.push('/lobby');
+    }, 
+   async getClue(){
+    let response = await this.$axios.get(`/game/${this.$gameStore.game.id}/clue/${this.clueNumber}`)
+    if (response.status !== 200){
+      throw 'Failed to get clue'
     }
+        this.clueObject = response.data; 
+    }, 
   }
 }
 </script>
