@@ -41,13 +41,13 @@
   </script>
   
   
-  <style scoped>
+<style>
 
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
-  width: 100vw; 
   background-color: transparent;
+  width: 100%; 
 }
 
 input[type="range"]::-webkit-slider-runnable-track {
@@ -96,21 +96,34 @@ body, html {
   font-size: 1.5em;
 }
 
-.slider-wrapper {
+ .slider-wrapper {
   display: flex;
   align-items: center;
   justify-content: space-between; 
-  width: 100%; 
+  width: 80vw; 
   max-width: 100vw; 
   padding: 0 1rem; 
-}
+  padding-bottom: 2em; 
+  margin-bottom: 2em; 
+} 
 
 .slider-wrapper p {
-  margin: 0; 
-  padding: 0 1rem;
-  color: white; 
-  font-size: 2em; 
+  margin: 0;
+  padding: 0 1em; 
+  color: white;
+  font-weight: 500;
+  font-size: 1.5em; 
 }
+
+@media (max-width: 600px) {
+  .slider-wrapper {
+    width: 90%; 
+  }
+
+  .slider-wrapper h4 {
+    font-size: 1em; 
+  }
+} 
 
 
 @media (min-width: 768px) {

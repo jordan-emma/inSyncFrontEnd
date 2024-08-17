@@ -7,13 +7,10 @@
       <div class="pageHeading">
         <h2>Type a Clue</h2>
       </div>
-      <div class="slider-wrapper">
+      <div v-if = "gotClue" class="slider-wrapper">
         <p>{{ clueObject.high }}</p>
-        <Slider :min="0" :max="100" v-model="sliderValue" :disabled="disableSlider" /> 
+        <Slider :min="0" :max="clueObject.max_value" :modelValue="clueObject.value" :disabled="disableSlider" /> 
         <p>{{ clueObject.low }}</p>
-      </div>
-      <div>
-        <p>Value: {{ sliderValue }}</p>
       </div>
       <div class="form-group">
         <input id="clueField" type="text" v-model="clue"/>
@@ -35,7 +32,7 @@ import Slider from '../components/slider.vue';
 
 export default {
   created(){
-      this.getClue(); 
+      //this.getClue(); 
     },
   components: {
     Slider
@@ -44,9 +41,14 @@ export default {
     return {
       clue: 'Your clue...',
       clueNumber: 1,
-      sliderValue: 50,
       disableSlider: true,
-      clueObject: {},
+      clueObject: {
+        high: 'tall', 
+        low: 'short',
+        value: 7, 
+        max_value: 10, 
+      },
+      gotClue: true, 
     };
   },
   methods: {
@@ -60,9 +62,11 @@ export default {
     let response = await this.$axios.get(`/game/${this.$gameStore.game.id}/clue/${this.clueNumber}`)
     if (response.status !== 200){
       throw 'Failed to get clue'
+      this.gotClue = false; 
     }
-        console.log(response.data); 
         this.clueObject = response.data; 
+        this.sliderValue = response.data.value;
+        this.gotClue = true; 
     }, 
   }
 }
