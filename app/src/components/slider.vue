@@ -42,18 +42,6 @@
   
   
   <style scoped>
-.slider-container {
-  position: relative;
-  padding: 0;
-  height: 9vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: transparent;
-  overflow: hidden;
-  height: 9vh;
-  width: 30vw; 
-}
 
 input[type="range"] {
   -webkit-appearance: none;
@@ -76,7 +64,7 @@ input[type="range"]::-webkit-slider-runnable-track {
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  height: 5em;
+  height:5em;
   width: 5em; 
   background: url("../images/cutestar3.png") center no-repeat;
   background-size: cover; 
@@ -91,13 +79,6 @@ body, html {
   padding: 0;
 }
 
-@media (max-width: 600px) {
-  .slider-container {
-    width: 80vw; 
-    align-items: center;
-  }
-}
-
 .purpleBackground{
     margin: 0;
     padding: 0;
@@ -105,13 +86,6 @@ body, html {
     justify-content: center;
     justify-items: center;
     justify-content: center; 
-}
-
-.slider-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: space-between; 
-  width: 40vw; 
 }
 
 .slider-wrapper h4 {
@@ -122,5 +96,43 @@ body, html {
   font-size: 1.5em;
 }
 
+.slider-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+  width: 100%; 
+  max-width: 100vw; 
+  padding: 0 1rem; 
+}
 
+.slider-wrapper p {
+  margin: 0; 
+  padding: 0 1rem;
+  color: white; 
+  font-size: 2em; 
+}
+
+
+@media (min-width: 768px) {
+  .slider-wrapper {
+    width: 80vw; 
+  }
+}
+
+@media (min-width: 1200px) {
+  .slider-wrapper {
+    width: 60vw; 
+  }
+}
+
+@media (max-width: 430px){
+  input[type="range"]::-webkit-slider-thumb {
+    height: 8vw; 
+    width: 8vw;
+  }
+}
 </style>
+
+
+
+

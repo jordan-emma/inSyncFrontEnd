@@ -61,6 +61,7 @@ export default {
     if (response.status !== 200){
       throw 'Failed to get clue'
     }
+        console.log(response.data); 
         this.clueObject = response.data; 
     }, 
   }
@@ -84,9 +85,6 @@ export default {
   display: flex;
 }
 
-h2, p {
-  color: white;
-}
 
 
 </style>
