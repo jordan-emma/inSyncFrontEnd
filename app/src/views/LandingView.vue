@@ -21,6 +21,7 @@
         <button class="rounded-button" @click="togglePlay">PLAY</button>
         <button class="rounded-button" @click="toggleModal">HOW TO PLAY</button>
         <button class="rounded-button">SETTINGS</button>
+        <button class="rounded-button" @click="sendMessage">SEND MESSAGE</button>
       </div>
     </div>
   </div>
@@ -36,14 +37,30 @@ import { io } from 'socket.io-client'
 export default {
   created() {
     const socket = io.connect('http://localhost:5000'); // Replace with your server's address
+    socket.on('connect', function() {
+      console.log('Connected to WebSocket server');
+    });
+
+    socket.on('message', function(data) {
+      console.log('Received message:', data);
+    });
+
+    socket.send('Hello from the client');
+
+    this.socket = socket;
 
   },
   data() {
     return {
-      showModal: false
+      showModal: false,
+      socket: null
     }
   },
   methods: {
+    sendMessage() {
+      console.log('Button clicked');
+      this.socket.send('Button clicked');
+    },
     togglePlay() {
       this.$router.push('/play');
     },
