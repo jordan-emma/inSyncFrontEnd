@@ -42,12 +42,7 @@ export default {
       clue: 'Your clue...',
       clueNumber: 1,
       disableSlider: true,
-      clueObject: {
-        high: 'tall', 
-        low: 'short',
-        value: 7, 
-        max_value: 10, 
-      },
+      clueObject: {},
       gotClue: false, 
     };
   },
