@@ -42,12 +42,7 @@ export default {
       clue: 'Your clue...',
       clueNumber: 1,
       disableSlider: true,
-      clueObject: {
-        high: 'tall', 
-        low: 'short',
-        value: 7, 
-        max_value: 10, 
-      },
+      clueObject: {},
       gotClue: false, 
     };
   },
@@ -64,9 +59,8 @@ export default {
       throw 'Failed to get clue'
       this.gotClue = false; 
     }
-        this.clueObject = response.data; 
-        this.sliderValue = response.data.value;
-        this.gotClue = true; 
+     this.clueObject = response.data; 
+     this.gotClue = true; 
     }, 
     goToGuess(){ 
       this.$router.push('/guess');
