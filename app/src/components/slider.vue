@@ -3,7 +3,7 @@
       type="range"
       :min="min"
       :max="max"
-      :value="modelValue"
+      :value="value"
       @input="updateValue"
       :disabled="disabled" 
     />
@@ -21,7 +21,7 @@
         type: Number,
         default: 100
       },
-      modelValue: {
+      value: {
         type: Number,
         default: 0
       },
@@ -33,7 +33,7 @@
     methods: {
       updateValue(event) {
         if (!this.disabled) {
-          this.$emit('update:modelValue', Number(event.target.value));
+          this.$emit('update:value', Number(event.target.value));
         }
       }
     }

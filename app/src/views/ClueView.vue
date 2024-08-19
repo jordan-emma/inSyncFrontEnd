@@ -9,7 +9,7 @@
       </div>
       <div v-if = "gotClue" class="slider-wrapper">
         <p class="clueScalePhrase1">{{ clueObject.high }}</p>
-        <Slider :min="0" :max="clueObject.max_value" :modelValue="clueObject.value" :disabled="disableSlider" /> 
+        <Slider :min="0" :max="clueObject.max_value" :value="clueObject.value" :disabled="disableSlider" /> 
         <p class="clueScalePhrase2">{{ clueObject.low }}</p>
       </div>
       <div class="form-group">
