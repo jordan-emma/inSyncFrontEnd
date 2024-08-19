@@ -33,7 +33,7 @@
     methods: {
       updateValue(event) {
         if (!this.disabled) {
-          this.$emit('update:modelValue', Number(event.target.value));
+          this.$emit('value-updated', Number(event.target.value));
         }
       }
     }
