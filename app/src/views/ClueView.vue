@@ -59,9 +59,8 @@ export default {
       throw 'Failed to get clue'
       this.gotClue = false; 
     }
-        this.clueObject = response.data; 
-        this.sliderValue = response.data.value;
-        this.gotClue = true; 
+     this.clueObject = response.data; 
+     this.gotClue = true; 
     }, 
     goToGuess(){ 
       this.$router.push('/guess');
