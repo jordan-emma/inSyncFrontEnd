@@ -13,7 +13,7 @@
         <p class="clueScalePhrase2">{{ clueObject.low }}</p>
       </div>
       <div class="form-group">
-        <input id="clueField" type="text" v-model="clue" placeholder='Enter your clue...'/>
+        <input id="clueField" type="text" v-model="currentClue" placeholder='Enter your clue...'/>
       </div>
       <div class="button-container">
         <button v-if="clueNumber > 1" class="rounded-button" @click="goToPreviousClue">Back</button>
@@ -40,7 +40,8 @@ export default {
   },
   data() {
     return {
-      clue: '',
+      clues: [],
+      currentClue: '', 
       clueNumber: 1,
       disableSlider: true,
       clueObject: {},
@@ -49,14 +50,23 @@ export default {
     };
   },
   methods: {
+    addClue() {
+      if (this.currentClue.trim()){
+        this.clues.push(this.currentClue);
+        this.currentClue ='';
+      }
+      console.log(this.clues);
+    },
     changeClueNumber() {
       this.clueNumber++;
+      this.addClue();
     },
     toggleBack() {
       this.$router.push('/lobby');
     }, 
     goToPreviousClue() {
       this.clueNumber--; 
+      this.clues.pop(); 
     },
    async getClue(){
     let response = await this.$axios.get(`/game/${this.$gameStore.game.id}/clue/${this.clueNumber}`)
