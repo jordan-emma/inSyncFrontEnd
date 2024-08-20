@@ -16,6 +16,7 @@
         <input id="clueField" type="text" v-model="clue" placeholder='Enter your clue...'/>
       </div>
       <div class="button-container">
+        <button v-if="clueNumber > 1" class="rounded-button" @click="goToPreviousClue">Back</button>
         <button class="rounded-button">New Scale</button>
         <button v-if="clueNumber < maxClues" class="rounded-button" @click="changeClueNumber">Next Clue</button>
         <button v-if="clueNumber === maxClues" class="rounded-button" @click="goToGuess">Submit</button>
@@ -39,7 +40,7 @@ export default {
   },
   data() {
     return {
-      clue: 'Your clue...',
+      clue: '',
       clueNumber: 1,
       disableSlider: true,
       clueObject: {},
@@ -54,6 +55,9 @@ export default {
     toggleBack() {
       this.$router.push('/lobby');
     }, 
+    goToPreviousClue() {
+      this.clueNumber--; 
+    },
    async getClue(){
     let response = await this.$axios.get(`/game/${this.$gameStore.game.id}/clue/${this.clueNumber}`)
     if (response.status !== 200){
