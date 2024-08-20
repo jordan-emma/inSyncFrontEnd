@@ -57,18 +57,7 @@ export default {
       }
       console.log(this.clues);
     },
-    changeClueNumber() {
-      this.clueNumber++;
-      this.addClue();
-    },
-    toggleBack() {
-      this.$router.push('/lobby');
-    }, 
-    goToPreviousClue() {
-      this.clueNumber--; 
-      this.clues.pop(); 
-    },
-   async getClue(){
+    async getClue(){
     let response = await this.$axios.get(`/game/${this.$gameStore.game.id}/clue/${this.clueNumber}`)
     if (response.status !== 200){
       throw 'Failed to get clue'
@@ -77,6 +66,19 @@ export default {
      this.clueObject = response.data; 
      this.gotClue = true; 
     }, 
+    changeClueNumber() {
+      this.clueNumber++;
+      this.addClue();
+      this.getClue(); 
+    },
+    toggleBack() {
+      this.$router.push('/lobby');
+    }, 
+    goToPreviousClue() {
+      this.clueNumber--; 
+      this.clues.pop(); 
+    },
+
     goToGuess(){ 
       this.$router.push('/guess');
     }
