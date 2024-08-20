@@ -16,9 +16,9 @@
         <input id="clueField" type="text" v-model="currentClue" placeholder='Enter your clue...' />
       </div>
       <div class="button-container">
-        <button v-if="clueNumber > 1" class="rounded-button" @click="goToPreviousClue">Back</button>
-        <button class="rounded-button">New Scale</button>
-        <button v-if="clueNumber < maxClues" class="rounded-button" @click="changeClueNumber">Next Clue</button>
+        <button v-if="clueNumber > 1" class="rounded-button" @click="changeClueNumber(false)">Back</button>
+        <button class="rounded-button" @click="getClue(true)">New Scale</button>
+        <button v-if="clueNumber < maxClues" class="rounded-button" @click="changeClueNumber(true)">Next Clue</button>
         <button v-if="clueNumber === maxClues" class="rounded-button" @click="goToGuess">Submit</button>
       </div>
       <div>
@@ -47,14 +47,31 @@ export default {
       maxClues: 3
     }
   },
+  watch: {
+    clueObject() {
+      this.currentClue = this.clueObject.clue
+    },
+    clueNumber() {
+      this.getClue()
+    }
+  },
   methods: {
-    addClue() {
-      if (this.currentClue.trim()) {
-        this.currentClue = ''
+    async addClue() {
+      let clue = this.currentClue.trim();
+      if (clue) {
+        let response = await this.$axios.patch(`/clue/${this.clueObject.id}`, {clue})
+        if (response.status !== 200) {
+          alert('Failed to add clue')
+        }
+        console.log('Clue added')
       }
     },
-    async getClue() {
-      let response = await this.$axios.get(`/game/${this.$gameStore.game.id}/clue/${this.clueNumber}`)
+    async getClue(refresh=false) {
+      let url = `/game/${this.$gameStore.game.id}/clue/${this.clueNumber}`
+      if(refresh){
+        url = `/clue/${this.clueObject.id}/refresh`
+      }
+      let response = await this.$axios.get(url)
       if (response.status !== 200) {
         throw 'Failed to get clue'
         this.gotClue = false
@@ -62,24 +79,20 @@ export default {
       this.clueObject = response.data
       this.gotClue = true
     },
-    changeClueNumber() {
-      this.clueNumber++
-      this.addClue()
-      this.getClue()
+    async changeClueNumber(increment) {
+      this.clueNumber = increment ? this.clueNumber + 1 : this.clueNumber - 1
+      await this.addClue()
     },
     toggleBack() {
       this.$router.push('/lobby')
     },
-    goToPreviousClue() {
-      this.clueNumber--
-      this.getClue()
-    },
-
-    goToGuess() {
+    async goToGuess() {
+      await this.addClue()
       this.$router.push('/guess')
-    }
+    },
   }
 }
+
 </script>
 
 
