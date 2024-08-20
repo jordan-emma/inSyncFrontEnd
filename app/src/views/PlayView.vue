@@ -68,14 +68,13 @@ export default {
         }
       }, 
       async joinGame() {
-      if(this.code.length !== 6){
-        console.log("Invalid code");
-        return;
-      }
-      let code = await this.$gameStore.joinGame(this.name, this.code);
-      this.$router.push('/lobby');
-    }, 
-
+        if(this.code.length !== 6){
+          console.log("Invalid code");
+          return;
+        }
+        let code = await this.$gameStore.joinGame(this.name, this.code);
+        this.$router.push('/lobby');
+      }, 
     },
 
 }

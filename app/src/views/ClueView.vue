@@ -17,8 +17,8 @@
       </div>
       <div class="button-container">
         <button class="rounded-button">New Scale</button>
-        <button v-if="clueNumber < 3" class="rounded-button" @click="changeClueNumber">Next Clue</button>
-        <button v-if="clueNumber === 3" class="rounded-button" @click="goToGuess">Submit</button>
+        <button v-if="clueNumber < maxClues" class="rounded-button" @click="changeClueNumber">Next Clue</button>
+        <button v-if="clueNumber === maxClues" class="rounded-button" @click="goToGuess">Submit</button>
       </div>
       <div>
         <h2>{{clueNumber}}/3</h2>
@@ -44,6 +44,7 @@ export default {
       disableSlider: true,
       clueObject: {},
       gotClue: false, 
+      maxClues: 3,
     };
   },
   methods: {
