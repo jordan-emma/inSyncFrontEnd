@@ -13,7 +13,7 @@
         <p class="clueScalePhrase2">{{ clueObject.low }}</p>
       </div>
       <div class="form-group">
-        <input id="clueField" type="text" v-model="clue"/>
+        <input id="clueField" type="text" v-model="clue" placeholder='Enter your clue...'/>
       </div>
       <div class="button-container">
         <button class="rounded-button">New Scale</button>
