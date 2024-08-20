@@ -37,7 +37,15 @@ export const gameStore = defineStore('game', {
       }
       this.players = response.data; 
       return response.data; 
-    }, 
+    },
+    async getGame(){
+      let response = await axios.get(`game/${this.game.id}`)
+      if (response.status !== 200){
+        throw 'Failed to get game'
+      }
+      this.game = response.data;
+      return response.data;
+    },
 
   }
 })

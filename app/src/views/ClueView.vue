@@ -19,7 +19,7 @@
         <button v-if="clueNumber > 1" class="rounded-button" @click="changeClueNumber(false)">Back</button>
         <button class="rounded-button" @click="getClue(true)">New Scale</button>
         <button v-if="clueNumber < maxClues" class="rounded-button" @click="changeClueNumber(true)">Next Clue</button>
-        <button v-if="clueNumber === maxClues" class="rounded-button" @click="goToGuess">Submit</button>
+        <button v-if="clueNumber === maxClues" class="rounded-button" @click="addClue">Submit</button>
       </div>
       <div>
         <h2>{{ clueNumber }}/3</h2>
@@ -44,7 +44,9 @@ export default {
       clueNumber: 1,
       clueObject: {},
       gotClue: false,
-      maxClues: 3
+      maxClues: 3,
+      gameWatcherInterval: null,
+      gameStatus: null
     }
   },
   watch: {
@@ -53,9 +55,21 @@ export default {
     },
     clueNumber() {
       this.getClue()
-    }
+      if (this.clueNumber === this.maxClues) {
+        this.gameWatcherInterval = setInterval(this.getGame, 1000)
+      }
+    },
+    gameStatus() {
+      if (this.gameStatus === 'GUESSING') {
+        this.$router.push('/guess')
+      }
+    },
   },
   methods: {
+    async getGame() {
+      let data = await this.$gameStore.getGame()
+      this.gameStatus = data.status
+    },
     async addClue() {
       let clue = this.currentClue.trim();
       if (clue) {
@@ -63,7 +77,6 @@ export default {
         if (response.status !== 200) {
           alert('Failed to add clue')
         }
-        console.log('Clue added')
       }
     },
     async getClue(refresh=false) {
@@ -86,10 +99,13 @@ export default {
     toggleBack() {
       this.$router.push('/lobby')
     },
-    async goToGuess() {
-      await this.addClue()
-      this.$router.push('/guess')
-    },
+    // async goToGuess() {
+    //   await this.addClue()
+    //   this.$router.push('/guess')
+    // },
+  },
+  beforeUnmount() {
+  clearInterval(this.gameWatcherInterval)
   }
 }
 

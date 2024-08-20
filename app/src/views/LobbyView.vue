@@ -78,7 +78,11 @@ export default {
     playerRefresh(){
       return setInterval(this.listPlayers, 1000)
     },  
-    goToClues(){
+    async goToClues() {
+      let response = await this.$axios.put(`/game/${this.$gameStore.game.id}/start`);
+      if (response.status !== 200) {
+        alert('Failed to start game');
+      }
       this.$router.push('/clue');
     },
   },
