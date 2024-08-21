@@ -51,7 +51,7 @@ export default {
   },
   watch: {
     clueObject() {
-      this.currentClue = this.clueObject.clue
+      this.currentClue = this.clueObject.clue??'';
     },
     clueNumber() {
       this.getClue()
@@ -90,7 +90,7 @@ export default {
         this.gotClue = false
       }
       this.clueObject = response.data
-      this.gotClue = true
+      this.gotClue = true 
     },
     async changeClueNumber(increment) {
       this.clueNumber = increment ? this.clueNumber + 1 : this.clueNumber - 1
@@ -126,6 +126,13 @@ h2, p {
 .button-container {
   gap: 1rem;
   display: flex;
+}
+
+@media (max-width: 600px) {
+  .button-container {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
 }
 
 
