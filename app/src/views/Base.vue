@@ -21,11 +21,10 @@ import LoadingModal from '@/components/loadingModal.vue';
   .layout {
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Ensure the layout takes up full viewport height */
+    min-height: 100vh; 
   }
   .footer {
-    margin-top: auto; /* Push footer to the bottom */
-    /* Other styling for the footer */
+    margin-top: auto; 
   }
   </style>
   
