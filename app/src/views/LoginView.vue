@@ -1,7 +1,6 @@
 <template>
   <div class="background">
     <div class="container">
-      <LoadingModal :show="loading"></LoadingModal>
       <div class="name">
         <h1>Insync</h1>
       </div>
@@ -41,12 +40,7 @@
 </template>
 
 <script>
-import LoadingModal from '../components/loadingModal.vue'
-
 export default {
-  components: {
-    LoadingModal
-  },
   data() {
     return {
       name: '',
@@ -54,7 +48,6 @@ export default {
       password: '',
       confirm_password: '',
       showSignUpField: false, 
-      loading: false,
     }
   },
   computed: {
@@ -91,7 +84,7 @@ export default {
         return // todo set error message
       }
       try{
-        this.loading = true; 
+        this.$loading.yes();
         if (this.showSignUpField){
           await  this.$userStore.signUp(this.name, this.email, this.password, this.confirm_password)
         } else {
@@ -103,7 +96,7 @@ export default {
         console.log(e);
       }
       finally{
-        this.loading = false; 
+        this.$loading.no(); 
       }
     }
   }

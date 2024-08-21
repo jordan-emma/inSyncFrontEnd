@@ -47,5 +47,14 @@ export const gameStore = defineStore('game', {
       return response.data;
     },
 
+  }, 
+  persist: {
+    enabled: true, 
+    strategies: [
+      { 
+        key: 'game',
+        storage: localStorage,
+      }
+    ]
   }
 })

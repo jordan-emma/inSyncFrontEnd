@@ -51,15 +51,17 @@ export default {
       this.$router.push('/landing')
     },
     async startGame() {
+      this.$loading.yes()
       if (this.showRoomCodeField) {
         await this.joinGame()
       } else {
         await this.createGame()
       }
+      this.$loading.no()
     },
     async createGame() {
       try {
-        let code = await this.$gameStore.hostGame(this.name)
+        await this.$gameStore.hostGame(this.name)
         this.$router.push('/lobby')
       } catch (e) {
         console.log(e)
@@ -71,7 +73,7 @@ export default {
         console.log('Invalid code')
         return
       }
-      let code = await this.$gameStore.joinGame(this.name, this.code)
+      await this.$gameStore.joinGame(this.name, this.code)
       this.$router.push('/lobby')
     }
   }
