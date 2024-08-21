@@ -103,10 +103,10 @@ export default {
 
 <style scoped>
 .background {
-  background-image: url('../images/logo2.avif');
+  background-image: url('../images/loadingGif.gif');
   background-size: contain;
   background-position: center;
-  background-repeat: no-repeat;
+  background-repeat: repeat-x; 
   background-color: white;
 }
 
