@@ -103,6 +103,7 @@ export default {
   width: 10rem;
   outline: none;
   border-radius: 1rem;
+  margin-bottom: 1rem; 
 }
 
 </style>
