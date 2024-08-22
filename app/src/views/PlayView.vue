@@ -2,7 +2,7 @@
   <div class="purpleBackground">
     <div class="container">
       <div class="back">
-        <button @click="toggleBack">Back</button>
+        <button class="rounded-button" @click="toggleBack">Back</button>
       </div>
       <div class="underlineButtonContainer">
         <button v-if="showRoomCodeField" class="currentPageButton" @click="toggleJoinGame">Join Game</button>
@@ -83,32 +83,31 @@ export default {
 
 <style scoped>
 
-.underlineButtonContainer {
-  gap: 0.5em;
-}
-
 .underlineButton:hover {
-  background-color: black;
+  background-color: #1a1138;
   color: white;
 }
 
 .currentPageButton {
-  background-color: black;
+  background-color: #1a1138;
   color: white;
   border: none;
-  padding-bottom: 1rem;
-  padding-top: 0.5rem;
+  padding-bottom: 0.9rem;
+  padding-top: 0.9rem;
   font-size: 1.5rem;
   font-weight: 600;
-  text-decoration: underline;
-  text-decoration-thickness: 4px;
   text-align: center;
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
   opacity: 1;
   width: 10rem;
   outline: none;
-  border-radius: 1.25rem;
+  border-radius: 1rem;
 }
+
+.rounded-button:hover {
+  background-color: #1a1138;
+}
+
 
 </style>
