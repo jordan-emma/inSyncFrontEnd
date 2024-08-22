@@ -2,15 +2,15 @@
   <div class="purpleBackground">
     <div class="pageContainer">
       <div class="back">
-        <button @click="toggleBack">Back</button>
+        <button class="rounded-button" @click="toggleBack">Back</button>
       </div>
       <div class="pageHeading">
-        <h2>This is where the clue provided goes</h2>
+        <h2>{{clueGiver}}'s Clue: {{capitalizeClue(fetchedClue)}}</h2>
       </div>
       <div class="slider-wrapper">
-        <p>Scale</p>
+        <p>{{clueLow}}</p>
         <Slider :min="0" :max="100" v-model="sliderValue"/> 
-        <p>Scale</p>
+        <p>{{clueHigh}}</p>
       </div>
       <div class="button-container">
         <button class="rounded-button" @click="changeClueNumber">Submit</button>
@@ -23,9 +23,13 @@
 </template>
 
 <script>
+import { capitalize } from 'vue';
 import Slider from '../components/slider.vue'; 
 
 export default {
+  created(){
+    this.fetchClue()
+  },
   components: {
     Slider
   },
@@ -35,6 +39,10 @@ export default {
       totalCluesProvided: 'total clues provided',
       sliderValue: 50,
       disableSlider: false,
+      fetchedClue: '',
+      clueGiver: '',
+      clueLow: '', 
+      clueHigh: '', 
     };
   },
   methods: {
@@ -43,6 +51,26 @@ export default {
     }, 
     changeClueNumber() {
       this.clueNumber++;
+    }, 
+    async fetchClue(){ 
+      this.loading =true; 
+      try{ 
+        let response = await this.$axios.get(`/game/${this.$gameStore.game.id}/guess`)
+        if (response.status !== 200) {
+          throw 'Failed to get clue'
+        }
+        this.fetchedClue = response.data.clue
+        this.clueGiver = response.data.player_name
+        this.totalCluesProvided = response.data.total_clues
+        this.clueLow = response.data.low
+        this.clueHigh = response.data.high
+      }
+      finally{ 
+        this.loading = false; 
+      }
+    }, 
+    capitalizeClue(clue){ 
+      return clue.charAt(0).toUpperCase() + clue.slice(1);
     }
   }
 }
