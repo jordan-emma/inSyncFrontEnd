@@ -2,13 +2,16 @@
   <div class="container" v-if="show" @click="close">
     <div class="content">
       <div class="header">
-        <button>
-          X
-        </button>
+        <div class="closeButton" >
+          <img src="../images/close.png" @click="exit">
+        </div>
         <img src="../images/howToIcon3.png" />
         <h2>How to Play</h2>
       </div>
-      <slot></slot>
+      <p class="objective" v-html="header"></p>
+      <div class="whiteBox" v-for="block in blocks">
+        <p><b>{{block.title}}: </b>{{block.body}}</p>
+      </div> 
     </div>
   </div>
 </template>
@@ -19,19 +22,28 @@
       show: {
         type: Boolean,
         default: false
-      }
+      }, 
+      header: {
+        type: String, 
+        default: ''
+      }, 
+      blocks: { 
+        type: Array, 
+        default: []
+      },
     }, 
     methods: {
       close(e){
-    
         if(e.target.className === "container"){ 
-          this.$emit('close'); 
+          this.exit();
         }
-
+      }, 
+      exit(){ 
+        this.$emit('close'); 
       }
-
     }
   }
+
 </script>
 
 <style scoped>
@@ -83,19 +95,59 @@ h2 {
   color:#382a5f;
 }
 
-button{
+.closeButton{
   position: absolute; 
-  top: 1rem; 
-  right: 1.5rem; 
+  top: 0.85em; 
+  right: 0.1em; 
   margin: 0;
   background-color: transparent;
   border: transparent;
-  color: #382a5f;
-  font-size: 2em;
-  font-family: 
-  font-weight: 400;
 }
 
+.closeButton img {
+  width: 40px; 
+  height: 40px; 
+}
 
+@media (max-width: 600px) {
+  .content{
+    width: 90vw;
+  }
+  p{
+  padding: 4px;
+  margin: 0 auto;
+  font-size: 0.95em;
+  }
+  .whiteBox{
+    padding: 10px; 
+  }
+  .objective{
+    font-size: 1.2em;
+    padding-top: 1em;
+  }
+}
+
+.whiteBox {
+    background-color: white;
+    border-radius: 4px;
+    width: 70%;
+    height: auto; 
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    margin: 10px auto; 
+    padding: 20px; 
+    color: #382a5f;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+.objective { 
+  color: white; 
+  font-size: 1.5em;
+  text-align: center;
+  line-height: 1.2em; 
+}
 
 </style>

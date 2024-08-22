@@ -1,35 +1,6 @@
 <template>
   <div class="background-container" >
-    <modal :show="showModal" @close="toggleModal">
-      <p class="objective"> Team up with your <br>crew to spin the dial and hit<br>the hidden bullseye!</p>
-      <div class="whiteBox">
-        <p><b>The Catch: </b>The target is sneaky—it’s hiding in a new spot each round, and you’ll have to guess where it is.</p>
-      </div>
-      <div class="whiteBox">
-        <p><b>The Perk: </b>
-        One of your teammates has a special power—they know exactly where the target is! But there’s a twist: they can only drop a hint using a scale between two opposite ideas. Imagine a spectrum from “Sweet to Sour.” If the target is leaning towards “Sweet,” the clue might be something like “honey”—sweet, but not sugar-overload sweet.</p>
-      </div>
-
-      <div class="whiteBox">
-         <p><b>Clue Time: </b>
-         Every round, a new teammate gives the clue, and the rest of you get to chat, debate, and strategize while the clue giver stays as cool as a cucumber.</p>
-      </div>
-
-      <div class="whiteBox">
-        <p><b>The Reveal:</b>
-         When you’re all set, everyone taps “Ready,” and the big reveal happens—where’s the target?</p>
-      </div>
-
-      <div class="whiteBox">
-         <p><b>Scoring:</b>
-         The closer you are to the center, the more points you rack up!</p>
-      </div>
-
-      <div class="whiteBox">
-        <p><b>Teamwork:</b>
-        And remember, it’s all about teamwork—either you all win together, or you face the challenge again. Let the fun begin!</p>
-      </div>
-    </modal>
+    <modal :show="showModal"  :header="modalTitle" :blocks="modalBlocks" @close="toggleModal" />
     <div class="spinning-background"></div>
     <div class="content">
       <button class="rounded-button" id="logOut" @click="logOut">Log Out</button>
@@ -54,7 +25,34 @@ import modal from '../components/modal.vue'
 export default {
   data() {
     return {
-      showModal: false
+      showModal: false,
+      modalTitle: 'Team up with your <br> crew to spin the dial and hit <br> the hidden bullseye!', 
+      modalBlocks: [
+        {
+          title: 'The Catch', 
+          body:'The target is sneaky—it’s hiding in a new spot each round, and you’ll have to guess where it is.'
+        }, 
+        {
+          title: 'The Perk',
+          body: 'One of your teammates has a special power—they know exactly where the target is! But there’s a twist: they can only drop a hint using a scale between two opposite ideas. Imagine a spectrum from “Sweet to Sour.” If the target is leaning towards “Sweet,” the clue might be something like “honey”—sweet, but not sugar-overload sweet.'
+        }, 
+        {
+          title: 'Clue Time', 
+          body: 'Every round, a new teammate gives the clue, and the rest of you get to chat, debate, and strategize while the clue giver stays as cool as a cucumber.'
+        }, 
+        { 
+          title: 'The Reveal',
+          body: 'When you’re all set, everyone taps “Ready,” and the big reveal happens—where’s the target?'
+        }, 
+        {
+          title: 'Scoring', 
+          body: 'The closer you are to the center, the more points you rack up!'
+        }, 
+        {
+          title: 'Teamwork', 
+          body: 'And remember, it’s all about teamwork—either you all win together, or you face the challenge again. Let the fun begin!'
+        }
+      ]
     }
   },
   methods: {
@@ -133,49 +131,5 @@ export default {
 p {
   margin: 1rem 2rem;
 }
-
-.objective { 
-  color: white; 
-  font-size: 1.5em;
-  text-align: center;
-  line-height: 1.2em; 
-}
-
-.whiteBox {
-    background-color: white;
-    border-radius: 4px;
-    width: 70%;
-    height: auto; 
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    margin: 10px auto; 
-    padding: 20px; 
-    color: #382a5f;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
-}
-
-@media (max-width: 600px) {
-  p{
-  padding: 4px;
-  margin: 0 auto;
-  font-size: 0.95em;
-  }
-  .whiteBox{
-    padding: 10px; 
-  }
-  .objective{
-    font-size: 1.2em;
-  }
-}
-
-@media (max-width: 596px) {
-  .objective{
-    padding-top: 1em;
-  }
-}
-
 
 </style>
