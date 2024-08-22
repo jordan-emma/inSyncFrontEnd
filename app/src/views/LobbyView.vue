@@ -4,7 +4,7 @@
     <div class="back">
       <button class="rounded-button" @click="toggleBack">Back</button>
     </div>
-    <div class="name">
+    <div class="welcome">
       <h2>Lobby</h2>
       <h4>Your room code is {{ $gameStore.code }}</h4>
     </div>
