@@ -1,19 +1,20 @@
 <template>
-  <div class="background-container" >
+  <div class="purpleBackground" >
+    <div class="pageContainer">
     <modal :show="showModal"  :header="modalTitle" :blocks="modalBlocks" @close="toggleModal" />
-    <div class="spinning-background"></div>
-    <div class="content">
-      <button class="rounded-button" id="logOut" @click="logOut">Log Out</button>
+    <div class="logOut">
+      <button class="rounded-button" @click="logOut">Log Out</button>
+    </div>
       <div class="logo">
         <img src="../images/insyncLogo.png">
       </div>
       <p class="welcome">Hi, {{ $userStore.name }}!</p>
       <div class="button-container">
-        <button class="rounded-button" @click="togglePlay">PLAY</button>
-        <button class="rounded-button" @click="toggleModal">HOW TO PLAY</button>
-        <button class="rounded-button">SETTINGS</button>
+        <button class="rounded-button floating-button1" @click="togglePlay">PLAY</button>
+        <button class="rounded-button floating-button2" @click="toggleModal">HOW TO PLAY</button>
+        <button class="rounded-button floating-button3">SETTINGS</button>
       </div>
-    </div>
+  </div>
   </div>
 </template>
 
@@ -70,47 +71,24 @@ export default {
 </script>
 
 <style scoped>
-.background-container {
-    position: relative;
-    height: 100vh;
-    width: 100vw;
-    background-color: white;
+
+.logOut {
+  position: absolute; 
+  top: 1rem; 
+  left: 1rem; 
+  margin: 0; 
 }
 
-.spinning-background {
-    position: fixed; 
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-image: url('../images/background.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    z-index: 0; 
-    /* animation: spin 30s linear infinite; */
-    background-color: white;
+.logo {
+  display: flex;
+  justify-content: center; 
+  margin: 1rem 0; 
 }
 
-.content {
-    position: relative;
-    z-index: 1; 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    padding: 1rem;
+.logo img {
+  max-width: 100%; 
+  height: auto; 
 }
-
-/* @keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-} */
 
 .button-container {
     display: flex;
@@ -119,17 +97,73 @@ export default {
     gap: 0.625rem;              
 }
 
-#logOut {
-    position: absolute; 
-    top: 1rem; 
-    left: 1rem; 
-    margin: 0; 
-    font-weight: 600;
-    font-size: 1.25rem;
-}
-
 p {
   margin: 1rem 2rem;
 }
+
+@keyframes sideToSide1 {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(5px); 
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes sideToSide2 {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-5px); 
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+
+@keyframes containerMovement {
+  0% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(-5px, 5px);
+  }
+  40% {
+    transform: translate(5px, -5px);
+  }
+  60% {
+    transform: translate(-5px, -10px);
+  }
+  80% {
+    transform: translate(5px, 10px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+
+.floating-button1 {
+  animation: sideToSide1 15s infinite ease-in-out; 
+}
+
+.floating-button2 {
+  animation: sideToSide2 15s infinite ease-in-out; 
+}
+
+.floating-button3 {
+  animation: sideToSide1 15s infinite ease-in-out; 
+}
+
+.button-container {
+  animation: containerMovement 25s infinite ease-in-out; 
+}
+
+
 
 </style>
