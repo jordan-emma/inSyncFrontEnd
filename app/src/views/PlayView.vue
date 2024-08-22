@@ -1,6 +1,6 @@
 <template>
   <div class="purpleBackground">
-    <div class="container">
+    <div class="pageContainer">
       <div class="back">
         <button class="rounded-button" @click="toggleBack">Back</button>
       </div>
@@ -25,64 +25,61 @@
   </div>
 </template>
 
-
 <script>
 export default {
-  created() {
-    if (this.name === '') {
-      this.name = this.$userStore.name
-    }
-  },
   data() {
     return {
       showRoomCodeField: true,
       name: '',
       code: ''
+    };
+  },
+  created() {
+    if (this.name === '') {
+      this.name = this.$userStore.name;
     }
   },
   methods: {
     toggleHostGame() {
-      this.showRoomCodeField = false
+      this.showRoomCodeField = false;
     },
     toggleJoinGame() {
-      this.showRoomCodeField = true
+      this.showRoomCodeField = true;
     },
     toggleBack() {
-      this.$router.push('/landing')
+      this.$router.push('/landing');
     },
     async startGame() {
-      this.$loading.yes()
+      this.$loading.yes();
       if (this.showRoomCodeField) {
-        await this.joinGame()
+        await this.joinGame();
       } else {
-        await this.createGame()
+        await this.createGame();
       }
-      this.$loading.no()
+      this.$loading.no();
     },
     async createGame() {
       try {
-        await this.$gameStore.hostGame(this.name)
-        this.$router.push('/lobby')
+        await this.$gameStore.hostGame(this.name);
+        this.$router.push('/lobby');
       } catch (e) {
-        console.log(e)
-        alert('Failed to make game')
+        console.log(e);
+        alert('Failed to make game');
       }
     },
     async joinGame() {
       if (this.code.length !== 6) {
-        console.log('Invalid code')
-        return
+        console.log('Invalid code');
+        return;
       }
-      await this.$gameStore.joinGame(this.name, this.code)
-      this.$router.push('/lobby')
+      await this.$gameStore.joinGame(this.name, this.code);
+      this.$router.push('/lobby');
     }
   }
-
 }
 </script>
 
 <style scoped>
-
 .underlineButton:hover {
   background-color: #1a1138;
   color: white;
@@ -92,18 +89,15 @@ export default {
   background-color: #1a1138;
   color: white;
   border: none;
-  padding-bottom: 0.9rem;
-  padding-top: 0.9rem;
+  padding: 0.9rem 0;
   font-size: 1.5rem;
   font-weight: 600;
   text-align: center;
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
-  opacity: 1;
   width: 10rem;
-  outline: none;
   border-radius: 1rem;
-  margin-bottom: 1rem; 
+  margin-bottom: 1rem;
+  outline: none;
 }
-
 </style>

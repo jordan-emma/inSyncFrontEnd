@@ -1,31 +1,29 @@
 <template>
   <div class="purpleBackground">
-  <div class="container">
-    <div class="back">
-      <button class="rounded-button" @click="toggleBack">Back</button>
+    <div class="pageContainer">
+      <div class="back">
+        <button class="rounded-button" @click="toggleBack">Back</button>
+      </div>
+      <div class="welcome">
+        <h2>Lobby</h2>
+        <h4>Your room code is {{ $gameStore.code }}</h4>
+      </div>
+      <div class="profilePicture">
+        <img :src="randomImage" alt="Profile Picture" class="rounded-image" />
+      </div>
+      <div>
+        <p>Host: {{ $gameStore.hostPlayerName }}</p>
+        <p>{{ playerList }}</p>
+      </div>
+      <div class="button-container">
+        <button v-if="hosting" class="rounded-button" @click="goToClues">START GAME</button>
+      </div>
     </div>
-    <div class="welcome">
-      <h2>Lobby</h2>
-      <h4>Your room code is {{ $gameStore.code }}</h4>
-    </div>
-    <div class="profilePicture">
-      <img :src="randomImage" alt="Profile Picture" class="rounded-image"/>
-    </div>
-    <div>
-      <p> Host: {{ $gameStore.hostPlayerName }}</p>
-      <p> {{ playerList }} </p>
-    </div>
-    <div class="button-container">
-      <button v-if="hosting" class="rounded-button" @click="goToClues">START GAME</button>
-    </div>
-  </div>
   </div>
 </template>
 
 <script>
-
 export default {
-
   data() {
     return {
       images: [
@@ -41,108 +39,107 @@ export default {
       randomImage: '',
       pollUsers: null, 
       pollGame: null,
-      gameStatus: null, 
+      gameStatus: null
     };
-  },
-  watch: {
-    gameStatus() {
-      if (this.gameStatus === 'CLUE_GIVING') {
-        this.$router.push('/clue')
-      }
-    },
   },
   computed: {
     playerList() {
       const playerNames = this.$gameStore.playerNames;
-      const hostName = this.$gameStore.hostPlayerName; 
+      const hostName = this.$gameStore.hostPlayerName;
 
       const filteredPlayerNames = playerNames.filter(name => name !== hostName);
 
-        if (filteredPlayerNames.length === 0) {
-          return '';
-        } else if (filteredPlayerNames.length === 1) {
-          return filteredPlayerNames[0];
-        } else if (filteredPlayerNames.length === 2) {
-          return filteredPlayerNames.join(' and ');
-        } else {
-          return filteredPlayerNames.slice(0, -1).join(', ') + ', and ' + filteredPlayerNames[filteredPlayerNames.length - 1];
-        }
-    }, 
-    hosting(){
-      return this.$gameStore.hostPlayerId === this.$userStore.id; 
+      if (filteredPlayerNames.length === 0) {
+        return '';
+      } else if (filteredPlayerNames.length === 1) {
+        return filteredPlayerNames[0];
+      } else if (filteredPlayerNames.length === 2) {
+        return filteredPlayerNames.join(' and ');
+      } else {
+        return filteredPlayerNames.slice(0, -1).join(', ') + ', and ' + filteredPlayerNames[filteredPlayerNames.length - 1];
+      }
+    },
+    hosting() {
+      return this.$gameStore.hostPlayerId === this.$userStore.id;
     }
   },
   methods: {
-    toggleBack(){
+    toggleBack() {
       this.$router.push('/play');
     },
-    async listPlayers(){
-      try{
-        let playerData = await this.$gameStore.getPlayers(); 
+    async listPlayers() {
+      try {
+        await this.$gameStore.getPlayers();
+      } catch (e) {
+        console.log(e);
       }
-      catch(e){
-        console.log(e); 
-      }
-    },  
-    playerRefresh(){
-      return setInterval(this.listPlayers, 1000)
-    },  
+    },
+    playerRefresh() {
+      return setInterval(this.listPlayers, 1000);
+    },
     async goToClues() {
-      let response = await this.$axios.put(`/game/${this.$gameStore.game.id}/start`);
-      if (response.status !== 200) {
+      try {
+        const response = await this.$axios.put(`/game/${this.$gameStore.game.id}/start`);
+        if (response.status !== 200) {
+          alert('Failed to start game');
+        } else {
+          this.$router.push('/clue');
+        }
+      } catch (e) {
         alert('Failed to start game');
+        console.log(e);
       }
-      this.$router.push('/clue');
     },
     async getGame() {
-      let data = await this.$gameStore.getGame()
-      this.gameStatus = data.status
-    },
+      try {
+        const data = await this.$gameStore.getGame();
+        this.gameStatus = data.status;
+      } catch (e) {
+        console.log(e);
+      }
+    }
   },
   async created() {
     const imageOptions = await Promise.all(this.images);
     this.randomImage = imageOptions[Math.floor(Math.random() * imageOptions.length)].default;
     this.pollUsers = this.playerRefresh();
-    this.pollGame = setInterval(this.getGame, 1000)
+    this.pollGame = setInterval(this.getGame, 1000);
   },
-  beforeUnmount(){
+  beforeUnmount() {
     clearInterval(this.pollUsers);
     clearInterval(this.pollGame);
   }
-};
-
+}
 </script>
 
 <style scoped>
+.profilePicture {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+}
 
-  .profilePicture {
-    display: flex;
-    justify-content: center; 
-    align-items: center; 
-    margin-top: 2rem;
-  }
+.rounded-image {
+  border-radius: 50%;
+  width: 7.8125rem;
+  height: 7.8125rem;
+  object-fit: cover;
+  border: 5px solid white;
+  margin-bottom: 1em;
+}
 
-  .rounded-image {
-    border-radius: 50%; 
-    width: 7.8125rem; 
-    height: 7.8125rem;
-    object-fit: cover; 
-    border: 5px solid white;
-    margin-bottom: 1em; 
-  }
+h2, h4 {
+  color: white;
+  text-align: center;
+}
 
-  h2, h4{
-    color: white;
-    text-align: center;
-  }
-
-  p{
-    margin-bottom: 2em;
-    margin-top: 0.6rem;
-    font-size: 1.7rem;
-    font-weight: 700; 
-    color:white;
-    text-align: center; 
-  }
-
+p {
+  margin-bottom: 2em;
+  margin-top: 0.6rem;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: white;
+  text-align: center;
+}
 </style>
