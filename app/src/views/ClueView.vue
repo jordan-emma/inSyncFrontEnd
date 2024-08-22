@@ -3,7 +3,7 @@
     <div class="pageContainer">
       <LoadingModal :show="loading"></LoadingModal>
       <div class="back">
-        <button @click="toggleBack">Back</button>
+        <button class="rounded-button" @click="toggleBack">Back</button>
       </div>
       <div class="pageHeading">
         <h2>Type a Clue</h2>
@@ -13,7 +13,8 @@
         <Slider :min="0" :max="clueObject.max_value" :value="clueObject.value" :disabled="true" />
         <p class="clueScalePhrase2">{{ capitalizeString(clueObject.low) }}</p>
       </div>
-      <div class="form-group">
+      <section v-if="!submittedLastClue">
+      <div class="form-group" >
         <input id="clueField" type="text" v-model="currentClue" placeholder='Enter your clue...' />
       </div>
       <div class="button-container">
@@ -22,6 +23,7 @@
         <button v-if="clueNumber < maxClues" class="rounded-button" :disabled="!isClueEntered" @click="changeClueNumber(true)">Next Clue</button>
         <button v-if="onLastClue" class="rounded-button" @click="addClue">Submit</button>
       </div>
+    </section>
       <div>
         <h3 v-if="submittedLastClue">Waiting for other players...</h3>
       </div>
@@ -179,6 +181,12 @@ h2, p {
 h3{
   color: white;
   padding-top: 1em;
+}
+
+section{ 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center;
 }
 
 
