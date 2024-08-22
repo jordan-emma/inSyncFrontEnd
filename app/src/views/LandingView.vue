@@ -1,14 +1,34 @@
 <template>
   <div class="background-container" >
     <modal :show="showModal" @close="toggleModal">
-      <h1 class="howTo">How To Play</h1>
-      <p><b>Objective: </b>Team up with your crew to spin the dial and hit the hidden bullseye!</p>
-      <p><b>The Catch: </b>The target is sneaky—it’s hiding in a new spot each round, and you’ll have to guess where it is.</p>
-      <p><b>The Perk:  </b>One of your teammates has a special power—they know exactly where the target is! But there’s a twist: they can only drop a hint using a scale between two opposite ideas. Imagine a spectrum from “Sweet to Sour.” If the target is leaning towards “Sweet,” the clue might be something like “honey”—sweet, but not sugar-overload sweet.</p>
-      <p>Every round, a new teammate gives the clue, and the rest of you get to chat, debate, and strategize while the clue giver stays as cool as a cucumber.</p>
-      <p>When you’re all set, everyone taps “Ready,” and the big reveal happens—where’s the target?</p>
-      <p>The closer you are to the center, the more points you rack up!</p>
-      <p>And remember, it’s all about teamwork—either you all win together, or you face the challenge again. Let the fun begin!</p>
+      <p class="objective"> Team up with your <br>crew to spin the dial and hit<br>the hidden bullseye!</p>
+      <div class="whiteBox">
+        <p><b>The Catch: </b>The target is sneaky—it’s hiding in a new spot each round, and you’ll have to guess where it is.</p>
+      </div>
+      <div class="whiteBox">
+        <p><b>The Perk: </b>
+        One of your teammates has a special power—they know exactly where the target is! But there’s a twist: they can only drop a hint using a scale between two opposite ideas. Imagine a spectrum from “Sweet to Sour.” If the target is leaning towards “Sweet,” the clue might be something like “honey”—sweet, but not sugar-overload sweet.</p>
+      </div>
+
+      <div class="whiteBox">
+         <p><b>Clue Time: </b>
+         Every round, a new teammate gives the clue, and the rest of you get to chat, debate, and strategize while the clue giver stays as cool as a cucumber.</p>
+      </div>
+
+      <div class="whiteBox">
+        <p><b>The Reveal:</b>
+         When you’re all set, everyone taps “Ready,” and the big reveal happens—where’s the target?</p>
+      </div>
+
+      <div class="whiteBox">
+         <p><b>Scoring:</b>
+         The closer you are to the center, the more points you rack up!</p>
+      </div>
+
+      <div class="whiteBox">
+        <p><b>Teamwork:</b>
+        And remember, it’s all about teamwork—either you all win together, or you face the challenge again. Let the fun begin!</p>
+      </div>
     </modal>
     <div class="spinning-background"></div>
     <div class="content">
@@ -114,12 +134,48 @@ p {
   margin: 1rem 2rem;
 }
 
-.howTo {
-  text-decoration: underline;
-  text-decoration-style: wavy;
-  text-decoration-color: black;
-  text-underline-offset: 0.7rem; 
-  font-weight: 600; 
-  margin: 1rem 2rem;
+.objective { 
+  color: white; 
+  font-size: 1.5em;
+  text-align: center;
+  line-height: 1.2em; 
 }
+
+.whiteBox {
+    background-color: white;
+    border-radius: 4px;
+    width: 70%;
+    height: auto; 
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    margin: 10px auto; 
+    padding: 20px; 
+    color: #382a5f;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+@media (max-width: 600px) {
+  p{
+  padding: 4px;
+  margin: 0 auto;
+  font-size: 0.95em;
+  }
+  .whiteBox{
+    padding: 10px; 
+  }
+  .objective{
+    font-size: 1.2em;
+  }
+}
+
+@media (max-width: 596px) {
+  .objective{
+    padding-top: 1em;
+  }
+}
+
+
 </style>
