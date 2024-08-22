@@ -4,10 +4,10 @@
     <div class="spinning-background"></div>
     <div class="content">
       <button class="rounded-button" id="logOut" @click="logOut">Log Out</button>
-      <div class="name">
-        <h1>INSYNC</h1>
+      <div class="logo">
+        <img src="../images/insyncLogo.png">
       </div>
-      <p>Hi, {{ $userStore.name }}!</p>
+      <p class="welcome">Hi, {{ $userStore.name }}!</p>
       <div class="button-container">
         <button class="rounded-button" @click="togglePlay">PLAY</button>
         <button class="rounded-button" @click="toggleModal">HOW TO PLAY</button>
