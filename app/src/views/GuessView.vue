@@ -9,7 +9,7 @@
       </div>
       <div class="slider-wrapper">
         <p>{{capitalizeString(clueLow)}}</p>
-        <Slider :min="0" :max="100" v-model="sliderValue"/> 
+        <Slider :min="0" :max="100" v-model="sliderValue" :disabled="isClueGiver"/> 
         <p>{{capitalizeString(clueHigh)}}</p>
       </div>
       <div class="button-container">
@@ -38,12 +38,17 @@ export default {
       clueNumber: 1,
       totalCluesProvided: 'total clues provided',
       sliderValue: 50,
-      disableSlider: false,
       fetchedClue: '',
       clueGiver: '',
       clueLow: '', 
       clueHigh: '', 
+      clueGiverId: '',
     };
+  },
+  computed: {
+    isClueGiver(){ 
+      return this.$userStore.user.id === this.clueGiverId; 
+    }
   },
   methods: {
     toggleBack() {
@@ -64,6 +69,7 @@ export default {
         this.totalCluesProvided = response.data.total_clues
         this.clueLow = response.data.low
         this.clueHigh = response.data.high
+        this.clueGiverId = response.data.player_id
       }
       finally{ 
         this.loading = false; 
@@ -72,7 +78,6 @@ export default {
     capitalizeString(string){ 
       return string.charAt(0).toUpperCase() + string.slice(1);
     }, 
-
   }
 }
 </script>

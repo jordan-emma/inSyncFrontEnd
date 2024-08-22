@@ -39,8 +39,17 @@ export default {
         import('@/images/character8.jpg')
       ],
       randomImage: '',
-      pollUsers: null
+      pollUsers: null, 
+      pollGame: null,
+      gameStatus: null, 
     };
+  },
+  watch: {
+    gameStatus() {
+      if (this.gameStatus === 'CLUE_GIVING') {
+        this.$router.push('/clue')
+      }
+    },
   },
   computed: {
     playerList() {
@@ -85,14 +94,20 @@ export default {
       }
       this.$router.push('/clue');
     },
+    async getGame() {
+      let data = await this.$gameStore.getGame()
+      this.gameStatus = data.status
+    },
   },
   async created() {
     const imageOptions = await Promise.all(this.images);
     this.randomImage = imageOptions[Math.floor(Math.random() * imageOptions.length)].default;
     this.pollUsers = this.playerRefresh();
+    this.pollGame = setInterval(this.getGame, 1000)
   },
   beforeUnmount(){
     clearInterval(this.pollUsers);
+    clearInterval(this.pollGame);
   }
 };
 

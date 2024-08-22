@@ -20,7 +20,10 @@
         <button v-if="clueNumber > 1" class="rounded-button" @click="changeClueNumber(false)">Back</button>
         <button class="rounded-button" @click="getClue(true)">New Scale</button>
         <button v-if="clueNumber < maxClues" class="rounded-button" :disabled="!isClueEntered" @click="changeClueNumber(true)">Next Clue</button>
-        <button v-if="clueNumber === maxClues" class="rounded-button" @click="addClue">Submit</button>
+        <button v-if="onLastClue" class="rounded-button" @click="addClue">Submit</button>
+      </div>
+      <div>
+        <h3 v-if="submittedLastClue">Waiting for other players...</h3>
       </div>
       <div>
         <h2>{{ clueNumber }}/3</h2>
@@ -51,6 +54,8 @@ export default {
       gameWatcherInterval: null,
       gameStatus: null,
       loading: false,
+      waiting: false,
+      submittedLastClue: false,
     }
   },
   watch: {
@@ -59,8 +64,9 @@ export default {
     },
     clueNumber() {
       this.getClue()
-      if (this.clueNumber === this.maxClues) {
+      if (this.onLastClue) {
         this.gameWatcherInterval = setInterval(this.getGame, 1000)
+        this.waiting = true
       }
     },
     gameStatus() {
@@ -75,7 +81,10 @@ export default {
   computed: {
     isClueEntered() {
       return this.currentClue.trim() !== '';
-    }
+    }, 
+    onLastClue(){
+      return this.clueNumber === this.maxClues;
+    }, 
   },
   methods: {
     async getGame() {
@@ -88,6 +97,8 @@ export default {
         let response = await this.$axios.patch(`/clue/${this.clueObject.id}`, {clue})
         if (response.status !== 200) {
           alert('Failed to add clue')
+        } else if(this.onLastClue) {
+          this.submittedLastClue = true; 
         }
       }
     },
@@ -114,8 +125,9 @@ export default {
       }
     },
     async changeClueNumber(increment) {
-      this.clueNumber = increment ? this.clueNumber + 1 : this.clueNumber - 1
       await this.addClue()
+      this.clueNumber = increment ? this.clueNumber + 1 : this.clueNumber - 1
+      
     },
     toggleBack() {
       this.$router.push('/lobby')
@@ -123,6 +135,7 @@ export default {
     capitalizeString(string){ 
       return string.charAt(0).toUpperCase() + string.slice(1);
     }, 
+
     // async goToGuess() {
     //   await this.addClue()
     //   this.$router.push('/guess')
@@ -161,6 +174,11 @@ h2, p {
 
 .rounded-button:disabled { 
   background-color: darkgrey; 
+}
+
+h3{
+  color: white;
+  padding-top: 1em;
 }
 
 
