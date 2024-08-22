@@ -6,7 +6,8 @@
       </div>
       <div class="welcome">
         <h2>Lobby</h2>
-        <h4>Your room code is {{ $gameStore.code }}</h4>
+        <h4>Your room code is </h4>
+        <h4 class="roomCode">{{ $gameStore.code }}</h4>
       </div>
       <div class="profilePicture">
         <img :src="randomImage" alt="Profile Picture" class="rounded-image" />
@@ -142,4 +143,33 @@ p {
   color: white;
   text-align: center;
 }
+
+@media (max-width: 600px) {
+  .welcome {
+    font-size: 1.8em; 
+    padding-top: 0;
+  }
+  h2{
+    margin: 0 auto;
+  }
+  h4{
+    margin: 0 auto;
+    padding: 1em;
+  }
+  .roomCode{
+    padding: 0;
+  }
+  .rounded-image{
+    width: 5.8125rem;
+    height: 5.8125rem;
+  }
+  .rounded-button{ 
+    padding: 0.5rem;
+  }
+  p{ 
+    margin: 0.5em;
+
+  } 
+}
+
 </style>
