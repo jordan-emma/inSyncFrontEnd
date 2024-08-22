@@ -5,12 +5,12 @@
         <button class="rounded-button" @click="toggleBack">Back</button>
       </div>
       <div class="pageHeading">
-        <h2>{{clueGiver}}'s Clue: {{capitalizeClue(fetchedClue)}}</h2>
+        <h2>{{clueGiver}}'s Clue: {{capitalizeString(fetchedClue)}}</h2>
       </div>
       <div class="slider-wrapper">
-        <p>{{clueLow}}</p>
+        <p>{{capitalizeString(clueLow)}}</p>
         <Slider :min="0" :max="100" v-model="sliderValue"/> 
-        <p>{{clueHigh}}</p>
+        <p>{{capitalizeString(clueHigh)}}</p>
       </div>
       <div class="button-container">
         <button class="rounded-button" @click="changeClueNumber">Submit</button>
@@ -69,9 +69,10 @@ export default {
         this.loading = false; 
       }
     }, 
-    capitalizeClue(clue){ 
-      return clue.charAt(0).toUpperCase() + clue.slice(1);
-    }
+    capitalizeString(string){ 
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    }, 
+
   }
 }
 </script>

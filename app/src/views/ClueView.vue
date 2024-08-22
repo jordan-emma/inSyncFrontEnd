@@ -9,9 +9,9 @@
         <h2>Type a Clue</h2>
       </div>
       <div v-if="gotClue" class="slider-wrapper">
-        <p class="clueScalePhrase1">{{ clueObject.high }}</p>
+        <p class="clueScalePhrase1">{{ capitalizeString(clueObject.high)}}</p>
         <Slider :min="0" :max="clueObject.max_value" :value="clueObject.value" :disabled="true" />
-        <p class="clueScalePhrase2">{{ clueObject.low }}</p>
+        <p class="clueScalePhrase2">{{ capitalizeString(clueObject.low) }}</p>
       </div>
       <div class="form-group">
         <input id="clueField" type="text" v-model="currentClue" placeholder='Enter your clue...' />
@@ -120,6 +120,9 @@ export default {
     toggleBack() {
       this.$router.push('/lobby')
     },
+    capitalizeString(string){ 
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    }, 
     // async goToGuess() {
     //   await this.addClue()
     //   this.$router.push('/guess')
