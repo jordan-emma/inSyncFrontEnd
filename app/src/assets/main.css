@@ -158,9 +158,10 @@ body{
 
 @media (max-width: 600px) {
   .back .rounded-button  {
-    width: 7rem;
+    width: 5rem;
     height: auto;
     padding: 0.6rem;
+    font-size: 1em;
   }
 }
 
