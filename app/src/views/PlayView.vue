@@ -105,9 +105,4 @@ export default {
   border-radius: 1rem;
 }
 
-.rounded-button:hover {
-  background-color: #1a1138;
-}
-
-
 </style>

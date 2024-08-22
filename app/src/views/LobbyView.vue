@@ -2,7 +2,7 @@
   <div class="purpleBackground">
   <div class="container">
     <div class="back">
-      <button @click="toggleBack">Back</button>
+      <button class="rounded-button" @click="toggleBack">Back</button>
     </div>
     <div class="name">
       <h2>Lobby</h2>
