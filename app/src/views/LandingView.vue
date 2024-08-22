@@ -83,12 +83,12 @@ export default {
     left: 0;
     height: 100%;
     width: 100%;
-    background-image: url('../images/logo2.avif');
-    background-size: contain;
+    background-image: url('../images/background.jpg');
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     z-index: 0; 
-    animation: spin 30s linear infinite;
+    /* animation: spin 30s linear infinite; */
     background-color: white;
 }
 
@@ -103,14 +103,14 @@ export default {
     padding: 1rem;
 }
 
-@keyframes spin {
+/* @keyframes spin {
     from {
         transform: rotate(0deg);
     }
     to {
         transform: rotate(360deg);
     }
-}
+} */
 
 .button-container {
     display: flex;
