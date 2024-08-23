@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 
 export const userStore = defineStore('user', {
-  state: () => ({ user: null }),
+  state: () => ({ user: null, token:null }),
   getters: {
     isLoggedIn: (state) => !!state.user,
     name: (state) => state.user?.name,
@@ -15,7 +15,8 @@ export const userStore = defineStore('user', {
         throw 'Failed to log in'
       }
       axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
-      response = await axios.get('user')
+      this.token = `Bearer ${response.data.token}`
+      response = await axios.get('player')
       if (response.status !== 200){
         throw 'Failed to get user data'
       }
@@ -27,12 +28,22 @@ export const userStore = defineStore('user', {
         throw 'Failed to sign up'
       }
       axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
-      response = await axios.get('user')
+      this.token = `Bearer ${response.data.token}`
+      response = await axios.get('player')
       if (response.status !== 200){
         throw 'Failed to get user data'
       }
       this.user = response.data
     },
+  }, 
+  persist: {
+    enabled: true, 
+    strategies: [
+      { 
+        key: 'user',
+        storage: localStorage,
+      }
+    ]
   }
 })
 
