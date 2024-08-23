@@ -1,8 +1,8 @@
 <template>
-  <div class="background">
-    <div class="container">
-      <div class="name">
-        <h1>Insync</h1>
+  <div class="purpleBackground">
+    <div class="pageContainer">
+      <div class="logo">
+        <img src="../images/insyncLogo.png" alt="Logo" />
       </div>
       <form name="loginForm" @reset="resetFields" @submit.prevent="handleSubmit">
         <div class="form-group" v-show="showSignUpField">
@@ -22,22 +22,24 @@
           <input id="confirm_password" type="password" v-model.trim="confirm_password" />
           <p v-if="!passwordsMatch && showSignUpField" class="error-message">Passwords do not match</p>
         </div>
-        <p v-if="!showSignUpField && !isFormValid" class="error-message">Please enter email and password</p>
-        <div class="button-group">
-          <button v-if="!showSignUpField" class="rounded-button" type="button" @click="toggleView('signUp')">Create
-            Account
-          </button>
-          <button class="rounded-button" :disabled="!isFormValid" type="submit">
-            {{ showSignUpField ? 'Create Account' : 'Login' }}
-          </button>
-          <button class="rounded-button" type="reset">Reset</button>
-          <button v-if="showSignUpField" class="rounded-button" type="button" @click="toggleView('login')">Login
-          </button>
+        <div v-if="!showSignUpField && !isFormValid" class="error-message-container">
+          <div class="error-message">
+            <img src="../images/reminderIcon.png" alt="Reminder Icon" class="reminder-icon" />
+            <p class="error-message-text">Don’t forget to fill in both email and password.</p>
+          </div>
+        </div>
+        <div class="button-container">
+          <button v-if="!showSignUpField" class="rounded-button floating-button1" type="button" @click="toggleView('signUp')">Create Account</button>
+          <button class="rounded-button floating-button2" :disabled="!isFormValid" type="submit">{{ showSignUpField ? 'Create Account' : 'Login' }}</button>
+          <button class="rounded-button floating-button3" type="reset">Reset</button>
+          <button v-if="showSignUpField" class="rounded-button" type="button" @click="toggleView('login')">Login</button>
         </div>
       </form>
     </div>
   </div>
 </template>
+
+
 
 <script>
 export default {
@@ -105,51 +107,94 @@ export default {
 </script>
 
 <style scoped>
-.background {
-  background-image: url('../images/loadingGif.gif');
-  background-size: contain;
-  background-position: center;
-  background-repeat: repeat-x; 
-  background-color: white;
-}
-
-.container {
+.error-message-container {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  padding: 1rem;
-}
-
-.name {
-  margin-bottom: 2rem;
-}
-
-.button-group {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
   width: 100%;
-  margin-top: 1rem;
-  gap: 0.5rem;
-}
-
-@media (max-width: 600px) {
-  .button-group {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .background {
-    background-size: cover;
-  }
+  max-width: 300px;
+  margin-top: 0.5rem;
 }
 
 .error-message {
-  color: red;
-  font-size: 0.9rem;
-  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.reminder-icon {
+  position: absolute;
+  left: 1rem;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.error-message-text {
+  color: #47037e;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  margin-left: 2rem; 
+}
+
+.button-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1.5rem; 
+  animation: containerMovement 25s infinite ease-in-out;
+}
+
+@media(max-width: 600px) {
+  .button-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    animation: containerMovement 25s infinite ease-in-out;
+  }
+  .rounded-button {
+    padding-bottom: 0.75rem;
+    padding-top: 0.75rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    width: 8rem;
+  }
+}
+
+@keyframes floating {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes floating-outer {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+}
+
+.floating-button1 {
+  animation: floating-outer 5s infinite ease-in-out;
+}
+
+.floating-button2 {
+  animation: floating 5s infinite ease-in-out;
+}
+
+.floating-button3 {
+  animation: floating-outer 5s infinite ease-in-out;
 }
 </style>

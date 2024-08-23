@@ -76,83 +76,54 @@ export default {
 </script>
 
 <style scoped>
-.logo {
-  display: flex;
-  justify-content: center;
-  margin: 1rem 0;
-}
-
-.logo img {
-  max-width: 100%;
-  height: auto;
-}
-
 .button-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.625rem;
-  animation: containerMovement 25s infinite ease-in-out;
+  gap: 1.2rem; 
 }
 
 p {
   margin: 1rem 2rem;
 }
 
-@keyframes sideToSide1 {
-  0% {
-    transform: translateX(0);
+@keyframes float-middle {
+  0%, 100% {
+    transform: translateY(0);
   }
   50% {
-    transform: translateX(5px);
-  }
-  100% {
-    transform: translateX(0);
+    transform: translateY(6px); 
   }
 }
 
-@keyframes sideToSide2 {
-  0% {
-    transform: translateX(0);
+@keyframes float-outer {
+  0%, 100% {
+    transform: translateY(0);
   }
   50% {
-    transform: translateX(-5px);
-  }
-  100% {
-    transform: translateX(0);
+    transform: translateY(3px); 
   }
 }
 
-@keyframes containerMovement {
-  0% {
-    transform: translate(0, 0);
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
   }
-  20% {
-    transform: translate(-5px, 5px);
-  }
-  40% {
-    transform: translate(5px, -5px);
-  }
-  60% {
-    transform: translate(-5px, -10px);
-  }
-  80% {
-    transform: translate(5px, 10px);
-  }
-  100% {
-    transform: translate(0, 0);
+  50% {
+    transform: translateY(-5px); 
   }
 }
 
 .floating-button1 {
-  animation: sideToSide1 15s infinite ease-in-out;
+  animation: float-outer 6s infinite ease-in-out;
 }
 
 .floating-button2 {
-  animation: sideToSide2 15s infinite ease-in-out;
+  animation: float-middle 6s infinite ease-in-out;
 }
 
 .floating-button3 {
-  animation: sideToSide1 15s infinite ease-in-out;
+  animation: float-outer 6s infinite ease-in-out;
 }
+
 </style>

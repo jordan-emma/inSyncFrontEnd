@@ -165,4 +165,16 @@ body{
   }
 }
 
+.logo {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.logo img {
+  max-width: 100%;
+  height: auto;
+}
+
+
 
