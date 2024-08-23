@@ -55,7 +55,9 @@ export default {
       this.$router.push('/lobby');
     }, 
     changeClueNumber() {
-      this.clueNumber++;
+      if(this.clueNumber < this.totalCluesProvided){
+        this.clueNumber++;
+      }
     }, 
     async fetchClue() { 
       this.loading = true; 
