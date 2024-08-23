@@ -5,7 +5,7 @@
         <button class="rounded-button" @click="toggleBack">Back</button>
       </div>
       <div class="pageHeading">
-        <h2>{{ clueGiver }}'s Clue: {{ capitalizeString(fetchedClue) }}</h2>
+        <h2>{{ isClueGiver ? 'Your' : `${clueGiver}'s` }} Clue: {{ capitalizeString(fetchedClue) }}</h2>
       </div>
       <div class="slider-wrapper">
         <p>{{ capitalizeString(clueLow) }}</p>
@@ -13,7 +13,8 @@
         <p>{{ capitalizeString(clueHigh) }}</p>
       </div>
       <div class="button-container">
-        <button class="rounded-button" @click="changeClueNumber">Submit</button>
+        <button v-if='!isClueGiver' class="rounded-button" @click="changeClueNumber">Submit</button>
+        <p v-if='isClueGiver'>Shhh! this is your clue... Don't give any hints </p>
       </div>
       <div>
         <h2>{{ clueNumber }}/{{ totalCluesProvided }}</h2>
@@ -42,6 +43,7 @@ export default {
       guessValue: '',
       maxValue: '',
       defaultValue: '',
+      clueId: '', 
     };
   },
   created() {
@@ -75,6 +77,7 @@ export default {
         this.clueHigh = response.data.high;
         this.clueGiverId = response.data.player_id;
         this.maxValue = response.data.max_value; 
+        this.clueId = response.data.id; 
         this.setDefaultValue(); 
       } finally { 
         this.loading = false; 
@@ -86,10 +89,10 @@ export default {
     setDefaultValue(){ 
       return this.defaultValue = this.maxValue/2; 
     },
-    // async sendGuessvalue() { 
+    // async sendGuessValue() { 
     //   this.loading = true; 
     //   try{ 
-    //     let response = await axios.post(`/game/${this.$gameStore.game.id}/guess`); 
+    //     let response = await axios.patch(`/clue/${this.clueId}`, {guess_value: this.guessValue}); //the first is the url we are going to and the second prop is the object key and then the valuewe are udating 
     //     if (response.status != 200){ 
     //       throw 'Failed to submit clue'
     //     }
