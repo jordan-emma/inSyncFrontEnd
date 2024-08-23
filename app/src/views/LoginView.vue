@@ -5,33 +5,35 @@
         <img src="../images/insyncLogo.png" alt="Logo" />
       </div>
       <form name="loginForm" @reset="resetFields" @submit.prevent="handleSubmit">
-        <div class="form-group" v-show="showSignUpField">
-          <label for="name">Name:</label>
-          <input id="name" type="text" v-model.trim="name" />
-        </div>
-        <div class="form-group">
-          <label for="email">Email:</label>
-          <input id="email" type="text" v-model.trim="email" />
-        </div>
-        <div class="form-group">
-          <label for="password">Password:</label>
-          <input id="password" type="password" v-model.trim="password" />
-        </div>
-        <div class="form-group" v-show="showSignUpField">
-          <label for="confirm_password">Confirm Password:</label>
-          <input id="confirm_password" type="password" v-model.trim="confirm_password" />
-          <p v-if="!passwordsMatch && showSignUpField" class="error-message">Passwords do not match</p>
-        </div>
-        <div v-if="!showSignUpField && !isFormValid" class="error-message-container">
-          <div class="error-message">
-            <img src="../images/reminderIcon.png" alt="Reminder Icon" class="reminder-icon" />
-            <p class="error-message-text">Don’t forget to fill in both email and password.</p>
+        <div class="inputContainer">
+          <div class="form-group" v-show="showSignUpField">
+            <label for="name">Name:</label>
+            <input id="name" type="text" v-model.trim="name" />
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input id="email" type="text" v-model.trim="email" />
+          </div>
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input id="password" type="password" v-model.trim="password" />
+          </div>
+          <div class="form-group" v-show="showSignUpField">
+            <label for="confirm_password">Confirm Password:</label>
+            <input id="confirm_password" type="password" v-model.trim="confirm_password" />
+            <p v-if="!passwordsMatch && showSignUpField" class="error-message">Passwords do not match</p>
+          </div>
+          <div v-if="!showSignUpField && !isFormValid" class="error-message-container">
+            <div class="error-message">
+              <img src="../images/reminderIcon.png" alt="Reminder Icon" class="reminder-icon" />
+              <p class="error-message-text">Don’t forget to fill in both email and password.</p>
+            </div>
           </div>
         </div>
         <div class="button-container">
-          <button v-if="!showSignUpField" class="rounded-button floating-button1" type="button" @click="toggleView('signUp')">Create Account</button>
-          <button class="rounded-button floating-button2" :disabled="!isFormValid" type="submit">{{ showSignUpField ? 'Create Account' : 'Login' }}</button>
-          <button class="rounded-button floating-button3" type="reset">Reset</button>
+          <button v-if="!showSignUpField" class="rounded-button floating-button1" type="button" @click="toggleView('signUp')">Sign Up</button>
+          <button class="rounded-button floating-button2" :disabled="!isFormValid" type="submit">{{ showSignUpField ? 'Sign Up' : 'Login' }}</button>
+          <button v-if="!showSignUpField" class="rounded-button floating-button3" type="reset">Reset</button>
           <button v-if="showSignUpField" class="rounded-button" type="button" @click="toggleView('login')">Login</button>
         </div>
       </form>
@@ -158,6 +160,7 @@ export default {
     align-items: center;
     gap: 0.8rem;
     animation: containerMovement 25s infinite ease-in-out;
+    margin-top: 1rem;
   }
   .rounded-button {
     padding-bottom: 0.75rem;
@@ -166,6 +169,123 @@ export default {
     font-weight: 600;
     width: 8rem;
   }
+  .inputContainer{  
+  overflow-y: scroll;
+  width: 100%;
+}
+form{
+  width: 100%;
+}
+}
+
+@media(max-height: 376px ) {
+  .button-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    animation: containerMovement 25s infinite ease-in-out;
+    margin-top: 1rem;
+  }
+  .rounded-button {
+    padding-bottom: 0.75rem;
+    padding-top: 0.75rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    width: 8rem;
+  }
+  .inputContainer{ 
+  max-height: 383px; 
+  overflow-y: scroll;
+  width: 100%;
+}
+form{
+  width: 100%;
+}
+}
+
+@media(max-height: 720px ) {
+  .button-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    animation: containerMovement 25s infinite ease-in-out;
+    margin-top: 1rem;
+  }
+  .rounded-button {
+    padding-bottom: 0.75rem;
+    padding-top: 0.75rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    width: 8rem;
+  }
+  .inputContainer{ 
+  max-height: 383px; 
+  overflow-y: scroll;
+  width: 100%;
+}
+form{
+  width: 100%;
+}
+}
+
+@media(max-height: 720px ) {
+  .button-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    animation: containerMovement 25s infinite ease-in-out;
+    margin-top: 1rem;
+  }
+  .rounded-button {
+    padding-bottom: 0.75rem;
+    padding-top: 0.75rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    width: 8rem;
+  }
+  .inputContainer{ 
+  max-height: 383px; 
+  overflow-y: scroll;
+  width: 100%;
+}
+form{
+  width: 100%;
+}
+}
+
+@media (max-width: 1024px) and (max-height: 600px) {
+  .logo {
+    width: 100%; 
+    text-align: center;
+    margin-bottom: 1rem; 
+  }
+
+  .button-container {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.8rem; 
+    margin: 1rem;
+  }
+
+  .rounded-button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    width: 7rem;
+  }
+
+  .inputContainer {
+    max-height: 300px; 
+    overflow-y: auto;
+    width: 100%;
+    padding: 0 1rem; 
+  }
+
+  form {
+    width: 90%; 
+    margin: auto;
+  }
+
 }
 
 @keyframes floating {
@@ -197,4 +317,12 @@ export default {
 .floating-button3 {
   animation: floating-outer 5s infinite ease-in-out;
 }
+
+.inputContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
 </style>

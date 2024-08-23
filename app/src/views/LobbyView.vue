@@ -64,6 +64,13 @@ export default {
       return this.$gameStore.hostPlayerId === this.$userStore.id;
     }
   },
+  watch: { 
+    gameStatus() {
+      if (this.gameStatus === 'CLUE_GIVING') {
+        this.$router.push('/clue')
+      }
+    },
+  },
   methods: {
     toggleBack() {
       this.$router.push('/play');

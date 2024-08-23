@@ -9,7 +9,7 @@
       </div>
       <div class="slider-wrapper">
         <p>{{ capitalizeString(clueLow) }}</p>
-        <Slider :min="0" :max="100" v-model="sliderValue" :disabled="isClueGiver" />
+        <Slider :min="0" :max="maxValue" :value="defaultValue" v-model="guessValue" :disabled="isClueGiver" />
         <p>{{ capitalizeString(clueHigh) }}</p>
       </div>
       <div class="button-container">
@@ -33,13 +33,15 @@ export default {
     return {
       clueNumber: 1,
       totalCluesProvided: 'total clues provided',
-      sliderValue: 50,
       fetchedClue: '',
       clueGiver: '',
       clueLow: '', 
       clueHigh: '', 
       clueGiverId: '',
       loading: false,
+      guessValue: '',
+      maxValue: '',
+      defaultValue: '',
     };
   },
   created() {
@@ -72,13 +74,29 @@ export default {
         this.clueLow = response.data.low;
         this.clueHigh = response.data.high;
         this.clueGiverId = response.data.player_id;
+        this.maxValue = response.data.max_value; 
+        this.setDefaultValue(); 
       } finally { 
         this.loading = false; 
       }
     }, 
     capitalizeString(string) { 
       return string.charAt(0).toUpperCase() + string.slice(1);
-    }
+    }, 
+    setDefaultValue(){ 
+      return this.defaultValue = this.maxValue/2; 
+    },
+    // async sendGuessvalue() { 
+    //   this.loading = true; 
+    //   try{ 
+    //     let response = await axios.post(`/game/${this.$gameStore.game.id}/guess`); 
+    //     if (response.status != 200){ 
+    //       throw 'Failed to submit clue'
+    //     }
+    //     this.
+
+    //   }
+    // }
   }
 }
 </script>
