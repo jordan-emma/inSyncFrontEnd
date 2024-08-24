@@ -61,8 +61,6 @@ export default {
       clueObject: {},
       gotClue: false,
       maxClues: 3,
-      gameWatcherInterval: null,
-      gameStatus: null,
       loading: false,
       waiting: false,
       submittedLastClue: false,
@@ -118,13 +116,15 @@ export default {
     clueNumber() {
       this.getClue()
       if (this.onLastClue) {
-        this.gameWatcherInterval = setInterval(this.getGame, 1000)
         this.waiting = true
       }
     },
-    gameStatus() {
-      if (this.gameStatus === 'GUESSING') {
-        this.$router.push('/guess')
+    $gameStore: {
+      deep: true,
+      handler() {
+        if (this.$gameStore.game.status === 'GUESSING') {
+          this.$router.push('/guess');
+        }
       }
     },
     currentClue(newClue) {
@@ -145,10 +145,6 @@ export default {
     },
   },
   methods: {
-    async getGame() {
-      let data = await this.$gameStore.getGame(); 
-      this.gameStatus = data.status
-    },
     async addClue() {
       let clue = this.currentClue.trim()
       if (clue) {
@@ -195,7 +191,6 @@ export default {
     }
   },
   beforeUnmount() {
-    clearInterval(this.gameWatcherInterval)
   },
 }
 </script>
