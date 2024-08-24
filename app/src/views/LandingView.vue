@@ -29,23 +29,11 @@ import modal from '../components/modal.vue'
 </script>
 
 <script>
-import { io } from 'socket.io-client'
-
 export default {
   created() {
-    const socket = io.connect('http://localhost:5000'); // Replace with your server's address
-    socket.on('connect', function() {
-      console.log('Connected to WebSocket server');
-    });
-
-    socket.on('message', function(data) {
+    this.$socket.on('message', function(data) {
       console.log('Received message:', data);
     });
-
-    socket.send('Hello from the client');
-
-    this.socket = socket;
-
   },
   data() {
     return {
@@ -82,8 +70,7 @@ export default {
   },
   methods: {
     sendMessage() {
-      console.log('Button clicked');
-      this.socket.send('Button clicked');
+      this.$socket.send('Button clicked');
     },
     togglePlay() {
       this.$router.push('/play')

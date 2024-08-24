@@ -43,6 +43,29 @@ export default {
       gameStatus: null
     };
   },
+  async created() {
+    const imageOptions = await Promise.all(this.images);
+    this.randomImage = imageOptions[Math.floor(Math.random() * imageOptions.length)].default;
+
+    this.$socket.on('connect', () => {
+      console.log('Socket connected');
+    });
+
+    this.$socket.on('new_player_joined', () => {
+      console.log('New player joined room:');
+      this.listPlayers();
+    });
+
+    this.$socket.on('error', (data) => {
+      console.error('Socket error:', data.message);
+    });
+
+    this.joinGameSocket();
+  },
+  beforeUnmount() {
+    clearInterval(this.pollUsers);
+    clearInterval(this.pollGame);
+  },
   computed: {
     playerList() {
       const playerNames = this.$gameStore.playerNames;
@@ -64,7 +87,7 @@ export default {
       return this.$gameStore.hostPlayerId === this.$userStore.id;
     }
   },
-  watch: { 
+  watch: {
     gameStatus() {
       if (this.gameStatus === 'CLUE_GIVING') {
         this.$router.push('/clue')
@@ -72,6 +95,9 @@ export default {
     },
   },
   methods: {
+    joinGameSocket() {
+      this.$socket.emit('join_game', {game_id: this.$gameStore.game.id, game_code: this.$gameStore.code});
+    },
     toggleBack() {
       this.$router.push('/play');
     },
@@ -107,16 +133,6 @@ export default {
       }
     }
   },
-  async created() {
-    const imageOptions = await Promise.all(this.images);
-    this.randomImage = imageOptions[Math.floor(Math.random() * imageOptions.length)].default;
-    this.pollUsers = this.playerRefresh();
-    this.pollGame = setInterval(this.getGame, 1000);
-  },
-  beforeUnmount() {
-    clearInterval(this.pollUsers);
-    clearInterval(this.pollGame);
-  }
 }
 </script>
 
