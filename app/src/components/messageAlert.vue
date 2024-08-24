@@ -31,8 +31,6 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  max-width: 300px;
   margin: 0.5rem auto; 
   padding: 1rem;
   box-sizing: border-box; 
@@ -43,6 +41,7 @@ export default {
   align-items: center;
   justify-content: center;
   width: 100%;
+  max-width: 300px;
   background-color: rgba(255, 255, 255, 0.8);
   padding: 0.5rem 1rem;
   border: none;
