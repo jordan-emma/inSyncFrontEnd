@@ -38,33 +38,21 @@ export default {
         import('@/images/character8.jpg')
       ],
       randomImage: '',
-      pollUsers: null, 
       pollGame: null,
-      gameStatus: null
     };
   },
   async created() {
     const imageOptions = await Promise.all(this.images);
     this.randomImage = imageOptions[Math.floor(Math.random() * imageOptions.length)].default;
 
-    this.$socket.on('connect', () => {
-      console.log('Socket connected');
-    });
-
-    this.$socket.on('new_player_joined', () => {
-      console.log('New player joined room:');
-      this.listPlayers();
-    });
-
-    this.$socket.on('error', (data) => {
-      console.error('Socket error:', data.message);
+    this.$socket.on('player_list', (data) => {
+      this.$gameStore.players = data;
     });
 
     this.joinGameSocket();
   },
   beforeUnmount() {
-    clearInterval(this.pollUsers);
-    clearInterval(this.pollGame);
+    this.$socket.off('player_list');
   },
   computed: {
     playerList() {
@@ -88,9 +76,12 @@ export default {
     }
   },
   watch: {
-    gameStatus() {
-      if (this.gameStatus === 'CLUE_GIVING') {
-        this.$router.push('/clue')
+    $gameStore: {
+      deep: true,
+      handler() {
+        if (this.$gameStore.game.status === 'CLUE_GIVING') {
+          this.$router.push('/clue');
+        }
       }
     },
   },
@@ -108,9 +99,6 @@ export default {
         console.log(e);
       }
     },
-    playerRefresh() {
-      return setInterval(this.listPlayers, 1000);
-    },
     async goToClues() {
       try {
         const response = await this.$axios.put(`/game/${this.$gameStore.game.id}/start`);
@@ -126,8 +114,7 @@ export default {
     },
     async getGame() {
       try {
-        const data = await this.$gameStore.getGame();
-        this.gameStatus = data.status;
+        await this.$gameStore.getGame();
       } catch (e) {
         console.log(e);
       }
