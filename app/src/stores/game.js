@@ -7,7 +7,10 @@ export const gameStore = defineStore('game', {
     code: (state) => state.game?.game_code, 
     playerNames: (state) => state.players.map(i => i.display_name), 
     hostPlayerName: (state) => {
-      return state.players.find(player => player.host === true)?.display_name || null;
+      return state.players.find(player => player.host === true)?.display_name;
+    },
+    hostPlayerId: (state) => {
+      return state.players.find(player => player.host === true)?.player_id;
     },
       },
   actions:{
@@ -34,7 +37,24 @@ export const gameStore = defineStore('game', {
       }
       this.players = response.data; 
       return response.data; 
-    }, 
+    },
+    async getGame(){
+      let response = await axios.get(`game/${this.game.id}`)
+      if (response.status !== 200){
+        throw 'Failed to get game'
+      }
+      this.game = response.data;
+      return response.data;
+    },
 
+  }, 
+  persist: {
+    enabled: true, 
+    strategies: [
+      { 
+        key: 'game',
+        storage: localStorage,
+      }
+    ]
   }
 })
