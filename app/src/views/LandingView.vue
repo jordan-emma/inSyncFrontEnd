@@ -31,9 +31,6 @@ import modal from '../components/modal.vue'
 <script>
 export default {
   created() {
-    this.$socket.on('message', function(data) {
-      console.log('Received message:', data);
-    });
   },
   data() {
     return {
