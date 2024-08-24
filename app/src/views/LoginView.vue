@@ -30,9 +30,9 @@
         </div>
         <div class="button-container">
           <button v-if="!showSignUpField" class="rounded-button floating-button1" type="button" @click="toggleView('signUp')">Sign Up</button>
+          <button v-if="showSignUpField" class="rounded-button" type="button" @click="toggleView('login')">Login</button>
           <button class="rounded-button floating-button2" :disabled="!isFormValid" type="submit">{{ showSignUpField ? 'Sign Up' : 'Login' }}</button>
           <button v-if="!showSignUpField" class="rounded-button floating-button3" type="reset">Reset</button>
-          <button v-if="showSignUpField" class="rounded-button" type="button" @click="toggleView('login')">Login</button>
         </div>
       </form>
     </div>
@@ -117,7 +117,7 @@ export default {
       } 
     },    
     passwordMismatchMessage() { 
-      if(!this.passwordsMatch){ 
+      if(!this.passwordsMatch && this.showSignUpField){ 
         this.alertMessage = 'Passwords do not match'; 
         this.showAlert = true; 
       } else if (this.passwordsMatch){ 
