@@ -5,11 +5,11 @@
         <button class="rounded-button" @click="toggleBack">Back</button>
       </div>
       <div class="pageHeading">
-        <h2>{{ isClueGiver ? 'Your' : `${clueGiver}'s` }} Clue: {{ capitalizeString(fetchedClue) }}</h2>
+        <h2>{{ isClueGiver ? 'Your' : `${clueGiver}'s` }} Clue: {{ capitalizeString(prompt) }}</h2>
       </div>
       <div class="slider-wrapper">
         <p>{{ capitalizeString(clueLow) }}</p>
-        <Slider :min="0" :max="maxValue" :value="defaultValue" v-model="guessValue" :disabled="isClueGiver" />
+        <Slider :min="0" :max="maxValue" :value="guessValue" @value-updated="setGuessValue" :disabled="isClueGiver" />
         <p>{{ capitalizeString(clueHigh) }}</p>
       </div>
       <div class="button-container">
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import Slider from '../components/slider.vue'; 
+import Slider from '@/components/slider.vue';
 
 export default {
   components: {
@@ -34,19 +34,28 @@ export default {
     return {
       clueNumber: 1,
       totalCluesProvided: 'total clues provided',
-      fetchedClue: '',
+      prompt: '',
       clueGiver: '',
-      clueLow: '', 
-      clueHigh: '', 
-      clueGiverId: '',
+      clueLow: '',
+      clueHigh: '',
+      clueGiverId: 0,
       loading: false,
-      guessValue: '',
-      maxValue: '',
-      defaultValue: '',
-      clueId: '', 
+      guessValue: 0,
+      maxValue: 0,
+      clueId: 0,
     };
   },
-  created() {
+  watch: {
+    $clueStore: {
+      deep: true,
+      handler() {
+        this.setClueProperties();
+      },
+
+    }
+  },
+  async created() {
+    this.guessValue = this.getDefaultValue();
     this.fetchClue();
   },
   computed: {
@@ -70,36 +79,45 @@ export default {
         if (response.status !== 200) {
           throw 'Failed to get clue';
         }
-        this.fetchedClue = response.data.clue;
-        this.clueGiver = response.data.player_name;
-        this.totalCluesProvided = response.data.total_clues;
-        this.clueLow = response.data.low;
-        this.clueHigh = response.data.high;
-        this.clueGiverId = response.data.player_id;
-        this.maxValue = response.data.max_value; 
-        this.clueId = response.data.id; 
-        this.setDefaultValue(); 
+        this.$clueStore.update(response.data);
+        this.clueId = response.data.id;
+        this.setClueProperties();
       } finally { 
         this.loading = false; 
       }
-    }, 
+    },
+    setClueProperties() {
+      let data = this.$clueStore.clue_by_id(this.clueId);
+      if (!data) {
+        return
+      }
+      this.prompt = data.clue;
+      this.clueGiver = data.player_name;
+      this.totalCluesProvided = data.total_clues;
+      this.clueLow = data.low;
+      this.clueHigh = data.high;
+      this.clueGiverId = data.player_id;
+      this.maxValue = data.max_value;
+      this.clueId = data.id;
+      this.guessValue = data.guess_value;
+    },
     capitalizeString(string) { 
       return string.charAt(0).toUpperCase() + string.slice(1);
-    }, 
-    setDefaultValue(){ 
-      return this.defaultValue = this.maxValue/2; 
     },
-    // async sendGuessValue() { 
-    //   this.loading = true; 
-    //   try{ 
-    //     let response = await axios.patch(`/clue/${this.clueId}`, {guess_value: this.guessValue}); //the first is the url we are going to and the second prop is the object key and then the valuewe are udating 
-    //     if (response.status != 200){ 
-    //       throw 'Failed to submit clue'
-    //     }
-    //     this.
-
-    //   }
-    // }
+    getDefaultValue(){
+      return this.maxValue/2;
+    },
+    async setGuessValue(value) {
+      this.guessValue = value;
+      try {
+        let response = await this.$axios.patch(`/clue/${this.clueId}`, {guess_value: this.guessValue});
+        if (response.status !== 200) {
+          throw 'Failed to update guess value';
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    }
   }
 }
 </script>

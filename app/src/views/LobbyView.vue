@@ -38,10 +38,16 @@ export default {
         import('@/images/character8.jpg')
       ],
       randomImage: '',
-      pollUsers: null, 
       pollGame: null,
-      gameStatus: null
     };
+  },
+  async created() {
+    const imageOptions = await Promise.all(this.images);
+    this.randomImage = imageOptions[Math.floor(Math.random() * imageOptions.length)].default;
+    this.joinGameRoom();
+  },
+  beforeUnmount() {
+    this.$socket.off('player_list');
   },
   computed: {
     playerList() {
@@ -64,14 +70,20 @@ export default {
       return this.$gameStore.hostPlayerId === this.$userStore.id;
     }
   },
-  watch: { 
-    gameStatus() {
-      if (this.gameStatus === 'CLUE_GIVING') {
-        this.$router.push('/clue')
+  watch: {
+    $gameStore: {
+      deep: true,
+      handler() {
+        if (this.$gameStore.game.status === 'CLUE_GIVING') {
+          this.$router.push('/clue');
+        }
       }
     },
   },
   methods: {
+    joinGameRoom() {
+      this.$socket.emit('join_game', {game_id: this.$gameStore.game.id, game_code: this.$gameStore.code});
+    },
     toggleBack() {
       this.$router.push('/play');
     },
@@ -81,9 +93,6 @@ export default {
       } catch (e) {
         console.log(e);
       }
-    },
-    playerRefresh() {
-      return setInterval(this.listPlayers, 1000);
     },
     async goToClues() {
       try {
@@ -100,23 +109,12 @@ export default {
     },
     async getGame() {
       try {
-        const data = await this.$gameStore.getGame();
-        this.gameStatus = data.status;
+        await this.$gameStore.getGame();
       } catch (e) {
         console.log(e);
       }
     }
   },
-  async created() {
-    const imageOptions = await Promise.all(this.images);
-    this.randomImage = imageOptions[Math.floor(Math.random() * imageOptions.length)].default;
-    this.pollUsers = this.playerRefresh();
-    this.pollGame = setInterval(this.getGame, 1000);
-  },
-  beforeUnmount() {
-    clearInterval(this.pollUsers);
-    clearInterval(this.pollGame);
-  }
 }
 </script>
 
