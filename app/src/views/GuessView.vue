@@ -41,21 +41,29 @@ export default {
       clueGiverId: 0,
       loading: false,
       maxValue: 0,
-      clueId: 0,
+      clueId: this.$gameStore.game.current_clue_id,
       clueObject: {},
     };
   },
   watch: {
+    $gameStore: {
+      deep: true,
+      handler() {
+        this.clueId = this.$gameStore.game.current_clue_id;
+      },
+    },
     $clueStore: {
       deep: true,
       handler() {
         this.setClueProperties();
       },
-
-    }
+    },
+    clueId() {
+      this.setClueProperties();
+    },
   },
   async created() {
-    this.fetchClue();
+    this.setClueProperties();
   },
   computed: {
     clueGiverName() {
@@ -77,23 +85,32 @@ export default {
         this.clueNumber++;
       }
     }, 
-    async fetchClue() { 
-      this.loading = true; 
-      try { 
-        let response = await this.$axios.get(`/game/${this.$gameStore.game.id}/guess`);
-        if (response.status !== 200) {
-          throw 'Failed to get clue';
+    async setCurrentClue() {
+      if (!this.isHost){
+        return;
+      }
+
+      let currentClueId = this.$gameStore.game.current_clue_id;
+      if (!currentClueId) {
+        try {
+          this.loading = true;
+          await this.$gameStore.setNextGuessId();
+        } catch (e) {
+          console.log(e);
         }
-        this.$clueStore.update(response.data);
-        this.clueId = response.data.id;
-        this.setClueProperties();
-      } finally { 
-        this.loading = false; 
+        finally {
+          this.loading = false;
+        }
       }
     },
     setClueProperties() {
+      if(!this.clueId){
+        this.setCurrentClue();
+        return;
+      }
       let data = this.$clueStore.clue_by_id(this.clueId);
       if (!data) {
+        this.$clueStore.fetchClue(this.clueId);
         return
       }
       this.clueObject = data;
