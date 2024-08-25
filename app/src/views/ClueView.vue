@@ -9,9 +9,9 @@
         <h2>Type a Clue</h2>
       </div>
       <div v-if="gotClue && !submittedLastClue" class="slider-wrapper">
-        <p class="clueScalePhrase1">{{ capitalizeString(clueObject.high) }}</p>
-        <Slider :min="0" :max="clueObject.max_value" :value="clueObject.value" :disabled="true" />
         <p class="clueScalePhrase2">{{ capitalizeString(clueObject.low) }}</p>
+        <Slider :min="0" :max="clueObject.max_value" :value="clueObject.value" :disabled="true" />
+        <p class="clueScalePhrase1">{{ capitalizeString(clueObject.high) }}</p>
       </div>
       <section v-if="!submittedLastClue">
         <div class="form-group">
