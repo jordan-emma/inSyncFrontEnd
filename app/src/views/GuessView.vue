@@ -4,31 +4,33 @@
       <div class="back">
         <button class="rounded-button" @click="toggleBack">Back</button>
       </div>
-      <div class="pageHeading">
-        <h2>{{ isClueGiver ? 'Your' : `${clueGiver}'s` }} Clue: {{ capitalizeString(prompt) }}</h2>
-      </div>
-      <div class="slider-wrapper">
-        <p>{{ capitalizeString(clueLow) }}</p>
-        <Slider :min="0" :max="maxValue" :value="guessValue" @value-updated="setGuessValue" :disabled="isClueGiver" />
-        <p>{{ capitalizeString(clueHigh) }}</p>
-      </div>
-      <div class="button-container">
-        <button v-if='!isClueGiver' class="rounded-button" @click="changeClueNumber">Submit</button>
-        <p v-if='isClueGiver'>Shhh! this is your clue... Don't give any hints </p>
-      </div>
-      <div>
-        <h2>{{ clueNumber }}/{{ totalCluesProvided }}</h2>
-      </div>
+      <guess-submit
+        v-if="clueObject.status === 'OPEN'"
+        :clue-giver-name="clueGiverName"
+        :prompt="capitalizeString(prompt)"
+        :clueId="clueId"
+        :canEdit="!isClueGiver"
+        :clueNumber="clueNumber"
+        :clueObject="clueObject"
+      />
+      <guess-reveal
+        v-if="clueObject.status === 'CLOSED'"
+        :host="isHost"
+        :prompt="capitalizeString(prompt)"
+        :clueObject="clueObject"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import Slider from '@/components/slider.vue';
+import GuessSubmit from '@/components/GuessSubmit.vue'
+import GuessReveal from '@/components/GuessReveal.vue'
 
 export default {
   components: {
-    Slider
+    GuessSubmit,
+    GuessReveal
   },
   data() {
     return {
@@ -36,13 +38,11 @@ export default {
       totalCluesProvided: 'total clues provided',
       prompt: '',
       clueGiver: '',
-      clueLow: '',
-      clueHigh: '',
       clueGiverId: 0,
       loading: false,
-      guessValue: 0,
       maxValue: 0,
       clueId: 0,
+      clueObject: {},
     };
   },
   watch: {
@@ -55,12 +55,17 @@ export default {
     }
   },
   async created() {
-    this.guessValue = this.getDefaultValue();
     this.fetchClue();
   },
   computed: {
+    clueGiverName() {
+      return this.isClueGiver ? 'Your' : `${this.clueGiver}'s`;
+    },
     isClueGiver() { 
       return this.$userStore.user.id === this.clueGiverId; 
+    },
+    isHost() {
+      return this.$gameStore.hostPlayerId === this.$userStore.id;
     }
   },
   methods: {
@@ -91,45 +96,19 @@ export default {
       if (!data) {
         return
       }
-      this.prompt = data.clue;
+      this.clueObject = data;
+      this.prompt = data.prompt;
       this.clueGiver = data.player_name;
       this.totalCluesProvided = data.total_clues;
-      this.clueLow = data.low;
-      this.clueHigh = data.high;
       this.clueGiverId = data.player_id;
-      this.maxValue = data.max_value;
       this.clueId = data.id;
-      this.guessValue = data.guess_value;
     },
     capitalizeString(string) { 
       return string.charAt(0).toUpperCase() + string.slice(1);
     },
-    getDefaultValue(){
-      return this.maxValue/2;
-    },
-    async setGuessValue(value) {
-      this.guessValue = value;
-      try {
-        let response = await this.$axios.patch(`/clue/${this.clueId}`, {guess_value: this.guessValue});
-        if (response.status !== 200) {
-          throw 'Failed to update guess value';
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    }
+
   }
 }
 </script>
 
-<style scoped>
-.button-container {
-  display: flex;
-  gap: 1rem;
-  padding-top: 2em;
-}
 
-h2, p {
-  color: white;
-}
-</style>

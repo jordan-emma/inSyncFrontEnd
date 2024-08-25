@@ -34,6 +34,7 @@ const socket = io.connect('http://localhost:5000');
 function connectSocket(socket) {
   return new Promise((resolve, reject) => {
     if (socket.connected) {
+      console.log("Connected: ", this.$socket.connected);
       resolve();
     } else {
       socket.on('connect', () => {

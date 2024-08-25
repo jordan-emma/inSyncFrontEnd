@@ -23,7 +23,7 @@
           />
         </div>
         <div class="button-container">
-          <button v-if="clueNumber > 1" class="rounded-button" @click="changeClueNumber(false)">Back</button>
+<!--          <button v-if="clueNumber > 1" class="rounded-button" @click="changeClueNumber(false)">Back</button>-->
           <button class="rounded-button" @click="getClue(true)">New Scale</button>
           <button v-if="clueNumber < maxClues" class="rounded-button" :disabled="!isClueEntered" @click="changeClueNumber(true)">Next Clue</button>
           <button v-if="onLastClue" class="rounded-button" @click="addClue">Submit</button>
@@ -127,9 +127,6 @@ export default {
         }
       }
     },
-    currentClue(newClue) {
-      this.isClueEntered = newClue.trim() !== ''
-    },
     submittedLastClue(newValue) {
       if (newValue) {
         this.showModal = true
@@ -146,14 +143,16 @@ export default {
   },
   methods: {
     async addClue() {
-      let clue = this.currentClue.trim()
-      if (clue) {
-        let response = await this.$axios.patch(`/clue/${this.clueObject.id}`, { clue })
-        if (response.status !== 200) {
-          alert('Failed to add clue')
-        } else if (this.onLastClue) {
-          this.submittedLastClue = true
-        }
+      let prompt = this.currentClue.trim()
+      if(!prompt) {
+        return
+      }
+
+      let response = await this.$axios.post(`/clue/${this.clueObject.id}/prompt`, { prompt })
+      if (response.status !== 200) {
+        alert('Failed to add clue')
+      } else if (this.onLastClue) {
+        this.submittedLastClue = true
       }
     },
     async getClue(refresh = false) {

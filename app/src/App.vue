@@ -20,7 +20,6 @@ export default {
   },
   async mounted() {
     await this.$connectSocket(this.$socket);
-    console.log("Connected: ", this.$socket.connected);
 
     if (this.$gameStore.game.id) {
       console.log('Rejoining game');
