@@ -11,6 +11,11 @@
     <div class="button-container">
       <button v-if='canEdit' class="rounded-button" @click="">Submit</button>
       <p v-if='!canEdit'>Shhh! this is your clue... Don't give any hints </p>
+      <message-alert
+        :show="!canEdit"
+        messageText="Shhh! this is your clue... Don't give any hints"
+        :messageIcon="alertIcon"
+      />
     </div>
     <div>
       <h2>{{ clueNumber }}/{{ clueObject.total_clues }}</h2>
@@ -21,10 +26,11 @@
 
 <script>
 import Slider from '@/components/slider.vue'
+import MessageAlert from '@/components/MessageAlert.vue'
 
 export default {
   name: 'GuessSubmit',
-  components: { Slider },
+  components: { MessageAlert, Slider },
   props:{
     canEdit: {
       type: Boolean,
@@ -46,6 +52,14 @@ export default {
       type: Object,
       required: true
     }
+  },
+  data() {
+    return {
+      alertIcon: '',
+    }
+  },
+  async created() {
+    this.alertIcon = (await import('@/images/quietIcon.png')).default;
   },
   methods: {
     async setGuessValue(guess_value) {
