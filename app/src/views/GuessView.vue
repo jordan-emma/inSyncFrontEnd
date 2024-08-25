@@ -90,8 +90,7 @@ export default {
         return;
       }
 
-      let currentClueId = this.$gameStore.game.current_clue_id;
-      if (!currentClueId) {
+      if (!this.clueId) {
         try {
           this.loading = true;
           await this.$gameStore.setNextGuessId();
