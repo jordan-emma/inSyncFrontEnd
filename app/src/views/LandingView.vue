@@ -18,7 +18,6 @@
         <button class="rounded-button floating-button1" @click="togglePlay">PLAY</button>
         <button class="rounded-button floating-button2" @click="toggleModal">HOW TO PLAY</button>
         <button class="rounded-button floating-button3">SETTINGS</button>
-        <button class="rounded-button" @click="sendMessage">SEND MESSAGE</button>
       </div>
     </div>
   </div>
@@ -30,8 +29,6 @@ import modal from '../components/modal.vue'
 
 <script>
 export default {
-  created() {
-  },
   data() {
     return {
       showModal: false,
@@ -62,13 +59,9 @@ export default {
           body: 'And remember, it’s all about teamwork—either you all win together, or you face the challenge again. Let the fun begin!'
         }
       ],
-      socket: null
     }
   },
   methods: {
-    sendMessage() {
-      this.$socket.send('Button clicked');
-    },
     togglePlay() {
       this.$router.push('/play')
     },

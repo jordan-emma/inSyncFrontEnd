@@ -44,12 +44,7 @@ export default {
   async created() {
     const imageOptions = await Promise.all(this.images);
     this.randomImage = imageOptions[Math.floor(Math.random() * imageOptions.length)].default;
-
-    this.$socket.on('player_list', (data) => {
-      this.$gameStore.players = data;
-    });
-
-    this.joinGameSocket();
+    this.joinGameRoom();
   },
   beforeUnmount() {
     this.$socket.off('player_list');
@@ -86,7 +81,7 @@ export default {
     },
   },
   methods: {
-    joinGameSocket() {
+    joinGameRoom() {
       this.$socket.emit('join_game', {game_id: this.$gameStore.game.id, game_code: this.$gameStore.code});
     },
     toggleBack() {

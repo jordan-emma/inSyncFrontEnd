@@ -31,10 +31,6 @@ export default {
       axios.defaults.headers.common['Authorization'] = this.user.token;
     }
 
-    this.$socket.on('connect', () => {
-      console.log('Socket connected');
-    });
-
     this.$socket.on('disconnect', () => {
       console.log('Socket disconnected');
     });
@@ -49,6 +45,10 @@ export default {
 
     this.$socket.on('clue_updated', (data) => {
       this.$clueStore.update(data);
+    });
+
+    this.$socket.on('player_list', (data) => {
+      this.$gameStore.players = data;
     });
   },
 }
