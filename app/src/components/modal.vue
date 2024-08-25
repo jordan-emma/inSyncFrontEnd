@@ -32,8 +32,8 @@ export default {
       default: false
     },
     header: {
-      type: String,
-      default: ''
+      type: Array,
+      default: []
     },
     blocks: {
       type: Array,
