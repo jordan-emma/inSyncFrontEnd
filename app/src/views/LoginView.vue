@@ -12,29 +12,27 @@
           </div>
           <div class="form-group">
             <label for="email">Email:</label>
-            <input id="email" type="text" v-model.trim="email" />
+            <input id="email" type="text" v-model.trim="email" @click="showAlertMessage"/>
           </div>
           <div class="form-group">
             <label for="password">Password:</label>
-            <input id="password" type="password" v-model.trim="password" />
+            <input id="password" type="password" v-model.trim="password" @click="showAlertMessage()" @keyup="passwordMismatchMessage"/>
           </div>
           <div class="form-group" v-show="showSignUpField">
             <label for="confirm_password">Confirm Password:</label>
-            <input id="confirm_password" type="password" v-model.trim="confirm_password" />
-            <p v-if="!passwordsMatch && showSignUpField" class="error-message">Passwords do not match</p>
-          </div>
-          <div v-if="!showSignUpField && !isFormValid" class="error-message-container">
-            <div class="error-message">
-              <img src="../images/reminderIcon.png" alt="Reminder Icon" class="reminder-icon" />
-              <p class="error-message-text">Don’t forget to fill in both email and password.</p>
+            <input id="confirm_password" type="password" v-model.trim="confirm_password" @keyup="passwordMismatchMessage"/>
             </div>
-          </div>
+          <message-alert
+            :show="showAlert"
+            :messageText="alertMessage"
+            :messageIcon="alertIcon"
+          />
         </div>
         <div class="button-container">
           <button v-if="!showSignUpField" class="rounded-button floating-button1" type="button" @click="toggleView('signUp')">Sign Up</button>
+          <button v-if="showSignUpField" class="rounded-button" type="button" @click="toggleView('login')">Login</button>
           <button class="rounded-button floating-button2" :disabled="!isFormValid" type="submit">{{ showSignUpField ? 'Sign Up' : 'Login' }}</button>
           <button v-if="!showSignUpField" class="rounded-button floating-button3" type="reset">Reset</button>
-          <button v-if="showSignUpField" class="rounded-button" type="button" @click="toggleView('login')">Login</button>
         </div>
       </form>
     </div>
@@ -44,7 +42,15 @@
 
 
 <script>
+import messageAlert from '../components/messageAlert.vue'
+
 export default {
+  components: {
+    messageAlert,
+  },
+  async created() {
+    this.alertIcon = (await import('@/images/reminderIcon.png')).default;
+  },
   data() {
     return {
       name: '',
@@ -52,6 +58,9 @@ export default {
       password: '',
       confirm_password: '',
       showSignUpField: false, 
+      showAlert: false,
+      alertMessage: '',
+      alertIcon: '',
     }
   },
   computed: {
@@ -77,7 +86,8 @@ export default {
       this.name = ''
       this.email = ''
       this.password = ''
-      this.confirm_password = ''
+      this.confirm_password = '',
+      this.showAlert = false;
     },
     toggleView(view) {
       this.showSignUpField = (view === 'signUp')
@@ -102,6 +112,20 @@ export default {
       finally{
         this.$loading.no(); 
       }
+    },
+    showAlertMessage() {
+      if (!this.showSignUpField && (!this.email.trim() || !this.password.trim())) {
+        this.alertMessage = 'Don’t forget to fill in both email and password.';
+        this.showAlert = true;
+      }
+    },
+    passwordMismatchMessage() {
+      if(!this.passwordsMatch && this.showSignUpField){
+        this.alertMessage = 'Passwords do not match';
+        this.showAlert = true;
+      } else if (this.passwordsMatch){
+        this.showAlert = false
+      }
     }
   }
 }
@@ -109,43 +133,6 @@ export default {
 </script>
 
 <style scoped>
-.error-message-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: 300px;
-  margin-top: 0.5rem;
-}
-
-.error-message {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 0.5rem;
-  position: relative;
-  margin-bottom: 1rem;
-}
-
-.reminder-icon {
-  position: absolute;
-  left: 1rem;
-  width: 1.5rem;
-  height: 1.5rem;
-}
-
-.error-message-text {
-  color: #47037e;
-  font-size: 1rem;
-  font-weight: bold;
-  text-align: center;
-  margin-left: 2rem; 
-}
-
 .button-container {
   display: flex;
   flex-direction: row;

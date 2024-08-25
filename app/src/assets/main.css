@@ -69,7 +69,7 @@ form {
   flex-direction: column;
   align-items: flex-start; 
   margin-bottom: 1rem;
-  width: 100%;
+  width: 300px;
   max-width: 300px;
   background-color: rgba(134, 116, 201, 0.7);
   padding: 1rem;
