@@ -9,7 +9,7 @@
       <p>{{ clueObject.high }}</p>
     </div>
     <div class="button-container">
-      <button v-if='canEdit' class="rounded-button" @click="">Submit</button>
+      <button v-if='canEdit' class="rounded-button" @click="closeClue">Submit</button>
       <p v-if='!canEdit'>Shhh! this is your clue... Don't give any hints </p>
     </div>
     <div>
@@ -53,6 +53,16 @@ export default {
         let response = await this.$axios.post(`/clue/${this.clueObject.id}/guess`, {guess_value});
         if (response.status !== 200) {
           throw 'Failed to update guess value';
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async closeClue() {
+      try {
+        let response = await this.$axios.post(`/clue/${this.clueObject.id}/close`);
+        if (response.status !== 200) {
+          throw 'Failed to close clue';
         }
       } catch (e) {
         console.log(e);
