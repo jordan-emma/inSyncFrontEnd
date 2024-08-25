@@ -35,11 +35,11 @@ export const userStore = defineStore('user', {
       }
       this.user = response.data
     },
-  }, 
+  },
   persist: {
-    enabled: true, 
+    enabled: true,
     strategies: [
-      { 
+      {
         key: 'user',
         storage: localStorage,
       }

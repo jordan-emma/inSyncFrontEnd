@@ -58,7 +58,7 @@ export default {
           title: 'Teamwork',
           body: 'And remember, it’s all about teamwork—either you all win together, or you face the challenge again. Let the fun begin!'
         }
-      ]
+      ],
     }
   },
   methods: {
@@ -80,7 +80,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.2rem; 
+  gap: 1.2rem;
 }
 
 p {
@@ -92,7 +92,7 @@ p {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(6px); 
+    transform: translateY(6px);
   }
 }
 
@@ -101,7 +101,7 @@ p {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(3px); 
+    transform: translateY(3px);
   }
 }
 
@@ -110,7 +110,7 @@ p {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-5px); 
+    transform: translateY(-5px);
   }
 }
 

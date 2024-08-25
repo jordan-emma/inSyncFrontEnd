@@ -48,13 +48,22 @@ export default {
         import('@/images/character8.jpg')
       ],
       randomImage: '',
-      pollUsers: null, 
       pollGame: null,
-      gameStatus: null, 
+      gameStatus: null,
       showAlert: true,
-      alertMessage: 'Click here to copy game code!', 
+      alertMessage: 'Click here to copy game code!',
       alertIcon: '',
     };
+  },
+  async created() {
+    const iconModule = await import('@/images/copyIcon.png');
+    const imageOptions = await Promise.all(this.images);
+    this.alertIcon = iconModule.default;
+    this.randomImage = imageOptions[Math.floor(Math.random() * imageOptions.length)].default;
+    this.joinGameRoom();
+  },
+  beforeUnmount() {
+    this.$socket.off('player_list');
   },
   computed: {
     playerList() {
@@ -77,14 +86,20 @@ export default {
       return this.$gameStore.hostPlayerId === this.$userStore.id;
     }
   },
-  watch: { 
-    gameStatus() {
-      if (this.gameStatus === 'CLUE_GIVING') {
-        this.$router.push('/clue')
+  watch: {
+    $gameStore: {
+      deep: true,
+      handler() {
+        if (this.$gameStore.game.status === 'CLUE_GIVING') {
+          this.$router.push('/clue');
+        }
       }
     },
   },
   methods: {
+    joinGameRoom() {
+      this.$socket.emit('join_game', {game_id: this.$gameStore.game.id, game_code: this.$gameStore.code});
+    },
     toggleBack() {
       this.$router.push('/play');
     },
@@ -94,9 +109,6 @@ export default {
       } catch (e) {
         console.log(e);
       }
-    },
-    playerRefresh() {
-      return setInterval(this.listPlayers, 1000);
     },
     async goToClues() {
       try {
@@ -113,36 +125,23 @@ export default {
     },
     async getGame() {
       try {
-        const data = await this.$gameStore.getGame();
-        this.gameStatus = data.status;
+        await this.$gameStore.getGame();
       } catch (e) {
         console.log(e);
       }
-    }, 
+    },
     copyText() {
       const storage = document.createElement('textarea');
-      storage.value = this.$refs.message.textContent; 
-      document.body.appendChild(storage); 
+      storage.value = this.$refs.message.textContent;
+      document.body.appendChild(storage);
       storage.select();
-      storage.setSelectionRange(0, 99999); 
+      storage.setSelectionRange(0, 99999);
       document.execCommand('copy');
-      document.body.removeChild(storage); 
-      this.copied = true; 
-      this.alertMessage = 'Copied!'; 
+      document.body.removeChild(storage);
+      this.copied = true;
+      this.alertMessage = 'Copied!';
     },
   },
-  async created() {
-    const iconModule = await import('@/images/copyIcon.png');
-    this.alertIcon = iconModule.default;
-    const imageOptions = await Promise.all(this.images);
-    this.randomImage = imageOptions[Math.floor(Math.random() * imageOptions.length)].default;
-    this.pollUsers = this.playerRefresh();
-    this.pollGame = setInterval(this.getGame, 1000);
-  },
-  beforeUnmount() {
-    clearInterval(this.pollUsers);
-    clearInterval(this.pollGame);
-  }
 }
 </script>
 
@@ -222,20 +221,20 @@ img{
     height: fit-content;
     display: flex;
   }
-  .welcome { 
-    display: flex; 
-  }
-  .buttonContainer{ 
+  .welcome {
     display: flex;
   }
-  .profilePicture{ 
+  .buttonContainer{
     display: flex;
   }
-  p{ 
+  .profilePicture{
+    display: flex;
+  }
+  p{
     display: flex;
     margin-bottom: 0.5em;
   }
-  h2{ 
+  h2{
     margin-top: 1em;
     margin-bottom: 0.5em;
   }
@@ -244,7 +243,7 @@ img{
     width: 5.8125rem;
     margin: 0;
   }
-  .rounded-button{ 
+  .rounded-button{
     padding: 0.5rem;
     margin-bottom: 0.5rem;
   }
