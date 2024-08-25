@@ -96,7 +96,7 @@ export default {
     },
     async goToClues() {
       try {
-        const response = await this.$axios.put(`/game/${this.$gameStore.game.id}/start`);
+        const response = await this.$axios.post(`/game/${this.$gameStore.game.id}/start`);
         if (response.status !== 200) {
           alert('Failed to start game');
         } else {

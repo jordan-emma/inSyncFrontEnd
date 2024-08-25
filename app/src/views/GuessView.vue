@@ -91,7 +91,7 @@ export default {
       if (!data) {
         return
       }
-      this.prompt = data.clue;
+      this.prompt = data.prompt;
       this.clueGiver = data.player_name;
       this.totalCluesProvided = data.total_clues;
       this.clueLow = data.low;
@@ -110,7 +110,7 @@ export default {
     async setGuessValue(value) {
       this.guessValue = value;
       try {
-        let response = await this.$axios.patch(`/clue/${this.clueId}`, {guess_value: this.guessValue});
+        let response = await this.$axios.post(`/clue/${this.clueId}/guess`, {guess_value: this.guessValue});
         if (response.status !== 200) {
           throw 'Failed to update guess value';
         }
