@@ -14,7 +14,11 @@
       </div>
       <div class="button-container">
         <button v-if='!isClueGiver' class="rounded-button" @click="changeClueNumber">Submit</button>
-        <p v-if='isClueGiver'>Shhh! this is your clue... Don't give any hints </p>
+        <message-alert
+            :show="showAlert"
+            :messageText="alertMessage"
+            :messageIcon="alertIcon"
+          />
       </div>
       <div>
         <h2>{{ clueNumber }}/{{ totalCluesProvided }}</h2>
@@ -25,10 +29,12 @@
 
 <script>
 import Slider from '@/components/slider.vue';
+import messageAlert from '@/components/messageAlert.vue';
 
 export default {
   components: {
-    Slider
+    Slider, 
+    messageAlert,
   },
   data() {
     return {
@@ -43,6 +49,9 @@ export default {
       guessValue: 0,
       maxValue: 0,
       clueId: 0,
+      showAlert: false,
+      alertMessage: `Shhh! this is your clue... Don't give any hints`, 
+      alertIcon: '',
     };
   },
   watch: {
@@ -51,12 +60,17 @@ export default {
       handler() {
         this.setClueProperties();
       },
-
+    }, 
+    isClueGiver(isClueGiverNow) {
+    if (isClueGiverNow) {
+      this.showAlert = true;
     }
+  }
   },
   async created() {
     this.guessValue = this.getDefaultValue();
     this.fetchClue();
+    this.alertIcon = (await import('@/images/quietIcon.png')).default;
   },
   computed: {
     isClueGiver() { 
@@ -131,5 +145,9 @@ export default {
 
 h2, p {
   color: white;
+}
+
+.slider-wrapper{ 
+  margin-bottom: 0;
 }
 </style>
