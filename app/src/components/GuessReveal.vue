@@ -43,14 +43,14 @@ export default {
   },
   methods: {
     async goToNextClue() {
-      // try {
-      //   let response = await this.$axios.post(`/clue/${this.clueObject.id}/guess`, {guess_value});
-      //   if (response.status !== 200) {
-      //     throw 'Failed to update guess value';
-      //   }
-      // } catch (e) {
-      //   console.log(e);
-      // }
+      try {
+        this.$loading.yes();
+        await this.$gameStore.setNextGuessId();
+      } catch (e) {
+        console.log(e);
+      } finally {
+        this.$loading.no();
+      }
     }
   }
 }

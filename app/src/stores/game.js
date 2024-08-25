@@ -46,6 +46,13 @@ export const gameStore = defineStore('game', {
       this.game = response.data;
       return response.data;
     },
+    async setNextGuessId(){
+      let response = await axios.post(`game/${this.game.id}/guess/next`)
+      if (response.status !== 200){
+        throw 'Failed to set next guess id'
+      }
+      return response.data;
+    }
 
   }, 
   persist: {
