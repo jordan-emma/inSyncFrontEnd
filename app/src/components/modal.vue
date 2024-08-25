@@ -6,9 +6,9 @@
           <img src="../images/close.png" @click="exit">
         </div>
         <img src="../images/howToIcon3.png" />
-        <h2>{{modalHeading}}</h2>
+        <h2>{{ modalHeading }}</h2>
       </div>
-      <p class="objective" v-html="header"></p>
+      <p class="objective" v-html="header[currentIndex]"></p>
       <div class="carousel">
         <transition name="fade" mode="out-in">
           <div class="whiteBox" :key="currentIndex">

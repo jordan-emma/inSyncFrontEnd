@@ -20,11 +20,15 @@ export default {
   },
   data() {
     return {
-      modalTitle: 'Results',
+      modalTitle: ["Clue 1", "Clue 2", "Clue 3"],
       modalHeading: 'Results',
       modalBlocks: [ 
         {
-          title: 'Clue 1',
+          title: 'Your Score',
+          body: 'Did you know that the average person spends about 6 months of their life waiting in line for food?'
+        }, 
+        {
+          title: 'Now Score',
           body: 'Did you know that the average person spends about 6 months of their life waiting in line for food?'
         }, 
       ],
