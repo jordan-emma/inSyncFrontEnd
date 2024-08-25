@@ -39,6 +39,11 @@ const router = createRouter({
           name: 'Guess',
           component: () => import('../views/GuessView.vue')
         },
+        {
+          path: '/results',
+          name: 'Results',
+          component: () => import('../views/ResultsView.vue')
+        },
       ]
     },
   ]

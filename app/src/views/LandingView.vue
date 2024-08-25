@@ -5,6 +5,7 @@
         :show="showModal"
         :header="modalTitle"
         :blocks="modalBlocks"
+        :modalHeading="modalHeading"
         @close="toggleModal"
       />
       <div class="back">
@@ -32,6 +33,7 @@ export default {
   data() {
     return {
       showModal: false,
+      modalHeading: 'How to Play',
       modalTitle: 'Team up with your <br> crew to spin the dial and hit <br> the hidden bullseye!',
       modalBlocks: [
         {
