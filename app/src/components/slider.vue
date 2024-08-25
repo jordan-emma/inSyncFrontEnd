@@ -28,7 +28,7 @@
       disabled: { 
         type: Boolean,
         default: false
-      }
+      }, 
     },
     methods: {
       updateValue(event) {
