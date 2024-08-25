@@ -6,7 +6,10 @@
       </div>
       <div class="welcome">
         <h2>Lobby</h2>
-        <h4 class="roomCode" ref="message">Room Code: {{ $gameStore.code }}</h4>
+        <div class="roomCode">
+          <h4>Room Code: </h4>
+          <h4 ref="message">{{ $gameStore.code }}</h4>
+        </div>
         <message-alert
           :show="showAlert"
           :messageText="alertMessage"
@@ -178,6 +181,11 @@ p {
 .roomCode {
 	width: fit-content;
   margin: auto;
+  display: inline-flex;
+}
+
+.roomCode h4:first-child {
+  margin-right: 0.5em; 
 }
 
 img{
