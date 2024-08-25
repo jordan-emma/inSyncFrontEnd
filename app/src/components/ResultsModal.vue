@@ -13,6 +13,9 @@
         <transition name="fade" mode="out-in">
           <div class="whiteBox" :key="currentIndex">
             <p><b>{{ blocks[currentIndex].title }}: </b>{{ blocks[currentIndex].body }}</p>
+            <p>Your Guess: {{ blocks[currentIndex].slider1 }}</p>
+            <p>Actual: {{ blocks[currentIndex].slider2 }}</p>
+            <p>Points Awarded: {{ blocks[currentIndex].pointsAwarded }}</p>
           </div>
         </transition>
         <div class="button-container">

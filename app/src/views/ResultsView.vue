@@ -1,7 +1,7 @@
 <template>
   <div class="purpleBackground">
     <div class="pageContainer">
-     <Modal 
+     <ResultsModal 
      :show="true"
      :header="modalTitle"
      :blocks="modalBlocks"
@@ -12,24 +12,30 @@
 </template>
 
 <script>
-import Modal from '@/components/modal.vue';
+import ResultsModal from '@/components/ResultsModal.vue';
 
 export default {
   components: {
-    Modal, 
+    ResultsModal, 
   },
   data() {
     return {
-      modalTitle: ["Clue 1", "Clue 2", "Clue 3"],
+      modalTitle: 'Total Points: ',
       modalHeading: 'Results',
       modalBlocks: [ 
         {
-          title: 'Your Score',
-          body: 'Did you know that the average person spends about 6 months of their life waiting in line for food?'
+          title: 'Clue 1',
+          body: 'This is Place Holder for clue 1',
+          slider1: 'This is where the frst slider will go ',
+          slider2: 'This is where the second slider will go',
+          pointsAwarded: 'This is where the points earned will go'
         }, 
         {
-          title: 'Now Score',
-          body: 'Did you know that the average person spends about 6 months of their life waiting in line for food?'
+          title: 'Clue 2',
+          body: 'This is Place Holder for clue 2',
+          slider1: 'This is where the frst slider will go ',
+          slider2: 'This is where the second slider will go',
+          pointsAwarded: 'This is where the points earned will go'
         }, 
       ],
     }
