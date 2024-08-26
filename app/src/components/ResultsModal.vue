@@ -13,8 +13,18 @@
         <transition name="fade" mode="out-in">
           <div class="whiteBox" :key="currentIndex">
             <p><b>{{ blocks[currentIndex].title }}: </b>{{ blocks[currentIndex].body }}</p>
-            <p>Your Guess: {{ blocks[currentIndex].slider1 }}</p>
-            <p>Actual: {{ blocks[currentIndex].slider2 }}</p>
+            <p>Your Guess: </p>
+            <slider
+              :value="blocks[currentIndex].guess_value"
+              :max="blocks[currentIndex].max_value"
+              :disabled="true"
+               />
+            <p>Actual: </p>
+            <slider
+              :value="blocks[currentIndex].target_value"
+              :max="blocks[currentIndex].max_value"
+              :disabled="true"
+               />
             <p>Points Awarded: {{ blocks[currentIndex].pointsAwarded }}</p>
           </div>
         </transition>
@@ -28,7 +38,12 @@
 </template>
 
 <script>
+import Slider from '@/components/slider.vue';
+
 export default {
+  components: {
+    Slider,
+  },
   props: {
     show: {
       type: Boolean,

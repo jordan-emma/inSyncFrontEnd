@@ -17,9 +17,6 @@
         :messageIcon="alertIcon"
       />
     </div>
-    <div>
-      <h2>{{ clueNumber }}/{{ clueObject.total_clues }}</h2>
-    </div>
   </div>
 
 </template>

@@ -43,6 +43,10 @@ export default {
   },
   methods: {
     async goToNextClue() {
+      if(this.$gameStore.game.status === 'FINISHED'){ 
+        this.$router.push('/results');
+        return
+      }
       try {
         this.$loading.yes();
         await this.$gameStore.setNextGuessId();

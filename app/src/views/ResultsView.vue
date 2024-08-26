@@ -23,22 +23,7 @@ export default {
       modalTitle: 'Total Points: ',
       modalHeading: 'Results',
       clueObject: {},
-      modalBlocks: [ 
-        {
-          title: '',
-          body: 'This is Place Holder for clue 1',
-          slider1: 'This is where the frst slider will go ',
-          slider2: 'This is where the second slider will go',
-          pointsAwarded: 'This is where the points earned will go'
-        }, 
-        {
-          title: 'Clue',
-          body: 'This is Place Holder for clue 2',
-          slider1: 'This is where the frst slider will go ',
-          slider2: 'This is where the second slider will go',
-          pointsAwarded: 'This is where the points earned will go'
-        }, 
-      ],
+      modalBlocks: [],
     }
   },
   methods: { 
@@ -49,16 +34,10 @@ export default {
         return {
           title: 'Clue', 
           body: clue.prompt, 
-          slider1: { 
-            max_value: clue.max_value, 
-            low_value: clue.low, 
-            guess_value: clue.guess_value
-          }, 
-          slider2: { 
-            max_value: clue.max_value, 
-            low_value: clue.low, 
-            target_value: clue.value, 
-          }, 
+          max_value: clue.max_value, 
+          low_value: clue.low, 
+          guess_value: clue.guess_value,
+          target_value: clue.value
         }
       })
     }
@@ -66,6 +45,7 @@ export default {
   created() { 
     this.clueObject = this.setBlocks(); 
     console.log(this.clueObject); 
+    this.modalBlocks = this.setBlocks();
   },
 }
 
