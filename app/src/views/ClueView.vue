@@ -142,6 +142,7 @@ export default {
   },
   methods: {
     async addClue() {
+      this.loading = true;
       let prompt = this.currentClue.trim()
       if(!prompt) {
         return
@@ -153,6 +154,7 @@ export default {
       } else if (this.onLastClue) {
         this.submittedLastClue = true
       }
+      this.loading = false;
     },
     async getClue(refresh = false) {
       this.loading = true
