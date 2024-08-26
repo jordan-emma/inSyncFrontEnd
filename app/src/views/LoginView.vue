@@ -51,6 +51,7 @@ export default {
   async created() {
     this.alertIcon = (await import('@/images/reminderIcon.png')).default;
     this.$userStore.clear(); 
+    this.$gameStore.clear(); 
   },
   data() {
     return {
