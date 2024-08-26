@@ -1,7 +1,6 @@
 <template>
   <div class="purpleBackground">
     <div class="pageContainer">
-      <LoadingModal :show="loading" />
       <div class="back">
         <button class="rounded-button" @click="toggleBack">Back</button>
       </div>
@@ -44,13 +43,11 @@
 
 <script>
 import Slider from '../components/slider.vue'
-import LoadingModal from '../components/loadingModal.vue'
 import FunFactsModal from '../components/funFactsModal.vue'
 
 export default {
   components: {
     Slider,
-    LoadingModal,
     FunFactsModal
   },
   data() {
@@ -60,7 +57,6 @@ export default {
       clueObject: {},
       gotClue: false,
       maxClues: 3,
-      loading: false,
       waiting: false,
       submittedLastClue: false,
       showModal: false, 
@@ -142,7 +138,7 @@ export default {
   },
   methods: {
     async addClue() {
-      this.loading = true;
+      this.$loading.yes();
       let prompt = this.currentClue.trim()
       if(!prompt) {
         return
@@ -154,10 +150,10 @@ export default {
       } else if (this.onLastClue) {
         this.submittedLastClue = true
       }
-      this.loading = false;
+      this.$loading.no();
     },
     async getClue(refresh = false) {
-      this.loading = true
+      this.$loading.yes();
       let url = `/game/${this.$gameStore.game.id}/clue/${this.clueNumber}`
       if (refresh) {
         url = `/clue/${this.clueObject.id}/refresh`
@@ -173,7 +169,7 @@ export default {
       } catch (e) {
         console.log(e)
       } finally {
-        this.loading = false
+        this.$loading.no();
       }
     },
     async changeClueNumber(increment) {
