@@ -22,7 +22,6 @@ export default {
     return {
       modalTitle: 'Total Points: ',
       modalHeading: 'Results',
-      clueObject: {},
       modalBlocks: [],
     }
   },
@@ -44,10 +43,10 @@ export default {
           player_name: clue.player_name,
         }
       })
-    }
+    }, 
+
   }, 
   created() { 
-    this.clueObject = this.setBlocks(); 
     this.modalBlocks = this.setBlocks();
   },
 }

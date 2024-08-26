@@ -8,7 +8,7 @@
         <img src="../images/resultsIcon.png" />
         <h2>{{ modalHeading }}</h2>
       </div>
-      <p class="objective" v-html="header"></p>
+      <p class="objective">{{header}} {{ runningTotal }}</p>
       <div v-if="showArrows" class="carousel" >
         <transition name="fade" mode="out-in">
           <div class="whiteBox" :key="currentIndex">
@@ -71,13 +71,23 @@ export default {
     modalHeading: {
       type: String, 
       default: ''
-    }
+    }, 
   },
   data() {
     return {
       currentIndex: 0, 
       showArrows: true,
     };
+  },
+  computed: {
+    runningTotal() { 
+      let totalScore = 0;
+      let finalIndex =  this.showArrows ? this.currentIndex : this.blocks.length-1
+      for (let i=0; i<= finalIndex; i++){ 
+        totalScore += this.blocks[i].score; 
+      }
+      return totalScore;
+    }, 
   },
   methods: {
     close(e) {
@@ -105,7 +115,7 @@ export default {
     }, 
     playAgain() { 
       this.$router.push('/play')
-    }
+    }, 
   }
 };
 </script>
