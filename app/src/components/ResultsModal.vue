@@ -23,7 +23,7 @@
                />
                <p>{{ blocks[currentIndex].high_prompt}}</p>
               </div>
-            <p><b>Actual: </b></p>
+            <p><b>{{blocks[currentIndex].player_name}} said: </b></p>
             <div class="sliderContainer">
               <p>{{ blocks[currentIndex].low_prompt}}</p>
               <slider
@@ -33,7 +33,7 @@
                />
                <p>{{ blocks[currentIndex].high_prompt}}</p>
             </div>
-            <p><b>Points Earned: </b> {{ blocks[currentIndex].pointsAwarded }}</p>
+            <p><b>Points Earned: </b> {{ blocks[currentIndex].score }}</p>
           </div>
         </transition>
         <div v-if="showArrows" class="button-container">

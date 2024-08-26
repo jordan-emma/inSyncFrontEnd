@@ -41,6 +41,7 @@ export default {
           low_prompt: clue.low, 
           high_prompt: clue.high,
           score: 3,
+          player_name: clue.player_name,
         }
       })
     }

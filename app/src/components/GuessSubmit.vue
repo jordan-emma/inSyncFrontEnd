@@ -10,7 +10,6 @@
     </div>
     <div class="button-container">
       <button v-if='canEdit' class="rounded-button" @click="closeClue">Submit</button>
-      <p v-if='!canEdit'>Shhh! this is your clue... Don't give any hints </p>
       <message-alert
         :show="!canEdit"
         messageText="Shhh! this is your clue... Don't give any hints"
