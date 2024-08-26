@@ -55,5 +55,48 @@ To set up this project locally, follow these steps:
 ## Usage 
 Once the development server is running, you can access the game in your web browser by navigating to http://localhost:5173. From there, you can experience the full functionality of InSync. 
 
+## Gameplay Instructions
+
+1. **Open the Game**:
+   - Launch the game in both an incognito window and a regular tab.
+
+2. **Sign Up**:
+   - Register your account in each tab.
+
+3. **Start Playing**:
+   - Click the "Play" button in both tabs.
+
+4. **Host and Join**:
+   - In one tab, Player 1 selects "Host Game" to start a new game.
+   - In the other tab, Player 2 selects "Join Game" and enters the game code displayed on the host's screen.
+
+5. **Start the Game**:
+   - The host starts the game once all players have joined.
+
+6. **Provide Clues**:
+   - Each player provides clues, with an option to receive a new scale if desired.
+
+7. **Clue Requirement**:
+   - The game will pause until all players have submitted 3 clues.
+
+8. **Gameplay Dynamics**:
+   - The clue giver's scale will be disabled once their clue is given. The clue giver should refrain from giving any additional hints.
+   - Non-clue-givers can discuss and adjust the scale position. These adjustments will be updated in real-time on all screens.
+   - Any player (excluding the clue giver) can submit the group's guess at any time. The game will then proceed to the guess reveal, where the guess slider and the target slider are displayed.
+
+9. **Game Progression**:
+   - Only the host has access to the "Next" button, which controls the game's progression.
+
+10. **Results**:
+    - After all clues have been revealed and answered, each player will see a "Results" button.
+    - Clicking this will show how many points the team scored for each clue.
+
+11. **Final Score**:
+    - On the results page, the total points and the total potential points are displayed.
+    - The team is ranked based on their score and receives one of five possible responses according to their ranking.
+
+12. **Replay Option**:
+    - Players can choose to play again, which will return them to the play page where they can either host a new game or join an existing one.
+
 ## About the Developer 
 As a frontend developer, this is my first full-fledged project, and it represents the culmination of my learning and growth in web development. Through InSync, I’ve explored various aspects of frontend development, including Vue.js, responsive design, real-time interactivity, and user experience optimisation. 
