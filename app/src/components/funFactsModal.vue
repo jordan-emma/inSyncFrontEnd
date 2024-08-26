@@ -5,7 +5,7 @@
         <div class="closeButton">
           <img src="../images/close.png" @click="exit" alt="Close"/>
         </div>
-        <img src="../images/waitingIcon.png" alt="Waiting Icon"/>
+        <img class="waitingIcon" src="../images/waitingIcon.png" alt="Waiting Icon"/>
         <h2>Waiting for other players...</h2>
       </div>
       <p class="objective" v-html="header"></p>
@@ -221,6 +221,11 @@ h2 {
 
 .fade-enter, .fade-leave-to {
   opacity: 0;
+}
+
+.waitingIcon{ 
+ height: 3em; 
+ width: 3em;
 }
 
 </style>
