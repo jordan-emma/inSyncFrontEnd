@@ -5,7 +5,7 @@
     </div>
     <div class="slider-wrapper">
       <p>{{ clueObject.low }}</p>
-      <Slider :min="0" :max="clueObject.max_value" :value="clueObject.guess_value" @value-updated="setGuessValue" :disabled="!canEdit" />
+      <Slider :max="clueObject.max_value" :value="clueObject.guess_value" @value-updated="setGuessValue" :disabled="!canEdit" />
       <p>{{ clueObject.high }}</p>
     </div>
     <div class="button-container">

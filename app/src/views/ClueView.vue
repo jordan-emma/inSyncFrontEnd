@@ -10,7 +10,7 @@
       </div>
       <div v-if="gotClue && !submittedLastClue" class="slider-wrapper">
         <p class="clueScalePhrase2">{{ capitalizeString(clueObject.low) }}</p>
-        <Slider :min="0" :max="clueObject.max_value" :value="clueObject.value" :disabled="true" />
+        <Slider :max="clueObject.max_value" :value="clueObject.value" :disabled="true" />
         <p class="clueScalePhrase1">{{ capitalizeString(clueObject.high) }}</p>
       </div>
       <section v-if="!submittedLastClue">
@@ -23,7 +23,6 @@
           />
         </div>
         <div class="button-container">
-<!--          <button v-if="clueNumber > 1" class="rounded-button" @click="changeClueNumber(false)">Back</button>-->
           <button class="rounded-button" @click="getClue(true)">New Scale</button>
           <button v-if="clueNumber < maxClues" class="rounded-button" :disabled="!isClueEntered" @click="changeClueNumber(true)">Next Clue</button>
           <button v-if="onLastClue" class="rounded-button" @click="addClue">Submit</button>

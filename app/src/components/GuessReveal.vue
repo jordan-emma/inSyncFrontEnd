@@ -6,12 +6,12 @@
     </div>
     <div class="slider-wrapper">
       <p>{{ clueObject.low }}</p>
-      <Slider :min="0" :max="clueObject.max_value" :value="clueObject.guess_value" :disabled="true" />
+      <Slider :max="clueObject.max_value" :value="clueObject.guess_value" :disabled="true" />
       <p>{{ clueObject.high }}</p>
     </div>
     <div class="slider-wrapper">
       <p>{{ clueObject.low }}</p>
-      <Slider :min="0" :max="clueObject.max_value" :value="clueObject.value" :disabled="true" />
+      <Slider :max="clueObject.max_value" :value="clueObject.value" :disabled="true" />
       <p>{{ clueObject.high }}</p>
     </div>
     <div class="button-container">
