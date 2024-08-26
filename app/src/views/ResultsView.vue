@@ -40,6 +40,7 @@ export default {
           target_value: clue.value, 
           low_prompt: clue.low, 
           high_prompt: clue.high,
+          score: 3,
         }
       })
     }

@@ -18,7 +18,6 @@
       <div class="button-container">
         <button class="rounded-button floating-button1" @click="togglePlay">PLAY</button>
         <button class="rounded-button floating-button2" @click="toggleModal">HOW TO PLAY</button>
-        <button class="rounded-button floating-button3">SETTINGS</button>
       </div>
     </div>
   </div>
