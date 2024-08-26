@@ -2,7 +2,7 @@
   <div class="purpleBackground">
     <div class="pageContainer">
       <div class="back">
-        <button class="rounded-button" @click="toggleBack">Back</button>
+        <button class="rounded-button" @click="toggleBack">Exit</button>
       </div>
       <div class="pageHeading" v-if="!submittedLastClue">
         <h2>Type a Clue</h2>
@@ -177,7 +177,7 @@ export default {
       this.clueNumber = increment ? this.clueNumber + 1 : this.clueNumber - 1
     },
     toggleBack() {
-      this.$router.push('/lobby')
+      this.$router.push('/play')
     },
     capitalizeString(string) {
       return string.charAt(0).toUpperCase() + string.slice(1)

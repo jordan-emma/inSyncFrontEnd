@@ -2,7 +2,7 @@
   <div class="purpleBackground">
     <div class="pageContainer">
       <div class="back">
-        <button class="rounded-button" @click="toggleBack">Back</button>
+        <button class="rounded-button" @click="toggleBack">Exit</button>
       </div>
       <guess-submit
         v-if="clueObject.status === 'OPEN'"
@@ -77,7 +77,7 @@ export default {
   },
   methods: {
     toggleBack() {
-      this.$router.push('/lobby');
+      this.$router.push('/play');
     }, 
     changeClueNumber() {
       if(this.clueNumber < this.totalCluesProvided){
