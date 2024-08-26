@@ -29,7 +29,7 @@
       </div>
     </div>
   </div>
-</template>
+</template> 
 
 <script>
 import MessageAlert from '@/components/MessageAlert.vue'
