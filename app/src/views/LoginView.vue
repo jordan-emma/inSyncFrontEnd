@@ -42,7 +42,7 @@
 
 
 <script>
-import messageAlert from '../components/messageAlert.vue'
+import messageAlert from '../components/MessageAlert.vue'
 
 export default {
   components: {
