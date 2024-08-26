@@ -73,6 +73,7 @@ export default {
   display: flex;
   gap: 1rem;
   padding-top: 2em;
+  justify-content: center;
 }
 
 h2, p {
