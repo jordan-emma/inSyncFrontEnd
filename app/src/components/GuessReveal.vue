@@ -87,10 +87,19 @@ h2, p {
   font-size: 2em;
   justify-content: center;
   display: flex;
+  background-color: rgba(134, 116, 201, 0.7);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  width: 50%;
+  margin: 1em auto;
+  
 }
+
 .pageHeading { 
   margin-bottom: 2em;
 }
+
+
 
 @media (max-width: 600px) {
   .pageHeading  {
