@@ -5,7 +5,8 @@
         <img src="../images/resultsIcon.png" />
         <h2>{{ modalHeading }}</h2>
       </div>
-      <p class="objective">{{header}} {{ runningTotal }}</p>
+      <p class="objective">{{header}} {{ runningTotal }} <span v-if="!showArrows">/ {{ $gameStore.game.potential_score }}</span></p>
+      <p class="objective" v-if="!showArrows">{{overAllScore}}</p>
       <div v-if="showArrows" class="carousel" >
         <transition name="fade" mode="out-in">
           <div class="whiteBox" :key="currentIndex">
@@ -85,6 +86,31 @@ export default {
       }
       return totalScore;
     }, 
+    overAllScore() {
+  let scorePercentage = (this.$gameStore.game.score / this.$gameStore.game.potential_score) * 100;
+  
+  if (scorePercentage < 20) { 
+    return 'You’re about as useful as a black hole—nothing escapes your grasp, not even common sense.';
+  } 
+  if (scorePercentage < 40) { 
+    return 'Your intelligence is like the vast emptiness of space—plenty of room for improvement.';
+  }
+  if (scorePercentage < 60) { 
+    return 'If brains were stars, you’d be a dimly lit one in the night sky—there’s potential for more brilliance.';
+  }
+  if (scorePercentage < 80) { 
+    return 'You’re like a comet—making an impressive appearance but with room to shine even brighter.';
+  }
+  if (scorePercentage < 100) { 
+    return `That’s pretty solid—you're like a planet with potential, almost in the habitable zone. Keep up the good work, and you might just orbit greatness someday!`;
+  }
+  if (scorePercentage === 100) { 
+    return 'Congratulations on scoring 100%—you’re a supernova in a galaxy of stars, truly outstanding!';
+  }
+  
+  return '';
+}
+
   },
   methods: {
     nextSlide() {

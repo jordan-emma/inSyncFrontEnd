@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 import Base from '@/views/Base.vue'
 
 const router = createRouter({
@@ -8,6 +7,7 @@ const router = createRouter({
     {
       path: '/',
       component: Base,
+      redirect: '/login',
       children: [
         {
           path: '/landing',
@@ -44,8 +44,12 @@ const router = createRouter({
           name: 'Results',
           component: () => import('../views/ResultsView.vue')
         },
-      ]
+      ], 
     },
+    {
+      path: '/:pathMatch(.*)*', 
+      redirect: '/login'
+    }
   ]
 })
 

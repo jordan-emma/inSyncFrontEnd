@@ -57,14 +57,15 @@ export default {
     };
   },
   async created() {
-    const iconModule = await import('@/images/copyIcon.png');
-    this.alertIcon = iconModule.default;
+    this.alertIcon = (await import('@/images/copyIcon.png')).default;
     const imageOptions = await Promise.all(this.images);
     this.randomImage = imageOptions[Math.floor(Math.random() * imageOptions.length)].default;
-    this.joinGameRoom();
   },
-  beforeUnmount() {
-    this.$socket.off('player_list');
+  mounted() { 
+    this.joinGameRoom();
+    if (!$userStore.isLoggedIn){ 
+      this.$router.push('/login');
+    }
   },
   computed: {
     playerList() {

@@ -50,6 +50,7 @@ export default {
   },
   async created() {
     this.alertIcon = (await import('@/images/reminderIcon.png')).default;
+    this.$userStore.clear(); 
   },
   data() {
     return {
