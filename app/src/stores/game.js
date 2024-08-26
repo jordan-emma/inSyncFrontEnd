@@ -52,8 +52,11 @@ export const gameStore = defineStore('game', {
         throw 'Failed to set next guess id'
       }
       return response.data;
-    }
-
+    }, 
+    clear() { 
+      this.game=null;
+      this.players=[];
+    },
   }, 
   persist: {
     enabled: true, 

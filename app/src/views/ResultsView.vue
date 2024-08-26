@@ -49,17 +49,21 @@ export default {
         return {
           title: 'Clue', 
           body: clue.prompt, 
-          slider: { 
+          slider1: { 
+            max_value: clue.max_value, 
+            low_value: clue.low, 
+            guess_value: clue.guess_value
+          }, 
+          slider2: { 
             max_value: clue.max_value, 
             low_value: clue.low, 
             target_value: clue.value, 
-            guess_value: clue.guess_value
           }, 
         }
       })
     }
   }, 
-  mounted() { 
+  created() { 
     this.clueObject = this.setBlocks(); 
     console.log(this.clueObject); 
   },
