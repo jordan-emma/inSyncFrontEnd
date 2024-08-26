@@ -252,18 +252,6 @@ h2 {
   font-size: 1em;
 }
 
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  height:4em;
-  width: 4em; 
-  background-size: cover; 
-  cursor: grab;
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
 p{
   color: #2d1b5e;
 }
