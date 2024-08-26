@@ -226,6 +226,7 @@ h2 {
 .waitingIcon{ 
  height: 3em; 
  width: 3em;
+ margin: 0.4em;
 }
 
 </style>
