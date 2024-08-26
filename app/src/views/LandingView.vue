@@ -34,7 +34,7 @@ export default {
     return {
       showModal: false,
       modalHeading: 'How to Play',
-      modalTitle: ['Team up with your <br> crew to spin the dial and hit <br> the hidden bullseye!'],
+      modalTitle: 'Team up with your <br> crew to spin the dial and hit <br> the hidden bullseye!',
       modalBlocks: [
         {
           title: 'The Catch',
