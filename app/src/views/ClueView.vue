@@ -19,6 +19,7 @@
             type="text"
             v-model="currentClue"
             placeholder="Enter your clue..."
+            maxlength="120"
           />
         </div>
         <div class="button-container">
@@ -102,6 +103,9 @@ export default {
     }
   },
   created() {
+    if(!this.$userStore.isLoggedIn && this.$gameStore.empty){ 
+      return
+    }
     this.getClue()
   },
   watch: {
@@ -117,7 +121,7 @@ export default {
     $gameStore: {
       deep: true,
       handler() {
-        if (this.$gameStore.game.status === 'GUESSING') {
+        if (this.$gameStore?.game?.status === 'GUESSING') {
           this.$router.push('/guess');
         }
       }
@@ -153,6 +157,9 @@ export default {
       this.$loading.no();
     },
     async getClue(refresh = false) {
+      if(this.$gameStore.empty){ 
+        return
+      }
       this.$loading.yes();
       let url = `/game/${this.$gameStore.game.id}/clue/${this.clueNumber}`
       if (refresh) {
@@ -185,8 +192,6 @@ export default {
     toggleModal() {
       this.showModal = !this.showModal
     }
-  },
-  beforeUnmount() {
   },
 }
 </script>

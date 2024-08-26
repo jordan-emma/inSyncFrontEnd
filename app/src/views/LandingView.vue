@@ -70,8 +70,9 @@ export default {
       this.$router.push('/play')
     },
     logOut() {
+      this.$userStore.clear(); 
       this.clearStores(); 
-      this.$router.push('/login')
+      this.$router.push('/login');
     },
     toggleModal() {
       this.showModal = !this.showModal

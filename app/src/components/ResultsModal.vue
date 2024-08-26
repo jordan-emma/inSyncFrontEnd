@@ -10,28 +10,28 @@
       <div v-if="showArrows" class="carousel" >
         <transition name="fade" mode="out-in">
           <div class="whiteBox" :key="currentIndex">
-            <p><b>{{ blocks[currentIndex].title }}: </b>{{ blocks[currentIndex].body }}</p>
+            <p><b>{{ blocks[currentIndex]?.title }}: </b>{{ blocks[currentIndex]?.body }}</p>
             <p><b>Group Guess: </b></p>
             <div class="sliderContainer">
-              <p>{{ blocks[currentIndex].low_prompt}}</p>
+              <p>{{ blocks[currentIndex]?.low_prompt}}</p>
               <slider
-                :value="blocks[currentIndex].guess_value"
-                :max="blocks[currentIndex].max_value"
+                :value="blocks[currentIndex]?.guess_value"
+                :max="blocks[currentIndex]?.max_value"
                 :disabled="true"
                />
-               <p>{{ blocks[currentIndex].high_prompt}}</p>
+               <p>{{ blocks[currentIndex]?.high_prompt}}</p>
               </div>
-            <p><b>{{blocks[currentIndex].player_name}} said: </b></p>
+            <p><b>{{blocks[currentIndex]?.player_name}} said: </b></p>
             <div class="sliderContainer">
-              <p>{{ blocks[currentIndex].low_prompt}}</p>
+              <p>{{ blocks[currentIndex]?.low_prompt}}</p>
               <slider
-                :value="blocks[currentIndex].target_value"
-                :max="blocks[currentIndex].max_value"
+                :value="blocks[currentIndex]?.target_value"
+                :max="blocks[currentIndex]?.max_value"
                 :disabled="true"
                />
-               <p>{{ blocks[currentIndex].high_prompt}}</p>
+               <p>{{ blocks[currentIndex]?.high_prompt}}</p>
             </div>
-            <p><b>Points Earned: </b> {{ blocks[currentIndex].score }}</p>
+            <p><b>Points Earned: </b> {{ blocks[currentIndex]?.score }}</p>
           </div>
         </transition>
         <div v-if="showArrows" class="button-container">
@@ -79,6 +79,9 @@ export default {
   },
   computed: {
     runningTotal() { 
+      if(this.blocks.length === 0){ 
+        return 0;
+      }
       let totalScore = 0;
       let finalIndex =  this.showArrows ? this.currentIndex : this.blocks.length-1
       for (let i=0; i<= finalIndex; i++){ 

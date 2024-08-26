@@ -40,7 +40,7 @@ export default {
       clueGiver: '',
       clueGiverId: 0,
       maxValue: 0,
-      clueId: this.$gameStore.game.current_clue_id,
+      clueId: this.$gameStore.game?.current_clue_id,
       clueObject: {},
     };
   },
@@ -62,6 +62,9 @@ export default {
     },
   },
   async created() {
+    if(!this.$userStore.isLoggedIn && this.$gameStore.empty){ 
+      return 
+    }
     this.setClueProperties();
   },
   computed: {

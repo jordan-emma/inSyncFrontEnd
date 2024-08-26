@@ -47,6 +47,9 @@ export default {
 
   }, 
   created() { 
+    if(!this.$userStore.isLoggedIn && this.$gameStore.empty){
+      return
+    }
     this.modalBlocks = this.setBlocks();
   },
 }

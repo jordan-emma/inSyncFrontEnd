@@ -12,15 +12,15 @@
           </div>
           <div class="form-group">
             <label for="email">Email:</label>
-            <input id="email" type="text" v-model.trim="email" @click="showAlertMessage"/>
+            <input id="email" type="email" autocomplete="email" v-model.trim="email" @click="showAlertMessage"/>
           </div>
           <div class="form-group">
             <label for="password">Password:</label>
-            <input id="password" type="password" v-model.trim="password" @click="showAlertMessage()" @keyup="passwordMismatchMessage"/>
+            <input id="password" autocomplete="password"type="password" v-model.trim="password" @click="showAlertMessage()" @keyup="passwordMismatchMessage"/>
           </div>
           <div class="form-group" v-show="showSignUpField">
             <label for="confirm_password">Confirm Password:</label>
-            <input id="confirm_password" type="password" v-model.trim="confirm_password" @keyup="passwordMismatchMessage"/>
+            <input id="confirm_password" autocomplete="new-password" type="password" v-model.trim="confirm_password" @keyup="passwordMismatchMessage"/>
             </div>
           <message-alert
             :show="showAlert"

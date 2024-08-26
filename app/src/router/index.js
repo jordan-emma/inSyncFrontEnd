@@ -22,7 +22,7 @@ const router = createRouter({
         {
           path: '/lobby',
           name: 'Lobby',
-          component: () => import('../views/LobbyView.vue')
+          component: () => import('../views/LobbyView.vue') 
         },
         {
           path: '/play',

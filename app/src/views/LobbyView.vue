@@ -63,9 +63,6 @@ export default {
   },
   mounted() { 
     this.joinGameRoom();
-    if (!$userStore.isLoggedIn){ 
-      this.$router.push('/login');
-    }
   },
   computed: {
     playerList() {
@@ -111,6 +108,9 @@ export default {
       this.alertMessage = 'Copied!';
     },
     joinGameRoom() {
+      if(this.$gameStore.empty){
+        return
+      }
       this.$socket.emit('join_game', {game_id: this.$gameStore.game.id, game_code: this.$gameStore.code});
     },
     toggleBack() {
