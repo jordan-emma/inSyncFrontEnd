@@ -2,9 +2,6 @@
   <div class="container" v-if="show" @click="close">
     <div class="content">
       <div class="header">
-        <div class="closeButton">
-          <img src="../images/close.png" @click="exit">
-        </div>
         <img src="../images/resultsIcon.png" />
         <h2>{{ modalHeading }}</h2>
       </div>
@@ -90,14 +87,6 @@ export default {
     }, 
   },
   methods: {
-    close(e) {
-      if (e.target.className === "container") {
-        this.exit();
-      }
-    },
-    exit() {
-      this.$emit('close');
-    },
     nextSlide() {
       if (this.currentIndex < this.blocks.length - 1) {
         this.currentIndex++;
@@ -167,20 +156,6 @@ h2 {
   font-weight: 700;
   padding-top: 1.5%;
   color: #2d1b5e;;
-}
-
-.closeButton {
-  position: absolute; 
-  top: 1.2em; 
-  right: 0.1em; 
-  margin: 0;
-  background-color: transparent;
-  border: transparent;
-}
-
-.closeButton img {
-  width: 30px; 
-  height: 30px; 
 }
 
 @media (max-width: 600px) {
