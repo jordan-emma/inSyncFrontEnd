@@ -5,34 +5,45 @@
         <div class="closeButton">
           <img src="../images/close.png" @click="exit">
         </div>
-        <img src="../images/howToIcon3.png" />
+        <img src="../images/resultsIcon.png" />
         <h2>{{ modalHeading }}</h2>
       </div>
       <p class="objective" v-html="header"></p>
-      <div class="carousel">
+      <div v-if="showArrows" class="carousel" >
         <transition name="fade" mode="out-in">
           <div class="whiteBox" :key="currentIndex">
             <p><b>{{ blocks[currentIndex].title }}: </b>{{ blocks[currentIndex].body }}</p>
-            <p>Your Guess: </p>
-            <slider
-              :value="blocks[currentIndex].guess_value"
-              :max="blocks[currentIndex].max_value"
-              :disabled="true"
+            <p><b>Group Guess: </b></p>
+            <div class="sliderContainer">
+              <p>{{ blocks[currentIndex].low_prompt}}</p>
+              <slider
+                :value="blocks[currentIndex].guess_value"
+                :max="blocks[currentIndex].max_value"
+                :disabled="true"
                />
-            <p>Actual: </p>
-            <slider
-              :value="blocks[currentIndex].target_value"
-              :max="blocks[currentIndex].max_value"
-              :disabled="true"
+               <p>{{ blocks[currentIndex].high_prompt}}</p>
+              </div>
+            <p><b>Actual: </b></p>
+            <div class="sliderContainer">
+              <p>{{ blocks[currentIndex].low_prompt}}</p>
+              <slider
+                :value="blocks[currentIndex].target_value"
+                :max="blocks[currentIndex].max_value"
+                :disabled="true"
                />
-            <p>Points Awarded: {{ blocks[currentIndex].pointsAwarded }}</p>
+               <p>{{ blocks[currentIndex].high_prompt}}</p>
+            </div>
+            <p><b>Points Earned: </b> {{ blocks[currentIndex].pointsAwarded }}</p>
           </div>
         </transition>
-        <div class="button-container">
+        <div v-if="showArrows" class="button-container">
           <button class="prev" @click="prevSlide"><</button>
           <button class="next" @click="nextSlide">></button>
         </div>
       </div>
+      <div class="button-container">
+          <button v-if="!showArrows" class="rounded-button" @click="playAgain">Play Again</button>
+        </div>
     </div>
   </div>
 </template>
@@ -64,7 +75,8 @@ export default {
   },
   data() {
     return {
-      currentIndex: 0
+      currentIndex: 0, 
+      showArrows: true,
     };
   },
   methods: {
@@ -81,6 +93,7 @@ export default {
         this.currentIndex++;
       } else {
         this.currentIndex = 0;
+        this.showArrows = false;
       }
     },
     prevSlide() {
@@ -89,6 +102,9 @@ export default {
       } else {
         this.currentIndex = this.blocks.length - 1;
       }
+    }, 
+    playAgain() { 
+      this.$router.push('/play')
     }
   }
 };
@@ -113,7 +129,7 @@ export default {
   border-radius: 1rem;
   box-shadow: -10px 10px 20px 5px rgba(29, 22, 51, 0.6);
   font-family: 'Arial', 'sans-serif';
-  font-size: 0.98rem; 
+  font-size: 1.5rem; 
   overflow-y: auto;
   padding-bottom: 2em; 
   background-color: #60129d; 
@@ -140,7 +156,7 @@ h2 {
   font-size: 1rem;
   font-weight: 700;
   padding-top: 1.5%;
-  color: #382a5f;
+  color: #2d1b5e;;
 }
 
 .closeButton {
@@ -236,4 +252,60 @@ h2 {
   opacity: 0;
 }
 
+.prompt_container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5em;
+}
+
+.sliderContainer { 
+  width: 100%;
+  border-radius: 4px;
+  padding:1em;
+  display: inline-flex;
+  font-size: 1em;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height:4em;
+  width: 4em; 
+  background-size: cover; 
+  cursor: grab;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+p{
+  color: #2d1b5e;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+
+  background: linear-gradient(
+    to right,
+    rgb(231, 210, 243) 0%,
+    #84369c 100% 
+  );
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height:4em;
+  width: 4em; 
+  background: url("../images/starOption.png") center no-repeat;
+  background-size: cover; 
+  cursor: grab;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.sliderContainer p{
+  padding: 0.5em;
+}
 </style>

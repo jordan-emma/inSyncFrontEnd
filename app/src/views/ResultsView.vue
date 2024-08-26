@@ -37,14 +37,15 @@ export default {
           max_value: clue.max_value, 
           low_value: clue.low, 
           guess_value: clue.guess_value,
-          target_value: clue.value
+          target_value: clue.value, 
+          low_prompt: clue.low, 
+          high_prompt: clue.high,
         }
       })
     }
   }, 
   created() { 
     this.clueObject = this.setBlocks(); 
-    console.log(this.clueObject); 
     this.modalBlocks = this.setBlocks();
   },
 }

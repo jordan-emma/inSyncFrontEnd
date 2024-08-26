@@ -15,7 +15,8 @@
       <p>{{ clueObject.high }}</p>
     </div>
     <div class="button-container">
-      <button v-if='host' class="rounded-button" @click="goToNextClue">Next</button>
+      <button v-if='host && !isGameFinished' class="rounded-button" @click="goToNextClue">Next</button>
+      <button v-if="isGameFinished" class="rounded-button" @click="goToResults">Results</button>
     </div>
   </div>
 
@@ -41,12 +42,13 @@ export default {
       required: true
     }
   },
+  computed: { 
+    isGameFinished(){ 
+      return this.$gameStore.game.status === 'FINISHED';
+    }
+  },
   methods: {
     async goToNextClue() {
-      if(this.$gameStore.game.status === 'FINISHED'){ 
-        this.$router.push('/results');
-        return
-      }
       try {
         this.$loading.yes();
         await this.$gameStore.setNextGuessId();
@@ -54,6 +56,12 @@ export default {
         console.log(e);
       } finally {
         this.$loading.no();
+      }
+    }, 
+    goToResults(){ 
+      if(this.isGameFinished){ 
+        this.$router.push('/results');
+        return
       }
     }
   }
