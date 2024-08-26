@@ -1,6 +1,7 @@
 <template>
   <div class="purpleBackground">
     <div class="pageContainer">
+      <LoadingModal :show="loading" />
       <div class="back">
         <button class="rounded-button" @click="toggleBack">Back</button>
       </div>
@@ -33,9 +34,13 @@
 
 <script>
 import MessageAlert from '@/components/MessageAlert.vue'
+import LoadingModal from '../components/loadingModal.vue'
 
 export default {
-  components: { MessageAlert },
+  components: { 
+    MessageAlert, 
+    LoadingModal
+   },
   data() {
     return {
       images: [
@@ -51,7 +56,8 @@ export default {
       randomImage: '',
       showAlert: true,
       alertMessage: 'Click here to copy game code!',
-      alertIcon: ''
+      alertIcon: '', 
+      loading: false,
     };
   },
   async created() {
@@ -122,6 +128,7 @@ export default {
     },
     async goToClues() {
       try {
+        this.loading = true;
         const response = await this.$axios.post(`/game/${this.$gameStore.game.id}/start`);
         if (response.status !== 200) {
           alert('Failed to start game');
@@ -131,6 +138,8 @@ export default {
       } catch (e) {
         alert('Failed to start game');
         console.log(e);
+      } finally {
+        this.loading = false; 
       }
     },
     async getGame() {

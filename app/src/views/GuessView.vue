@@ -39,7 +39,6 @@ export default {
       prompt: '',
       clueGiver: '',
       clueGiverId: 0,
-      loading: false,
       maxValue: 0,
       clueId: this.$gameStore.game.current_clue_id,
       clueObject: {},
@@ -92,13 +91,9 @@ export default {
 
       if (!this.clueId) {
         try {
-          this.loading = true;
           await this.$gameStore.setNextGuessId();
         } catch (e) {
           console.log(e);
-        }
-        finally {
-          this.loading = false;
         }
       }
     },
