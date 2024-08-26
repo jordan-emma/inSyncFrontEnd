@@ -5,6 +5,7 @@
         :show="showModal"
         :header="modalTitle"
         :blocks="modalBlocks"
+        :modalHeading="modalHeading"
         @close="toggleModal"
       />
       <div class="back">
@@ -17,7 +18,6 @@
       <div class="button-container">
         <button class="rounded-button floating-button1" @click="togglePlay">PLAY</button>
         <button class="rounded-button floating-button2" @click="toggleModal">HOW TO PLAY</button>
-        <button class="rounded-button floating-button3">SETTINGS</button>
       </div>
     </div>
   </div>
@@ -32,6 +32,7 @@ export default {
   data() {
     return {
       showModal: false,
+      modalHeading: 'How to Play',
       modalTitle: 'Team up with your <br> crew to spin the dial and hit <br> the hidden bullseye!',
       modalBlocks: [
         {
@@ -61,15 +62,24 @@ export default {
       ],
     }
   },
+  created() {
+    this.clearStores(); 
+  },
   methods: {
     togglePlay() {
       this.$router.push('/play')
     },
     logOut() {
-      this.$router.push('/login')
+      this.$userStore.clear(); 
+      this.clearStores(); 
+      this.$router.push('/login');
     },
     toggleModal() {
       this.showModal = !this.showModal
+    }, 
+    clearStores() { 
+      this.$gameStore.clear(); 
+      this.$clueStore.clear(); 
     }
   }
 }

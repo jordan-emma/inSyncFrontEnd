@@ -1,7 +1,7 @@
 <template>
     <input
       type="range"
-      :min="min"
+      :min="0"
       :max="max"
       :value="value"
       @input="updateValue"
@@ -13,13 +13,9 @@
   export default {
     name: 'Slider',
     props: {
-      min: {
-        type: Number,
-        default: 0
-      },
       max: {
         type: Number,
-        default: 100
+        default: 10
       },
       value: {
         type: Number,
@@ -28,6 +24,11 @@
       disabled: { 
         type: Boolean,
         default: false
+      }
+    },
+    mounted() { 
+      if(isNaN(parseInt(this.value))){ 
+        this.$emit('value-updated', (this.max / 2));
       }
     },
     methods: {
@@ -39,7 +40,6 @@
     }
   }
   </script>
-  
   
 <style>
 

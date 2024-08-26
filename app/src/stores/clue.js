@@ -2,7 +2,8 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 
 export const clueStore = defineStore('clue', {
-  state: () => ({ clues: {} }),
+  state: () => ({ clues: {
+  } }),
   getters: {
     clue_by_id: (state) => (clue_id) => {
         try{
@@ -10,6 +11,18 @@ export const clueStore = defineStore('clue', {
         } catch (e){
             return null
         }
+    }, 
+    getCluesForGame: (state) => (game_id) => { 
+      let clue_ids = Object.keys(state.clues); 
+      let return_array = []; 
+      for(let i = 0; i < clue_ids.length -1; i++){ 
+        let key = clue_ids[i];
+        let clue = state.clues[key]; 
+        if(clue.game_id === game_id){ 
+          return_array.push(clue);
+        }
+      }
+      return return_array; 
     }
   },
   actions:{

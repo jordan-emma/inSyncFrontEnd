@@ -6,8 +6,16 @@
       </div>
       <div class="welcome">
         <h2>Lobby</h2>
-        <h4>Your room code is </h4>
-        <h4 class="roomCode">{{ $gameStore.code }}</h4>
+        <div class="roomCode">
+          <h4>Room Code: </h4>
+          <h4 ref="message">{{ $gameStore.code }}</h4>
+        </div>
+        <message-alert
+          :show="showAlert"
+          :messageText="alertMessage"
+          :messageIcon="alertIcon"
+          @click="copyText()"
+        />
       </div>
       <div class="profilePicture">
         <img :src="randomImage" alt="Profile Picture" class="rounded-image" />
@@ -21,10 +29,15 @@
       </div>
     </div>
   </div>
-</template>
+</template> 
 
 <script>
+import MessageAlert from '@/components/MessageAlert.vue'
+
 export default {
+  components: { 
+    MessageAlert
+   },
   data() {
     return {
       images: [
@@ -38,16 +51,18 @@ export default {
         import('@/images/character8.jpg')
       ],
       randomImage: '',
-      pollGame: null,
+      showAlert: true,
+      alertMessage: 'Click here to copy game code!',
+      alertIcon: '', 
     };
   },
   async created() {
+    this.alertIcon = (await import('@/images/copyIcon.png')).default;
     const imageOptions = await Promise.all(this.images);
     this.randomImage = imageOptions[Math.floor(Math.random() * imageOptions.length)].default;
-    this.joinGameRoom();
   },
-  beforeUnmount() {
-    this.$socket.off('player_list');
+  mounted() { 
+    this.joinGameRoom();
   },
   computed: {
     playerList() {
@@ -81,7 +96,21 @@ export default {
     },
   },
   methods: {
+    copyText() {
+      const storage = document.createElement('textarea');
+      storage.value = this.$refs.message.textContent;
+      document.body.appendChild(storage);
+      storage.select();
+      storage.setSelectionRange(0, 99999);
+      document.execCommand('copy');
+      document.body.removeChild(storage);
+      this.copied = true;
+      this.alertMessage = 'Copied!';
+    },
     joinGameRoom() {
+      if(this.$gameStore.empty){
+        return
+      }
       this.$socket.emit('join_game', {game_id: this.$gameStore.game.id, game_code: this.$gameStore.code});
     },
     toggleBack() {
@@ -96,6 +125,7 @@ export default {
     },
     async goToClues() {
       try {
+        this.$loading.yes();
         const response = await this.$axios.post(`/game/${this.$gameStore.game.id}/start`);
         if (response.status !== 200) {
           alert('Failed to start game');
@@ -105,6 +135,8 @@ export default {
       } catch (e) {
         alert('Failed to start game');
         console.log(e);
+      } finally {
+        this.$loading.no();
       }
     },
     async getGame() {
@@ -123,7 +155,6 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 2rem;
 }
 
 .rounded-image {
@@ -147,6 +178,27 @@ p {
   font-weight: 700;
   color: white;
   text-align: center;
+}
+
+.roomCode {
+  width: fit-content;
+  margin: auto;
+  display: inline-flex;
+}
+
+.roomCode h4:first-child {
+  margin-right: 0.5em;
+}
+
+img{
+  width: 50px;
+  height: auto;
+}
+
+.welcome{
+  padding: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 @media (max-width: 600px) {
@@ -175,6 +227,39 @@ p {
     margin: 0.5em;
 
   } 
+}
+
+@media (width: 1024px) and (height: 600px) {
+  .pageContainer {
+    height: fit-content;
+    display: flex;
+  }
+  .welcome {
+    display: flex;
+  }
+  .buttonContainer{
+    display: flex;
+  }
+  .profilePicture{
+    display: flex;
+  }
+  p{
+    display: flex;
+    margin-bottom: 0.5em;
+  }
+  h2{
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+  }
+  .rounded-image{
+    height: 5.8125rem;
+    width: 5.8125rem;
+    margin: 0;
+  }
+  .rounded-button{
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
 }
 
 </style>

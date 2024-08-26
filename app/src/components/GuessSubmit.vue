@@ -5,15 +5,16 @@
     </div>
     <div class="slider-wrapper">
       <p>{{ clueObject.low }}</p>
-      <Slider :min="0" :max="clueObject.max_value" :value="clueObject.guess_value" @value-updated="setGuessValue" :disabled="!canEdit" />
+      <Slider :max="clueObject.max_value" :value="clueObject.guess_value" @value-updated="setGuessValue" :disabled="!canEdit" />
       <p>{{ clueObject.high }}</p>
     </div>
     <div class="button-container">
       <button v-if='canEdit' class="rounded-button" @click="closeClue">Submit</button>
-      <p v-if='!canEdit'>Shhh! this is your clue... Don't give any hints </p>
-    </div>
-    <div>
-      <h2>{{ clueNumber }}/{{ clueObject.total_clues }}</h2>
+      <message-alert
+        :show="!canEdit"
+        messageText="Shhh! this is your clue... Don't give any hints"
+        :messageIcon="alertIcon"
+      />
     </div>
   </div>
 
@@ -21,10 +22,11 @@
 
 <script>
 import Slider from '@/components/slider.vue'
+import MessageAlert from '@/components/MessageAlert.vue'
 
 export default {
   name: 'GuessSubmit',
-  components: { Slider },
+  components: { MessageAlert, Slider },
   props:{
     canEdit: {
       type: Boolean,
@@ -46,6 +48,14 @@ export default {
       type: Object,
       required: true
     }
+  },
+  data() {
+    return {
+      alertIcon: '',
+    }
+  },
+  async created() {
+    this.alertIcon = (await import('@/images/quietIcon.png')).default;
   },
   methods: {
     async setGuessValue(guess_value) {
@@ -77,6 +87,7 @@ export default {
   display: flex;
   gap: 1rem;
   padding-top: 2em;
+  justify-content: center;
 }
 
 h2, p {

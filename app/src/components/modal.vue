@@ -6,7 +6,7 @@
           <img src="../images/close.png" @click="exit">
         </div>
         <img src="../images/howToIcon3.png" />
-        <h2>How to Play</h2>
+        <h2>{{ modalHeading }}</h2>
       </div>
       <p class="objective" v-html="header"></p>
       <div class="carousel">
@@ -38,6 +38,10 @@ export default {
     blocks: {
       type: Array,
       default: []
+    }, 
+    modalHeading: {
+      type: String, 
+      default: ''
     }
   },
   data() {

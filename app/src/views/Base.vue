@@ -13,6 +13,14 @@ import LoadingModal from '@/components/loadingModal.vue';
     components: {
         LoadingModal
     },
+    created() { 
+      if(!this.$userStore.isLoggedIn){ 
+        console.log('your not logged in ')
+        this.$router.push('/login')
+      } else if(this.$gameStore.empty){
+      this.$router.push('/landing');
+    }
+    },
 
   }
   </script>

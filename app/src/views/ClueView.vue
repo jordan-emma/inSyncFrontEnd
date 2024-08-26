@@ -1,17 +1,16 @@
 <template>
   <div class="purpleBackground">
     <div class="pageContainer">
-      <LoadingModal :show="loading" />
       <div class="back">
-        <button class="rounded-button" @click="toggleBack">Back</button>
+        <button class="rounded-button" @click="toggleBack">Exit</button>
       </div>
       <div class="pageHeading" v-if="!submittedLastClue">
         <h2>Type a Clue</h2>
       </div>
       <div v-if="gotClue && !submittedLastClue" class="slider-wrapper">
-        <p class="clueScalePhrase1">{{ capitalizeString(clueObject.high) }}</p>
-        <Slider :min="0" :max="clueObject.max_value" :value="clueObject.value" :disabled="true" />
         <p class="clueScalePhrase2">{{ capitalizeString(clueObject.low) }}</p>
+        <Slider :max="clueObject.max_value" :value="clueObject.value" :disabled="true" />
+        <p class="clueScalePhrase1">{{ capitalizeString(clueObject.high) }}</p>
       </div>
       <section v-if="!submittedLastClue">
         <div class="form-group">
@@ -20,10 +19,10 @@
             type="text"
             v-model="currentClue"
             placeholder="Enter your clue..."
+            maxlength="120"
           />
         </div>
         <div class="button-container">
-<!--          <button v-if="clueNumber > 1" class="rounded-button" @click="changeClueNumber(false)">Back</button>-->
           <button class="rounded-button" @click="getClue(true)">New Scale</button>
           <button v-if="clueNumber < maxClues" class="rounded-button" :disabled="!isClueEntered" @click="changeClueNumber(true)">Next Clue</button>
           <button v-if="onLastClue" class="rounded-button" @click="addClue">Submit</button>
@@ -45,13 +44,11 @@
 
 <script>
 import Slider from '../components/slider.vue'
-import LoadingModal from '../components/loadingModal.vue'
 import FunFactsModal from '../components/funFactsModal.vue'
 
 export default {
   components: {
     Slider,
-    LoadingModal,
     FunFactsModal
   },
   data() {
@@ -61,7 +58,6 @@ export default {
       clueObject: {},
       gotClue: false,
       maxClues: 3,
-      loading: false,
       waiting: false,
       submittedLastClue: false,
       showModal: false, 
@@ -107,6 +103,9 @@ export default {
     }
   },
   created() {
+    if(!this.$userStore.isLoggedIn && this.$gameStore.empty){ 
+      return
+    }
     this.getClue()
   },
   watch: {
@@ -122,7 +121,7 @@ export default {
     $gameStore: {
       deep: true,
       handler() {
-        if (this.$gameStore.game.status === 'GUESSING') {
+        if (this.$gameStore?.game?.status === 'GUESSING') {
           this.$router.push('/guess');
         }
       }
@@ -143,6 +142,7 @@ export default {
   },
   methods: {
     async addClue() {
+      this.$loading.yes();
       let prompt = this.currentClue.trim()
       if(!prompt) {
         return
@@ -154,9 +154,13 @@ export default {
       } else if (this.onLastClue) {
         this.submittedLastClue = true
       }
+      this.$loading.no();
     },
     async getClue(refresh = false) {
-      this.loading = true
+      if(this.$gameStore.empty){ 
+        return
+      }
+      this.$loading.yes();
       let url = `/game/${this.$gameStore.game.id}/clue/${this.clueNumber}`
       if (refresh) {
         url = `/clue/${this.clueObject.id}/refresh`
@@ -172,7 +176,7 @@ export default {
       } catch (e) {
         console.log(e)
       } finally {
-        this.loading = false
+        this.$loading.no();
       }
     },
     async changeClueNumber(increment) {
@@ -180,7 +184,7 @@ export default {
       this.clueNumber = increment ? this.clueNumber + 1 : this.clueNumber - 1
     },
     toggleBack() {
-      this.$router.push('/lobby')
+      this.$router.push('/play')
     },
     capitalizeString(string) {
       return string.charAt(0).toUpperCase() + string.slice(1)
@@ -188,8 +192,6 @@ export default {
     toggleModal() {
       this.showModal = !this.showModal
     }
-  },
-  beforeUnmount() {
   },
 }
 </script>

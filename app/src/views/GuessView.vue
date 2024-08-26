@@ -2,7 +2,7 @@
   <div class="purpleBackground">
     <div class="pageContainer">
       <div class="back">
-        <button class="rounded-button" @click="toggleBack">Back</button>
+        <button class="rounded-button" @click="toggleBack">Exit</button>
       </div>
       <guess-submit
         v-if="clueObject.status === 'OPEN'"
@@ -39,9 +39,8 @@ export default {
       prompt: '',
       clueGiver: '',
       clueGiverId: 0,
-      loading: false,
       maxValue: 0,
-      clueId: this.$gameStore.game.current_clue_id,
+      clueId: this.$gameStore.game?.current_clue_id,
       clueObject: {},
     };
   },
@@ -63,6 +62,9 @@ export default {
     },
   },
   async created() {
+    if(!this.$userStore.isLoggedIn && this.$gameStore.empty){ 
+      return 
+    }
     this.setClueProperties();
   },
   computed: {
@@ -78,7 +80,7 @@ export default {
   },
   methods: {
     toggleBack() {
-      this.$router.push('/lobby');
+      this.$router.push('/play');
     }, 
     changeClueNumber() {
       if(this.clueNumber < this.totalCluesProvided){
@@ -92,13 +94,9 @@ export default {
 
       if (!this.clueId) {
         try {
-          this.loading = true;
           await this.$gameStore.setNextGuessId();
         } catch (e) {
           console.log(e);
-        }
-        finally {
-          this.loading = false;
         }
       }
     },

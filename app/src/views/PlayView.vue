@@ -37,7 +37,9 @@ export default {
   created() {
     if (this.name === '') {
       this.name = this.$userStore.name;
-    }
+    } 
+    this.$clueStore.clear();
+    this.$gameStore.clear();
   },
   methods: {
     toggleHostGame() {

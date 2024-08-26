@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 import Base from '@/views/Base.vue'
 
 const router = createRouter({
@@ -8,6 +7,7 @@ const router = createRouter({
     {
       path: '/',
       component: Base,
+      redirect: '/login',
       children: [
         {
           path: '/landing',
@@ -22,7 +22,7 @@ const router = createRouter({
         {
           path: '/lobby',
           name: 'Lobby',
-          component: () => import('../views/LobbyView.vue')
+          component: () => import('../views/LobbyView.vue') 
         },
         {
           path: '/play',
@@ -39,8 +39,17 @@ const router = createRouter({
           name: 'Guess',
           component: () => import('../views/GuessView.vue')
         },
-      ]
+        {
+          path: '/results',
+          name: 'Results',
+          component: () => import('../views/ResultsView.vue')
+        },
+      ], 
     },
+    {
+      path: '/:pathMatch(.*)*', 
+      redirect: '/login'
+    }
   ]
 })
 

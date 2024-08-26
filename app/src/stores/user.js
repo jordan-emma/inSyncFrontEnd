@@ -6,7 +6,7 @@ export const userStore = defineStore('user', {
   getters: {
     isLoggedIn: (state) => !!state.user,
     name: (state) => state.user?.name,
-    id: (state) => state.user?.id
+    id: (state) => state.user?.id,
   },
   actions: {
     async login(email, password) {
@@ -34,6 +34,10 @@ export const userStore = defineStore('user', {
         throw 'Failed to get user data'
       }
       this.user = response.data
+    },
+    clear() { 
+      this.user=null;
+      this.token=null;
     },
   },
   persist: {
