@@ -62,15 +62,23 @@ export default {
       ],
     }
   },
+  created() {
+    this.clearStores(); 
+  },
   methods: {
     togglePlay() {
       this.$router.push('/play')
     },
     logOut() {
+      this.clearStores(); 
       this.$router.push('/login')
     },
     toggleModal() {
       this.showModal = !this.showModal
+    }, 
+    clearStores() { 
+      this.$gameStore.clear(); 
+      this.$clueStore.clear(); 
     }
   }
 }
