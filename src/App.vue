@@ -46,8 +46,19 @@ export default {
       this.$clueStore.update(data);
     });
 
-    this.$socket.on('player_list', (data) => {
-      this.$gameStore.players = data;
+    this.$socket.on('player_list', (newPlayers) => {
+      if (this.$gameStore?.players){
+        let existingPlayerIds = this.$gameStore.players.map(player => player.player_id);
+      newPlayers.forEach(player => {
+        if(player.host || player.player_id === this.$userStore.id){
+          return 
+        }
+        if (!existingPlayerIds.includes(player.player_id)) {
+          this.$info(`${player.display_name} joined the game!`);
+        }
+      });
+      }
+      this.$gameStore.players = newPlayers;
     });
   },
 }

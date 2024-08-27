@@ -31,7 +31,7 @@
         <div class="button-container">
           <button v-if="!showSignUpField" class="rounded-button floating-button1" type="button" @click="toggleView('signUp')">Sign Up</button>
           <button v-if="showSignUpField" class="rounded-button" type="button" @click="toggleView('login')">Login</button>
-          <button class="rounded-button floating-button2" :disabled="!isFormValid" type="submit">{{ showSignUpField ? 'Sign Up' : 'Login' }}</button>
+          <button class="rounded-button floating-button2" type="submit">{{ showSignUpField ? 'Sign Up' : 'Login' }}</button>
           <button v-if="!showSignUpField" class="rounded-button floating-button3" type="reset">Reset</button>
         </div>
       </form>
@@ -71,7 +71,7 @@ export default {
     },
     isFormValid() {
 
-      if ((this.email.trim() && !this.password.trim()) || (!this.email.trim() && this.password.trim())) {
+      if (!this.email.trim() || !this.password.trim()) {
         return false
       }
       if (!this.showSignUpField) {
@@ -97,7 +97,8 @@ export default {
     },
     async handleSubmit() {
       if (!this.isFormValid) {
-        return // todo set error message
+        this.$error('Details missing...')
+        return
       }
       try{
         this.$loading.yes();
@@ -106,10 +107,11 @@ export default {
         } else {
             await this.$userStore.login(this.email, this.password)
         }
+        this.$success('You are logged in!')
         this.$router.push('/landing')
-      } catch (e) {
-        // todo set error message
-        console.log(e);
+      } catch (axioserror) {
+        this.$badRequest(axioserror);
+        console.log(axioserror);
       }
       finally{
         this.$loading.no(); 

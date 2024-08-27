@@ -72,6 +72,7 @@ export default {
     logOut() {
       this.$userStore.clear(); 
       this.clearStores(); 
+      this.$success('You are logged out!')
       this.$router.push('/login');
     },
     toggleModal() {

@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
-
 export const gameStore = defineStore('game', {
   state: () => ({ game: null, players: [] }),
   getters: {
@@ -15,7 +14,7 @@ export const gameStore = defineStore('game', {
     empty: (state) => { 
       return state.game?.id ? false : true; 
     }
-      },
+  },
   actions:{
     async hostGame(display_name) {
       let response = await axios.post('game', {display_name})
@@ -33,7 +32,7 @@ export const gameStore = defineStore('game', {
       this.game = response.data;
       return game_code;
     }, 
-    async getPlayers(){
+    async getPlayers() {
       let response = await axios.get(`game/${this.game.id}/players`)
       if (response.status !== 200){
         throw 'Failed to get players'
@@ -41,7 +40,7 @@ export const gameStore = defineStore('game', {
       this.players = response.data; 
       return response.data; 
     },
-    async getGame(){
+    async getGame() {
       let response = await axios.get(`game/${this.game.id}`)
       if (response.status !== 200){
         throw 'Failed to get game'
@@ -49,7 +48,7 @@ export const gameStore = defineStore('game', {
       this.game = response.data;
       return response.data;
     },
-    async setNextGuessId(){
+    async setNextGuessId() {
       let response = await axios.post(`game/${this.game.id}/guess/next`)
       if (response.status !== 200){
         throw 'Failed to set next guess id'
