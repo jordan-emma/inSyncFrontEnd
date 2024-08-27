@@ -48,8 +48,21 @@ const errorToast = (message) => toast.error(message, {
   icon: true,
   rtl: false
 })
+const successToast = (message) => toast.success(message, {
+  position: "top-right",
+  timeout: 2000,
+  closeOnClick: true,
+  pauseOnFocusLoss: true,
+  pauseOnHover: true,
+  showCloseButtonOnHover: false,
+  hideProgressBar: true,
+  closeButton: "button",
+  icon: true,
+  rtl: false
+})
 
 app.config.globalProperties.$error= errorToast;
+app.config.globalProperties.$success= successToast;
 
 app.config.globalProperties.$badRequest = (axioserror) => { 
   const status = axioserror?.response?.status || 500 
@@ -61,6 +74,15 @@ app.config.globalProperties.$badRequest = (axioserror) => {
   if (status < 500 && status > 399) { 
     errorToast(message);
   }
+}
+
+app.config.globalProperties.$goodRequest = (axiosmessage) => { 
+  const status = axiosmessage?.response?.status || 200 
+  const message = axiosmessage?.response?.data?.message || 'Success!'
+  console.log(axiosmessage)
+  if (status > 199 && status > 300){ 
+    successToast('Success!');
+  } 
 }
 
 // const socket = io.connect('http://localhost:5000');

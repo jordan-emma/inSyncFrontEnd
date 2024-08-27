@@ -31,7 +31,7 @@
         <div class="button-container">
           <button v-if="!showSignUpField" class="rounded-button floating-button1" type="button" @click="toggleView('signUp')">Sign Up</button>
           <button v-if="showSignUpField" class="rounded-button" type="button" @click="toggleView('login')">Login</button>
-          <button class="rounded-button floating-button2"  type="submit" @click="showToast">{{ showSignUpField ? 'Sign Up' : 'Login' }}</button>
+          <button class="rounded-button floating-button2"  type="submit" >{{ showSignUpField ? 'Sign Up' : 'Login' }}</button>
           <button v-if="!showSignUpField" class="rounded-button floating-button3" type="reset">Reset</button>
         </div>
       </form>
@@ -105,6 +105,7 @@ export default {
         } else {
             await this.$userStore.login(this.email, this.password)
         }
+        this.$success('You are logged in!')
         this.$router.push('/landing')
       } catch (axioserror) {
         this.$badRequest(axioserror);
