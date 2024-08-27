@@ -19,36 +19,36 @@ export default {
     };
   },
   async mounted() {
-    await this.$connectSocket(this.$socket);
+    // await this.$connectSocket(this.$socket);
 
-    if (this.$gameStore.empty && this.$userStore.isLoggedIn) {
-      console.log('Rejoining game');
-      this.$socket.emit('join_game', {game_id: this.$gameStore.game.id, game_code: this.$gameStore.code});
-    }
+    // if (this.$gameStore.empty && this.$userStore.isLoggedIn) {
+    //   console.log('Rejoining game');
+    //   this.$socket.emit('join_game', {game_id: this.$gameStore.game.id, game_code: this.$gameStore.code});
+    // }
 
-    if (this.user.token) {
-      axios.defaults.headers.common['Authorization'] = this.user.token;
-    }
+    // if (this.user.token) {
+    //   axios.defaults.headers.common['Authorization'] = this.user.token;
+    // }
 
-    this.$socket.on('disconnect', () => {
-      console.log('Socket disconnected');
-    });
+    // this.$socket.on('disconnect', () => {
+    //   console.log('Socket disconnected');
+    // });
 
-    this.$socket.on('error', (data) => {
-      console.error('Socket error:', data.message);
-    });
+    // this.$socket.on('error', (data) => {
+    //   console.error('Socket error:', data.message);
+    // });
 
-    this.$socket.on('game_updated', (data) => {
-      this.$gameStore.game = data;
-    });
+    // this.$socket.on('game_updated', (data) => {
+    //   this.$gameStore.game = data;
+    // });
 
-    this.$socket.on('clue_updated', (data) => {
-      this.$clueStore.update(data);
-    });
+    // this.$socket.on('clue_updated', (data) => {
+    //   this.$clueStore.update(data);
+    // });
 
-    this.$socket.on('player_list', (data) => {
-      this.$gameStore.players = data;
-    });
+    // this.$socket.on('player_list', (data) => {
+    //   this.$gameStore.players = data;
+    // });
   },
 }
 </script>
