@@ -72,10 +72,12 @@ export default {
     async joinGame() {
       if (this.code.length !== 6) {
         console.log('Invalid code');
+        this.$error('Invalid code, please try again!')
         return;
       }
       await this.$gameStore.joinGame(this.name, this.code);
       this.$router.push('/lobby');
+      this.$success('Game joined!')
     }
   }
 }

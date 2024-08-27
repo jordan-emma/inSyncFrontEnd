@@ -38,7 +38,7 @@ app.config.globalProperties.$toast = useToast();
 const toast = useToast(); 
 const errorToast = (message) => toast.error(message, {
   position: "top-right",
-  timeout: 2000,
+  timeout: 3000,
   closeOnClick: true,
   pauseOnFocusLoss: true,
   pauseOnHover: true,
@@ -50,7 +50,19 @@ const errorToast = (message) => toast.error(message, {
 })
 const successToast = (message) => toast.success(message, {
   position: "top-right",
-  timeout: 2000,
+  timeout: 3000,
+  closeOnClick: true,
+  pauseOnFocusLoss: true,
+  pauseOnHover: true,
+  showCloseButtonOnHover: false,
+  hideProgressBar: true,
+  closeButton: "button",
+  icon: true,
+  rtl: false
+})
+const infoToast = (message) => toast.info(message, {
+  position: "top-right",
+  timeout: 3000,
   closeOnClick: true,
   pauseOnFocusLoss: true,
   pauseOnHover: true,
@@ -63,6 +75,7 @@ const successToast = (message) => toast.success(message, {
 
 app.config.globalProperties.$error= errorToast;
 app.config.globalProperties.$success= successToast;
+app.config.globalProperties.$info= infoToast;
 
 app.config.globalProperties.$badRequest = (axioserror) => { 
   const status = axioserror?.response?.status || 500 
@@ -85,26 +98,26 @@ app.config.globalProperties.$goodRequest = (axiosmessage) => {
   } 
 }
 
-// const socket = io.connect('http://localhost:5000');
-// function connectSocket(socket) {
-//   return new Promise((resolve, reject) => {
-//     if (socket.connected) {
-//       console.log("Connected: ", this.$socket.connected);
-//       resolve();
-//     } else {
-//       socket.on('connect', () => {
-//         resolve();
-//       });
+const socket = io.connect('http://localhost:5000');
+function connectSocket(socket) {
+  return new Promise((resolve, reject) => {
+    if (socket.connected) {
+      console.log("Connected: ", this.$socket.connected);
+      resolve();
+    } else {
+      socket.on('connect', () => {
+        resolve();
+      });
 
-//       socket.on('connect_error', (error) => {
-//         reject(error);
-//       });
-//     }
-//   });
-// }
+      socket.on('connect_error', (error) => {
+        reject(error);
+      });
+    }
+  });
+}
 
-// app.config.globalProperties.$socket = socket;
-// app.config.globalProperties.$connectSocket = connectSocket;
+app.config.globalProperties.$socket = socket;
+app.config.globalProperties.$connectSocket = connectSocket;
 
 app.use(Toast, {});
 app.mount('#app');
