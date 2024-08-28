@@ -1,6 +1,14 @@
 <template>
   <div class="purpleBackground">
     <div class="pageContainer">
+      <button
+        v-if="showSignUpField"
+        class="rounded-button back"
+        type="button"
+        @click="toggleView('login')"
+      >
+        Back
+      </button>
       <div class="logo">
         <img src="../images/insyncLogo.png" alt="Logo" />
       </div>
@@ -12,46 +20,69 @@
           </div>
           <div class="form-group">
             <label for="email">Email:</label>
-            <input id="email" type="email" autocomplete="email" v-model.trim="email" @click="showAlertMessage"/>
+            <input
+              id="email"
+              type="email"
+              autocomplete="email"
+              v-model.trim="email"
+              @click="showAlertMessage"
+            />
           </div>
           <div class="form-group">
             <label for="password">Password:</label>
-            <input id="password" autocomplete="password"type="password" v-model.trim="password" @click="showAlertMessage()" @keyup="passwordMismatchMessage"/>
+            <input
+              id="password"
+              autocomplete="password"
+              type="password"
+              v-model.trim="password"
+              @click="showAlertMessage()"
+              @keyup="passwordMismatchMessage"
+            />
           </div>
           <div class="form-group" v-show="showSignUpField">
             <label for="confirm_password">Confirm Password:</label>
-            <input id="confirm_password" autocomplete="new-password" type="password" v-model.trim="confirm_password" @keyup="passwordMismatchMessage"/>
-            </div>
-          <message-alert
-            :show="showAlert"
-            :messageText="alertMessage"
-            :messageIcon="alertIcon"
-          />
+            <input
+              id="confirm_password"
+              autocomplete="new-password"
+              type="password"
+              v-model.trim="confirm_password"
+              @keyup="passwordMismatchMessage"
+            />
+          </div>
+          <message-alert :show="showAlert" :messageText="alertMessage" :messageIcon="alertIcon" />
         </div>
         <div class="button-container">
-          <button v-if="!showSignUpField" class="rounded-button floating-button1" type="button" @click="toggleView('signUp')">Sign Up</button>
-          <button v-if="showSignUpField" class="rounded-button" type="button" @click="toggleView('login')">Login</button>
-          <button class="rounded-button floating-button2" type="submit">{{ showSignUpField ? 'Sign Up' : 'Login' }}</button>
-          <button v-if="!showSignUpField" class="rounded-button floating-button3" type="reset">Reset</button>
+          <button
+            v-if="!showSignUpField"
+            class="rounded-button floating-button1"
+            type="button"
+            @click="toggleView('signUp')"
+          >
+            Sign Up
+          </button>
+          <button class="rounded-button floating-button2" type="submit">
+            {{ showSignUpField ? 'Sign Up' : 'Login' }}
+          </button>
+          <button v-if="!showSignUpField" class="rounded-button floating-button3" type="reset">
+            Reset
+          </button>
         </div>
       </form>
     </div>
   </div>
 </template>
 
-
-
 <script>
 import messageAlert from '../components/MessageAlert.vue'
 
 export default {
   components: {
-    messageAlert,
+    messageAlert
   },
   async created() {
-    this.alertIcon = (await import('@/images/reminderIcon.png')).default;
-    this.$userStore.clear(); 
-    this.$gameStore.clear(); 
+    this.alertIcon = (await import('@/images/reminderIcon.png')).default
+    this.$userStore.clear()
+    this.$gameStore.clear()
   },
   data() {
     return {
@@ -59,10 +90,10 @@ export default {
       email: '',
       password: '',
       confirm_password: '',
-      showSignUpField: false, 
+      showSignUpField: false,
       showAlert: false,
       alertMessage: '',
-      alertIcon: '',
+      alertIcon: ''
     }
   },
   computed: {
@@ -70,7 +101,6 @@ export default {
       return this.password === this.confirm_password
     },
     isFormValid() {
-
       if (!this.email.trim() || !this.password.trim()) {
         return false
       }
@@ -78,21 +108,25 @@ export default {
         return true
       }
 
-      const isValid = this.name.trim() && this.email.trim() && this.password.trim() && this.confirm_password.trim() != ''
+      const isValid =
+        this.name.trim() &&
+        this.email.trim() &&
+        this.password.trim() &&
+        this.confirm_password.trim() !== ''
       const passwordsMatch = this.passwordsMatch
       return isValid && passwordsMatch
     }
   },
   methods: {
     resetFields() {
-      this.name = ''
-      this.email = ''
-      this.password = ''
-      this.confirm_password = '',
-      this.showAlert = false;
+      this.name = '',
+      this.email = '',
+      this.password = '',
+      (this.confirm_password = ''),
+      (this.showAlert = false)
     },
     toggleView(view) {
-      this.showSignUpField = (view === 'signUp')
+      this.showSignUpField = view === 'signUp'
       this.resetFields()
     },
     async handleSubmit() {
@@ -100,40 +134,38 @@ export default {
         this.$error('Details missing...')
         return
       }
-      try{
-        this.$loading.yes();
-        if (this.showSignUpField){
-          await  this.$userStore.signUp(this.name, this.email, this.password, this.confirm_password)
+      try {
+        this.$loading.yes()
+        if (this.showSignUpField) {
+          await this.$userStore.signUp(this.name, this.email, this.password, this.confirm_password)
         } else {
-            await this.$userStore.login(this.email, this.password)
+          await this.$userStore.login(this.email, this.password)
         }
         this.$success('You are logged in!')
         this.$router.push('/landing')
       } catch (axioserror) {
-        this.$badRequest(axioserror);
-        console.log(axioserror);
-      }
-      finally{
-        this.$loading.no(); 
+        this.$badRequest(axioserror)
+        console.log(axioserror)
+      } finally {
+        this.$loading.no()
       }
     },
     showAlertMessage() {
       if (!this.showSignUpField && (!this.email.trim() || !this.password.trim())) {
-        this.alertMessage = 'Don’t forget to fill in both email and password.';
-        this.showAlert = true;
+        this.alertMessage = 'Don’t forget to fill in both email and password.'
+        this.showAlert = true
       }
     },
     passwordMismatchMessage() {
-      if(!this.passwordsMatch && this.showSignUpField){
-        this.alertMessage = 'Passwords do not match';
-        this.showAlert = true;
-      } else if (this.passwordsMatch){
+      if (!this.passwordsMatch && this.showSignUpField) {
+        this.alertMessage = 'Passwords do not match'
+        this.showAlert = true
+      } else if (this.passwordsMatch) {
         this.showAlert = false
       }
     }
   }
 }
-
 </script>
 
 <style scoped>
@@ -141,11 +173,11 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 1.5rem; 
+  gap: 1.5rem;
   animation: containerMovement 25s infinite ease-in-out;
 }
 
-@media(max-width: 600px) {
+@media (max-width: 600px) {
   .button-container {
     flex-direction: column;
     align-items: center;
@@ -160,16 +192,16 @@ export default {
     font-weight: 600;
     width: 8rem;
   }
-  .inputContainer{  
-  overflow-y: scroll;
-  width: 100%;
-}
-form{
-  width: 100%;
-}
+  .inputContainer {
+    overflow-y: scroll;
+    width: 100%;
+  }
+  form {
+    width: 100%;
+  }
 }
 
-@media(max-height: 376px ) {
+@media (max-height: 376px) {
   .button-container {
     flex-direction: column;
     align-items: center;
@@ -184,17 +216,17 @@ form{
     font-weight: 600;
     width: 8rem;
   }
-  .inputContainer{ 
-  max-height: 383px; 
-  overflow-y: scroll;
-  width: 100%;
-}
-form{
-  width: 100%;
-}
+  .inputContainer {
+    max-height: 383px;
+    overflow-y: scroll;
+    width: 100%;
+  }
+  form {
+    width: 100%;
+  }
 }
 
-@media(max-height: 720px ) {
+@media (max-height: 720px) {
   .button-container {
     flex-direction: column;
     align-items: center;
@@ -209,17 +241,17 @@ form{
     font-weight: 600;
     width: 8rem;
   }
-  .inputContainer{ 
-  max-height: 383px; 
-  overflow-y: scroll;
-  width: 100%;
-}
-form{
-  width: 100%;
-}
+  .inputContainer {
+    max-height: 383px;
+    overflow-y: scroll;
+    width: 100%;
+  }
+  form {
+    width: 100%;
+  }
 }
 
-@media(max-height: 720px ) {
+@media (max-height: 720px) {
   .button-container {
     flex-direction: column;
     align-items: center;
@@ -234,27 +266,27 @@ form{
     font-weight: 600;
     width: 8rem;
   }
-  .inputContainer{ 
-  max-height: 383px; 
-  overflow-y: scroll;
-  width: 100%;
-}
-form{
-  width: 100%;
-}
+  .inputContainer {
+    max-height: 383px;
+    overflow-y: scroll;
+    width: 100%;
+  }
+  form {
+    width: 100%;
+  }
 }
 
 @media (max-width: 1024px) and (max-height: 600px) {
   .logo {
-    width: 100%; 
+    width: 100%;
     text-align: center;
-    margin-bottom: 1rem; 
+    margin-bottom: 1rem;
   }
 
   .button-container {
     flex-direction: row;
     align-items: center;
-    gap: 0.8rem; 
+    gap: 0.8rem;
     margin: 1rem;
   }
 
@@ -266,21 +298,21 @@ form{
   }
 
   .inputContainer {
-    max-height: 300px; 
+    max-height: 300px;
     overflow-y: auto;
     width: 100%;
-    padding: 0 1rem; 
+    padding: 0 1rem;
   }
 
   form {
-    width: 90%; 
+    width: 90%;
     margin: auto;
   }
-
 }
 
 @keyframes floating {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {
@@ -289,7 +321,8 @@ form{
 }
 
 @keyframes floating-outer {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {
@@ -309,11 +342,9 @@ form{
   animation: floating-outer 5s infinite ease-in-out;
 }
 
-.inputContainer{
+.inputContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-
-
 </style>
