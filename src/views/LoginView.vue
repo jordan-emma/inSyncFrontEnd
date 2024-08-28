@@ -122,8 +122,8 @@ export default {
       this.name = '',
       this.email = '',
       this.password = '',
-      (this.confirm_password = ''),
-      (this.showAlert = false)
+      this.confirm_password = '',
+      this.showAlert = false
     },
     toggleView(view) {
       this.showSignUpField = view === 'signUp'
