@@ -2,7 +2,7 @@
   <div class="purpleBackground">
     <div class="pageContainer">
       <button
-        v-if="showSignUpField"
+        v-show="showSignUpField"
         class="rounded-button back"
         type="button"
         @click="toggleView('login')"
@@ -25,7 +25,6 @@
               type="email"
               autocomplete="email"
               v-model.trim="email"
-              @click="showAlertMessage"
             />
           </div>
           <div class="form-group">
@@ -35,8 +34,6 @@
               autocomplete="password"
               type="password"
               v-model.trim="password"
-              @click="showAlertMessage()"
-              @keyup="passwordMismatchMessage"
             />
           </div>
           <div class="form-group" v-show="showSignUpField">
@@ -46,14 +43,13 @@
               autocomplete="new-password"
               type="password"
               v-model.trim="confirm_password"
-              @keyup="passwordMismatchMessage"
             />
           </div>
           <message-alert :show="showAlert" :messageText="alertMessage" :messageIcon="alertIcon" />
         </div>
         <div class="button-container">
           <button
-            v-if="!showSignUpField"
+            v-show="!showSignUpField"
             class="rounded-button floating-button1"
             type="button"
             @click="toggleView('signUp')"
@@ -63,7 +59,7 @@
           <button class="rounded-button floating-button2" type="submit">
             {{ showSignUpField ? 'Sign Up' : 'Login' }}
           </button>
-          <button v-if="!showSignUpField" class="rounded-button floating-button1" type="reset">
+          <button v-show="!showSignUpField" class="rounded-button floating-button1" type="reset">
             Reset
           </button>
         </div>
@@ -117,13 +113,25 @@ export default {
       return isValid && passwordsMatch
     }
   },
+  watch: {
+    email() {
+      this.checkForAlert()
+    },
+    password() {
+      this.checkForAlert()
+      this.checkPasswordMismatch()
+    },
+    confirm_password() {
+      this.checkPasswordMismatch()
+    }
+  },
   methods: {
     resetFields() {
       this.name = '',
-      this.email = '',
-      this.password = '',
-      this.confirm_password = '',
-      this.showAlert = false
+        this.email = '',
+        this.password = '',
+        this.confirm_password = '',
+        this.showAlert = false
     },
     toggleView(view) {
       this.showSignUpField = view === 'signUp'
@@ -150,13 +158,15 @@ export default {
         this.$loading.no()
       }
     },
-    showAlertMessage() {
+    checkForAlert() {
       if (!this.showSignUpField && (!this.email.trim() || !this.password.trim())) {
         this.alertMessage = 'Don’t forget to fill in both email and password.'
         this.showAlert = true
+      } else {
+        this.showAlert = false
       }
     },
-    passwordMismatchMessage() {
+    checkPasswordMismatch() {
       if (!this.passwordsMatch && this.showSignUpField) {
         this.alertMessage = 'Passwords do not match'
         this.showAlert = true
