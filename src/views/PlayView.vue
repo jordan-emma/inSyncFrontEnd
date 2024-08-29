@@ -2,24 +2,42 @@
   <div class="purpleBackground">
     <div class="pageContainer">
       <div class="back">
-        <button class="rounded-button" @click="toggleBack">Back</button>
+        <button
+          class="rounded-button"
+          @click="toggleBack"
+          aria-label="Go back to landing page"
+        >
+          Back
+        </button>
       </div>
       <div class="underlineButtonContainer">
-        <button v-if="showRoomCodeField" class="currentPageButton" @click="toggleJoinGame">Join Game</button>
-        <button v-if="!showRoomCodeField" class="underlineButton" @click="toggleJoinGame">Join Game</button>
-        <button v-if="showRoomCodeField" class="underlineButton" @click="toggleHostGame">Host Game</button>
-        <button v-if="!showRoomCodeField" class="currentPageButton" @click="toggleHostGame">Host Game</button>
+        <button
+          :class="buttonClass('join')"
+          @click="toggleGameMode"
+          aria-label="Switch to Join Game mode"
+        >
+          Join Game
+        </button>
+        <button
+          :class="buttonClass('host')"
+          @click="toggleGameMode"
+          aria-label="Switch to Host Game mode"
+        >
+          Host Game
+        </button>
       </div>
       <div v-if="showRoomCodeField" class="form-group">
         <label for="roomCode">Room code:</label>
-        <input id="roomCode" type="text" v-model="code" />
+        <input id="roomCode" type="text" v-model="code" aria-label="Enter room code" />
       </div>
       <div class="form-group">
         <label for="yourName">Your name:</label>
-        <input id="yourName" type="text" v-model="name" />
+        <input id="yourName" type="text" v-model="name" aria-label="Enter your name" />
       </div>
       <div class="button-container">
-        <button class="rounded-button" @click="startGame">Let's Play</button>
+        <button class="rounded-button" @click="startGame" aria-label="Start the game">
+          Let's Play
+        </button>
       </div>
     </div>
   </div>
@@ -30,65 +48,71 @@ export default {
   data() {
     return {
       showRoomCodeField: true,
-      name: '',
+      name: this.$userStore.name,
       code: ''
-    };
+    }
   },
   created() {
-    if (this.name === '') {
-      this.name = this.$userStore.name;
-    } 
-    this.$clueStore.clear();
-    this.$gameStore.clear();
+    this.$clueStore.clear()
+    this.$gameStore.clear()
+  },
+  computed: {
+    buttonClass() {
+      return (type) => {
+        if (type === 'host') {
+          return !this.showRoomCodeField ? 'currentPageButton' : 'underlineButton';
+        } else if (type === 'join') {
+          return this.showRoomCodeField ? 'currentPageButton' : 'underlineButton';
+        }
+      };
+    }
   },
   methods: {
-    toggleHostGame() {
-      this.showRoomCodeField = false;
-    },
-    toggleJoinGame() {
-      this.showRoomCodeField = true;
+    toggleGameMode() {
+      this.showRoomCodeField = !this.showRoomCodeField
     },
     toggleBack() {
-      this.$router.push('/landing');
+      this.$router.push('/landing')
     },
     async startGame() {
-      this.$loading.yes();
-      if (this.showRoomCodeField) {
-        await this.joinGame();
-      } else {
-        await this.createGame();
+      this.$loading.yes()
+      try {
+        if (this.showRoomCodeField) {
+          await this.joinGame()
+        } else {
+          await this.createGame()
+        }
+      } catch (e) {
+        this.$error('Failed to start game.')
       }
-      this.$loading.no();
+      this.$loading.no()
     },
     async createGame() {
       try {
-        await this.$gameStore.hostGame(this.name);
-        this.$router.push('/lobby');
+        await this.$gameStore.hostGame(this.name)
+        this.$router.push('/lobby')
       } catch (e) {
-        console.log(e);
-        alert('Failed to make game');
+        this.$error('Failed to make game.')
       }
     },
     async joinGame() {
       if (this.code.length !== 6) {
-        console.log('Invalid code');
         this.$error('Invalid code, please try again!')
-        return;
+        return
       }
-      await this.$gameStore.joinGame(this.name, this.code);
-      this.$router.push('/lobby');
-      this.$success('Game joined!')
+      try {
+        await this.$gameStore.joinGame(this.name, this.code)
+        this.$router.push('/lobby')
+        this.$success('Game joined!')
+      } catch (e) {
+        this.$error('Failed to join game. Please check your game code and try again!')
+      }
     }
   }
 }
 </script>
 
 <style scoped>
-.underlineButton:hover {
-  background-color: #1a1138;
-  color: white;
-}
-
 .currentPageButton {
   background-color: #1a1138;
   color: white;
@@ -98,7 +122,9 @@ export default {
   font-weight: 600;
   text-align: center;
   cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
   width: 10rem;
   border-radius: 1rem;
   margin-bottom: 1rem;
