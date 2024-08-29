@@ -2,7 +2,11 @@
   <div class="purpleBackground">
     <div class="pageContainer">
       <div class="back">
-        <button class="rounded-button" @click="toggleBack" aria-label="Go back to landing page">
+        <button
+          class="rounded-button"
+          @click="toggleBack"
+          aria-label="Go back to landing page"
+        >
           Back
         </button>
       </div>
@@ -55,14 +59,12 @@ export default {
   computed: {
     buttonClass() {
       return (type) => {
-        return type === 'host'
-          ? !this.showRoomCodeField
-            ? 'currentPageButton'
-            : 'underlineButton'
-          : this.showRoomCodeField
-            ? 'currentPageButton'
-            : 'underlineButton'
-      }
+        if (type === 'host') {
+          return !this.showRoomCodeField ? 'currentPageButton' : 'underlineButton';
+        } else if (type === 'join') {
+          return this.showRoomCodeField ? 'currentPageButton' : 'underlineButton';
+        }
+      };
     }
   },
   methods: {
