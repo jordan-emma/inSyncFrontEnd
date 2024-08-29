@@ -63,7 +63,7 @@
           <button class="rounded-button floating-button2" type="submit">
             {{ showSignUpField ? 'Sign Up' : 'Login' }}
           </button>
-          <button v-if="!showSignUpField" class="rounded-button floating-button3" type="reset">
+          <button v-if="!showSignUpField" class="rounded-button floating-button1" type="reset">
             Reset
           </button>
         </div>
@@ -169,6 +169,12 @@ export default {
 </script>
 
 <style scoped>
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .button-container {
   display: flex;
   flex-direction: row;
@@ -177,7 +183,7 @@ export default {
   animation: containerMovement 25s infinite ease-in-out;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 600px), (max-height: 376px), (max-height: 720px) {
   .button-container {
     flex-direction: column;
     align-items: center;
@@ -185,94 +191,28 @@ export default {
     animation: containerMovement 25s infinite ease-in-out;
     margin-top: 1rem;
   }
+
   .rounded-button {
-    padding-bottom: 0.75rem;
-    padding-top: 0.75rem;
+    padding: 0.75rem 0;
     font-size: 1.25rem;
     font-weight: 600;
     width: 8rem;
   }
+
   .inputContainer {
     overflow-y: scroll;
     width: 100%;
   }
+
   form {
     width: 100%;
   }
 }
 
-@media (max-height: 376px) {
-  .button-container {
-    flex-direction: column;
-    align-items: center;
-    gap: 0.8rem;
-    animation: containerMovement 25s infinite ease-in-out;
-    margin-top: 1rem;
-  }
-  .rounded-button {
-    padding-bottom: 0.75rem;
-    padding-top: 0.75rem;
-    font-size: 1.25rem;
-    font-weight: 600;
-    width: 8rem;
-  }
+@media (max-height: 376px),
+(max-height: 720px) {
   .inputContainer {
     max-height: 383px;
-    overflow-y: scroll;
-    width: 100%;
-  }
-  form {
-    width: 100%;
-  }
-}
-
-@media (max-height: 720px) {
-  .button-container {
-    flex-direction: column;
-    align-items: center;
-    gap: 0.8rem;
-    animation: containerMovement 25s infinite ease-in-out;
-    margin-top: 1rem;
-  }
-  .rounded-button {
-    padding-bottom: 0.75rem;
-    padding-top: 0.75rem;
-    font-size: 1.25rem;
-    font-weight: 600;
-    width: 8rem;
-  }
-  .inputContainer {
-    max-height: 383px;
-    overflow-y: scroll;
-    width: 100%;
-  }
-  form {
-    width: 100%;
-  }
-}
-
-@media (max-height: 720px) {
-  .button-container {
-    flex-direction: column;
-    align-items: center;
-    gap: 0.8rem;
-    animation: containerMovement 25s infinite ease-in-out;
-    margin-top: 1rem;
-  }
-  .rounded-button {
-    padding-bottom: 0.75rem;
-    padding-top: 0.75rem;
-    font-size: 1.25rem;
-    font-weight: 600;
-    width: 8rem;
-  }
-  .inputContainer {
-    max-height: 383px;
-    overflow-y: scroll;
-    width: 100%;
-  }
-  form {
-    width: 100%;
   }
 }
 
@@ -336,15 +276,5 @@ export default {
 
 .floating-button2 {
   animation: floating 5s infinite ease-in-out;
-}
-
-.floating-button3 {
-  animation: floating-outer 5s infinite ease-in-out;
-}
-
-.inputContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 </style>
