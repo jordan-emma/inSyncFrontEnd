@@ -55,6 +55,8 @@ export default {
       alertMessage: 'Click here to copy game code!',
       alertIcon: '', 
     };
+      alertIcon: ''
+    }
   },
   async created() {
     this.alertIcon = (await import('@/images/copyIcon.png')).default;
@@ -78,7 +80,11 @@ export default {
       } else if (filteredPlayerNames.length === 2) {
         return filteredPlayerNames.join(' and ');
       } else {
-        return filteredPlayerNames.slice(0, -1).join(', ') + ', and ' + filteredPlayerNames[filteredPlayerNames.length - 1];
+        return (
+          filteredPlayerNames.slice(0, -1).join(', ') +
+          ', and ' +
+          filteredPlayerNames[filteredPlayerNames.length - 1]
+        )
       }
     },
     hosting() {
@@ -93,60 +99,46 @@ export default {
           this.$router.push('/clue');
         }
       }
-    },
-  },
-  methods: {
-    copyText() {
-      const storage = document.createElement('textarea');
-      storage.value = this.$refs.message.textContent;
-      document.body.appendChild(storage);
-      storage.select();
-      storage.setSelectionRange(0, 99999);
-      document.execCommand('copy');
-      document.body.removeChild(storage);
-      this.copied = true;
-      this.alertMessage = 'Copied!';
-    },
-    joinGameRoom() {
-      if(this.$gameStore.empty){
-        return
-      }
-      this.$socket.emit('join_game', {game_id: this.$gameStore.game.id, game_code: this.$gameStore.code});
-    },
-    toggleBack() {
-      this.$router.push('/play');
-    },
-    async listPlayers() {
-      try {
-        await this.$gameStore.getPlayers();
-      } catch (e) {
-        console.log(e);
-      }
-    },
-    async goToClues() {
-      try {
-        this.$loading.yes();
-        const response = await this.$axios.post(`/game/${this.$gameStore.game.id}/start`);
-        if (response.status !== 200) {
-          alert('Failed to start game');
-        } else {
-          this.$router.push('/clue');
-        }
-      } catch (e) {
-        alert('Failed to start game');
-        console.log(e);
-      } finally {
-        this.$loading.no();
-      }
-    },
-    async getGame() {
-      try {
-        await this.$gameStore.getGame();
-      } catch (e) {
-        console.log(e);
-      }
     }
   },
+  methods: {
+    toggleBack() {
+      this.$router.push('/play')
+    },
+    async copyText() {
+      try {
+        const textToCopy = this.$refs.message.textContent;
+        await navigator.clipboard.writeText(textToCopy);
+        this.alertMessage = 'Copied!';
+      } catch (e) {
+        this.$error('Failed to copy text');
+      }
+    },
+    joinGameRoom() {
+      if (this.$gameStore.empty) {
+        return
+      }
+      this.$socket.emit('join_game', {
+        game_id: this.$gameStore.game.id,
+        game_code: this.$gameStore.code
+      })
+    },
+    async goToClues() {
+      this.$loading.yes();
+      try {
+        const response = await this.$axios.post(`/game/${this.$gameStore.game.id}/start`)
+        if (response.status !== 200) {
+          this.$error('Failed to start game.')
+        } else {
+          this.$router.push('/clue')
+        }
+      } catch (e) {
+        this.$error('Failed to start game')
+      } finally {
+        this.$loading.no()
+      }
+    },
+  }
 }
 </script>
 
@@ -190,12 +182,12 @@ p {
   margin-right: 0.5em;
 }
 
-img{
+img {
   width: 50px;
   height: auto;
 }
 
-.welcome{
+.welcome {
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -203,30 +195,29 @@ img{
 
 @media (max-width: 600px) {
   .welcome {
-    font-size: 1.8em; 
+    font-size: 1.8em;
     padding-top: 0;
   }
-  h2{
+  h2 {
     margin: 0 auto;
   }
-  h4{
+  h4 {
     margin: 0 auto;
     padding: 1em;
   }
-  .roomCode{
+  .roomCode {
     padding: 0;
   }
-  .rounded-image{
+  .rounded-image {
     width: 5.8125rem;
     height: 5.8125rem;
   }
-  .rounded-button{ 
+  .rounded-button {
     padding: 0.5rem;
   }
-  p{ 
+  p {
     margin: 0.5em;
-
-  } 
+  }
 }
 
 @media (width: 1024px) and (height: 600px) {
@@ -237,29 +228,28 @@ img{
   .welcome {
     display: flex;
   }
-  .buttonContainer{
+  .button-container {
     display: flex;
   }
-  .profilePicture{
+  .profilePicture {
     display: flex;
   }
-  p{
+  p {
     display: flex;
     margin-bottom: 0.5em;
   }
-  h2{
+  h2 {
     margin-top: 1em;
     margin-bottom: 0.5em;
   }
-  .rounded-image{
+  .rounded-image {
     height: 5.8125rem;
     width: 5.8125rem;
     margin: 0;
   }
-  .rounded-button{
+  .rounded-button {
     padding: 0.5rem;
     margin-bottom: 0.5rem;
   }
 }
-
 </style>
