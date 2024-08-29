@@ -2,9 +2,9 @@
   <div class="purpleBackground">
     <div class="pageContainer">
       <div class="back">
-        <button class="rounded-button" @click="toggleBack">Back</button>
+        <button class="rounded-button" @click="toggleBack" aria-label="Go back to play view">Back</button>
       </div>
-      <div class="welcome">
+      <header class="welcome">
         <h2>Lobby</h2>
         <div class="roomCode">
           <h4>Room Code: </h4>
@@ -16,7 +16,7 @@
           :messageIcon="alertIcon"
           @click="copyText()"
         />
-      </div>
+      </header>
       <div class="profilePicture">
         <img :src="randomImage" alt="Profile Picture" class="rounded-image" />
       </div>
