@@ -58,6 +58,11 @@
   color: white;
 }
 
+.underlineButton:hover {
+  background-color: #1a1138;
+  color: white;
+}
+
 form {
   display: flex;
   flex-direction: column;

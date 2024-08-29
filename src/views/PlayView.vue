@@ -68,13 +68,11 @@ export default {
         await this.$gameStore.hostGame(this.name)
         this.$router.push('/lobby')
       } catch (e) {
-        console.log(e)
         alert('Failed to make game')
       }
     },
     async joinGame() {
       if (this.code.length !== 6) {
-        console.log('Invalid code')
         this.$error('Invalid code, please try again!')
         return
       }
@@ -87,10 +85,6 @@ export default {
 </script>
 
 <style scoped>
-.underlineButton:hover {
-  background-color: #1a1138;
-  color: white;
-}
 
 .currentPageButton {
   background-color: #1a1138;
