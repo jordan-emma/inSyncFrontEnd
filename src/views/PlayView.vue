@@ -5,8 +5,8 @@
         <button class="rounded-button" @click="toggleBack">Back</button>
       </div>
       <div class="underlineButtonContainer">
-        <button :class="buttonClass('host')" @click="toggleGameMode">Host Game</button>
         <button :class="buttonClass('join')" @click="toggleGameMode">Join Game</button>
+        <button :class="buttonClass('host')" @click="toggleGameMode">Host Game</button>
       </div>
       <div v-if="showRoomCodeField" class="form-group">
         <label for="roomCode">Room code:</label>
@@ -40,9 +40,9 @@ export default {
     buttonClass() {
       return (type) => {
         if (type === 'host') {
-          return this.showRoomCodeField ? 'currentPageButton' : 'underlineButton'
-        } else if (type === 'join') {
           return !this.showRoomCodeField ? 'currentPageButton' : 'underlineButton'
+        } else if (type === 'join') {
+          return this.showRoomCodeField ? 'currentPageButton' : 'underlineButton'
         }
       }
     }
@@ -56,10 +56,14 @@ export default {
     },
     async startGame() {
       this.$loading.yes()
-      if (this.showRoomCodeField) {
-        await this.joinGame()
-      } else {
-        await this.createGame()
+      try {
+        if (this.showRoomCodeField) {
+          await this.joinGame()
+        } else {
+          await this.createGame()
+        }
+      } catch (e) {
+        this.$error('Failed to start game.')
       }
       this.$loading.no()
     },
@@ -68,7 +72,7 @@ export default {
         await this.$gameStore.hostGame(this.name)
         this.$router.push('/lobby')
       } catch (e) {
-        alert('Failed to make game')
+        this.$error('Failed to make game')
       }
     },
     async joinGame() {
