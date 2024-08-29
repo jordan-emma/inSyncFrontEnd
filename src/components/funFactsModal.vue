@@ -13,8 +13,7 @@
         <transition name="fade" mode="out-in">
           <div class="whiteBox" :key="currentIndex">
             <p>
-              <b>{{ shuffledBlocks[currentIndex].title }}: </b
-              >{{ shuffledBlocks[currentIndex].body }}
+              <b>{{ shuffledBlocks[currentIndex].title }}: </b>{{ shuffledBlocks[currentIndex].body }}
             </p>
           </div>
         </transition>
