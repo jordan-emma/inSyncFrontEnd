@@ -76,9 +76,13 @@ export default {
         this.$error('Invalid code, please try again!')
         return
       }
-      await this.$gameStore.joinGame(this.name, this.code)
-      this.$router.push('/lobby')
-      this.$success('Game joined!')
+      try {
+        await this.$gameStore.joinGame(this.name, this.code)
+        this.$router.push('/lobby')
+        this.$success('Game joined!')
+      } catch (e) {
+        this.$error('Failed to join game. Please check your game code and try again!')
+      }
     }
   }
 }
