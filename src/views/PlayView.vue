@@ -28,14 +28,11 @@ export default {
   data() {
     return {
       showRoomCodeField: true,
-      name: '',
+      name: this.$userStore.name,
       code: ''
     }
   },
   created() {
-    if (this.name === '') {
-      this.name = this.$userStore.name
-    }
     this.$clueStore.clear()
     this.$gameStore.clear()
   },
