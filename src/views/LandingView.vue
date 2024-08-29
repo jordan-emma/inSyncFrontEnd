@@ -9,15 +9,33 @@
         @close="toggleModal"
       />
       <div class="back">
-        <button class="rounded-button" @click="logOut">Log Out</button>
+        <button
+          class="rounded-button floating-button2"
+          @click="logOut"
+          aria-label="Log out"
+        >
+          Log Out
+        </button>
       </div>
       <div class="logo">
-        <img src="../images/insyncLogo.png" />
+        <img src="../images/insyncLogo.png" alt="logo" />
       </div>
       <p class="welcome">Hi, {{ $userStore.name }}!</p>
       <div class="button-container">
-        <button class="rounded-button floating-button1" @click="togglePlay">PLAY</button>
-        <button class="rounded-button floating-button2" @click="toggleModal">HOW TO PLAY</button>
+        <button
+          class="rounded-button floating-button1"
+          @click="togglePlay"
+          aria-label="Start playing"
+        >
+          PLAY
+        </button>
+        <button
+          class="rounded-button floating-button2"
+          @click="toggleModal"
+          aria-label="Open instructions on how to play"
+        >
+          HOW TO PLAY
+        </button>
       </div>
     </div>
   </div>
@@ -59,28 +77,28 @@ export default {
           title: 'Teamwork',
           body: 'And remember, it’s all about teamwork—either you all win together, or you face the challenge again. Let the fun begin!'
         }
-      ],
+      ]
     }
   },
   created() {
-    this.clearStores(); 
+    this.clearStores()
   },
   methods: {
     togglePlay() {
       this.$router.push('/play')
     },
     logOut() {
-      this.$userStore.clear(); 
-      this.clearStores(); 
+      this.$userStore.clear()
+      this.clearStores()
       this.$success('You are logged out!')
-      this.$router.push('/login');
+      this.$router.push('/login')
     },
     toggleModal() {
       this.showModal = !this.showModal
-    }, 
-    clearStores() { 
-      this.$gameStore.clear(); 
-      this.$clueStore.clear(); 
+    },
+    clearStores() {
+      this.$gameStore.clear()
+      this.$clueStore.clear()
     }
   }
 }
@@ -99,7 +117,8 @@ p {
 }
 
 @keyframes float-middle {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {
@@ -108,20 +127,12 @@ p {
 }
 
 @keyframes float-outer {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {
     transform: translateY(3px);
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-5px);
   }
 }
 
@@ -132,9 +143,4 @@ p {
 .floating-button2 {
   animation: float-middle 6s infinite ease-in-out;
 }
-
-.floating-button3 {
-  animation: float-outer 6s infinite ease-in-out;
-}
-
 </style>
