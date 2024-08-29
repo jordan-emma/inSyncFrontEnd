@@ -2,22 +2,38 @@
   <div class="purpleBackground">
     <div class="pageContainer">
       <div class="back">
-        <button class="rounded-button" @click="toggleBack">Back</button>
+        <button class="rounded-button" @click="toggleBack" aria-label="Go back to landing page">
+          Back
+        </button>
       </div>
       <div class="underlineButtonContainer">
-        <button :class="buttonClass('join')" @click="toggleGameMode">Join Game</button>
-        <button :class="buttonClass('host')" @click="toggleGameMode">Host Game</button>
+        <button
+          :class="buttonClass('join')"
+          @click="toggleGameMode"
+          aria-label="Switch to Join Game mode"
+        >
+          Join Game
+        </button>
+        <button
+          :class="buttonClass('host')"
+          @click="toggleGameMode"
+          aria-label="Switch to Host Game mode"
+        >
+          Host Game
+        </button>
       </div>
       <div v-if="showRoomCodeField" class="form-group">
         <label for="roomCode">Room code:</label>
-        <input id="roomCode" type="text" v-model="code" />
+        <input id="roomCode" type="text" v-model="code" aria-label="Enter room code" />
       </div>
       <div class="form-group">
         <label for="yourName">Your name:</label>
-        <input id="yourName" type="text" v-model="name" />
+        <input id="yourName" type="text" v-model="name" aria-label="Enter your name" />
       </div>
       <div class="button-container">
-        <button class="rounded-button" @click="startGame">Let's Play</button>
+        <button class="rounded-button" @click="startGame" aria-label="Start the game">
+          Let's Play
+        </button>
       </div>
     </div>
   </div>
@@ -39,11 +55,13 @@ export default {
   computed: {
     buttonClass() {
       return (type) => {
-        if (type === 'host') {
-          return !this.showRoomCodeField ? 'currentPageButton' : 'underlineButton'
-        } else if (type === 'join') {
-          return this.showRoomCodeField ? 'currentPageButton' : 'underlineButton'
-        }
+        return type === 'host'
+          ? !this.showRoomCodeField
+            ? 'currentPageButton'
+            : 'underlineButton'
+          : this.showRoomCodeField
+            ? 'currentPageButton'
+            : 'underlineButton'
       }
     }
   },
@@ -72,7 +90,7 @@ export default {
         await this.$gameStore.hostGame(this.name)
         this.$router.push('/lobby')
       } catch (e) {
-        this.$error('Failed to make game')
+        this.$error('Failed to make game.')
       }
     },
     async joinGame() {
@@ -93,7 +111,6 @@ export default {
 </script>
 
 <style scoped>
-
 .currentPageButton {
   background-color: #1a1138;
   color: white;
