@@ -53,8 +53,6 @@ export default {
       randomImage: '',
       showAlert: true,
       alertMessage: 'Click here to copy game code!',
-      alertIcon: '', 
-    };
       alertIcon: ''
     }
   },
