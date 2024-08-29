@@ -6,17 +6,19 @@
         class="rounded-button back"
         type="button"
         @click="toggleView('login')"
+        aria-label="Go back to Login form"
+        aria-controls="loginForm"
       >
         Back
       </button>
       <div class="logo">
-        <img src="../images/insyncLogo.png" alt="Logo" />
+        <img src="../images/insyncLogo.png" alt="Logo of inSync" />
       </div>
-      <form name="loginForm" @reset="resetFields" @submit.prevent="handleSubmit">
+      <form name="loginForm" @reset="resetFields" @submit.prevent="handleSubmit" id="loginForm" role="form">
         <div class="inputContainer">
           <div class="form-group" v-show="showSignUpField">
             <label for="name">Name:</label>
-            <input id="name" type="text" v-model.trim="name" />
+            <input id="name" type="text" v-model.trim="name" aria-required="true" />
           </div>
           <div class="form-group">
             <label for="email">Email:</label>
@@ -25,6 +27,7 @@
               type="email"
               autocomplete="email"
               v-model.trim="email"
+              aria-required="true"
             />
           </div>
           <div class="form-group">
@@ -34,6 +37,7 @@
               autocomplete="current-password"
               type="password"
               v-model.trim="password"
+              aria-required="true"
             />
           </div>
           <div class="form-group" v-show="showSignUpField">
@@ -43,9 +47,15 @@
               autocomplete="new-password"
               type="password"
               v-model.trim="confirm_password"
+              aria-required="true"
             />
           </div>
-          <message-alert :show="showAlert" :messageText="alertMessage" :messageIcon="alertIcon" />
+          <message-alert
+            :show="showAlert"
+            :messageText="alertMessage"
+            :messageIcon="alertIcon"
+            aria-live="assertive"
+          />
         </div>
         <div class="button-container">
           <button
@@ -53,13 +63,23 @@
             class="rounded-button floating-button1"
             type="button"
             @click="toggleView('signUp')"
+            aria-label="Switch to Sign Up form"
+            aria-controls="loginForm"
           >
             Sign Up
           </button>
-          <button class="rounded-button floating-button2" type="submit">
+          <button
+            class="rounded-button floating-button2"
+            type="submit"
+          >
             {{ showSignUpField ? 'Sign Up' : 'Login' }}
           </button>
-          <button v-show="!showSignUpField" class="rounded-button floating-button1" type="reset">
+          <button
+            v-show="!showSignUpField"
+            class="rounded-button floating-button1"
+            type="reset"
+            aria-label="Reset all form fields"
+          >
             Reset
           </button>
         </div>
@@ -153,7 +173,6 @@ export default {
         this.$router.push('/landing')
       } catch (axioserror) {
         this.$badRequest(axioserror)
-        console.log(axioserror)
       } finally {
         this.$loading.no()
       }
