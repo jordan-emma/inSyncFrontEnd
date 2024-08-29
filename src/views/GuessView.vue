@@ -82,34 +82,34 @@ export default {
     toggleBack() {
       this.$router.push('/play')
     },
-    changeClueNumber() {
-      if (this.clueNumber < this.totalCluesProvided) {
-        this.clueNumber++
-      }
-    },
     async setCurrentClue() {
-      if (!this.isHost) {
-        return
-      }
+      if (!this.isHost) return
 
       if (!this.clueId) {
         try {
           await this.$gameStore.setNextGuessId()
-        } catch (e) {
-          console.log(e)
+        } catch (error) {
+          this.$error('Unable to set the next clue.')
         }
       }
     },
-    setClueProperties() {
+    async setClueProperties() {
       if (!this.clueId) {
-        this.setCurrentClue()
+        await this.setCurrentClue()
         return
       }
-      let data = this.$clueStore.clue_by_id(this.clueId)
+      const data = this.$clueStore.clue_by_id(this.clueId)
       if (!data) {
-        this.$clueStore.fetchClue(this.clueId)
+        try {
+          await this.$clueStore.fetchClue(this.clueId)
+        } catch (error) {
+          this.$error('Unable to fetch the clue data.')
+        }
         return
       }
+      this.updateClueProperties(data)
+    },
+    updateClueProperties(data) {
       this.clueObject = data
       this.prompt = data.prompt
       this.clueGiver = data.player_name
