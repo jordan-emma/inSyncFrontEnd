@@ -9,15 +9,33 @@
         @close="toggleModal"
       />
       <div class="back">
-        <button class="rounded-button floating-button2" @click="logOut">Log Out</button>
+        <button
+          class="rounded-button floating-button2"
+          @click="logOut"
+          aria-label="Log out"
+        >
+          Log Out
+        </button>
       </div>
       <div class="logo">
-        <img src="../images/insyncLogo.png" alt="logo"/>
+        <img src="../images/insyncLogo.png" alt="logo" />
       </div>
       <p class="welcome">Hi, {{ $userStore.name }}!</p>
       <div class="button-container">
-        <button class="rounded-button floating-button1" @click="togglePlay">PLAY</button>
-        <button class="rounded-button floating-button2" @click="toggleModal">HOW TO PLAY</button>
+        <button
+          class="rounded-button floating-button1"
+          @click="togglePlay"
+          aria-label="Start playing"
+        >
+          PLAY
+        </button>
+        <button
+          class="rounded-button floating-button2"
+          @click="toggleModal"
+          aria-label="Open instructions on how to play"
+        >
+          HOW TO PLAY
+        </button>
       </div>
     </div>
   </div>
@@ -125,5 +143,4 @@ p {
 .floating-button2 {
   animation: float-middle 6s infinite ease-in-out;
 }
-
 </style>
