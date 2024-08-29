@@ -101,22 +101,22 @@ export default {
         (this.$gameStore.game.score / this.$gameStore.game.potential_score) * 100
 
       if (scorePercentage < 20) {
-        return 'You’re about as useful as a black hole—nothing escapes your grasp, not even common sense.'
+        return 'Your current score is like the dark void of space—mysterious but with endless potential for discovery!';
       }
       if (scorePercentage < 40) {
-        return 'Your intelligence is like the vast emptiness of space—plenty of room for improvement.'
+        return 'Your performance is like a distant nebula—there’s room to grow and shine brighter as you explore new horizons.';
       }
       if (scorePercentage < 60) {
-        return 'If brains were stars, you’d be a dimly lit one in the night sky—there’s potential for more brilliance.'
+        return 'If knowledge were stars, you’d be a burgeoning constellation—showing promise and the potential to light up the night sky.';
       }
       if (scorePercentage < 80) {
-        return 'You’re like a comet—making an impressive appearance but with room to shine even brighter.'
+        return 'You’re like a bright star in the galaxy—making a significant impact, but with the potential to shine even more brightly.';
       }
       if (scorePercentage < 100) {
-        return `That’s pretty solid—you're like a planet with potential, almost in the habitable zone. Keep up the good work, and you might just orbit greatness someday!`
+        return 'You’re on the edge of a stellar breakthrough—like a planet with the potential for greatness, orbiting just shy of perfection!';
       }
       if (scorePercentage === 100) {
-        return 'Congratulations on scoring 100%—you’re a supernova in a galaxy of stars, truly outstanding!'
+        return 'Congratulations! You’ve reached cosmic perfection—a supernova of brilliance lighting up the entire galaxy!';
       }
 
       return ''
