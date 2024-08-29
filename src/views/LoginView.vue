@@ -31,7 +31,7 @@
             <label for="password">Password:</label>
             <input
               id="password"
-              autocomplete="password"
+              autocomplete="current-password"
               type="password"
               v-model.trim="password"
             />
