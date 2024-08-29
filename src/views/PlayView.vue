@@ -5,10 +5,8 @@
         <button class="rounded-button" @click="toggleBack">Back</button>
       </div>
       <div class="underlineButtonContainer">
-        <button v-if="showRoomCodeField" class="currentPageButton" @click="toggleJoinGame">Join Game</button>
-        <button v-if="!showRoomCodeField" class="underlineButton" @click="toggleJoinGame">Join Game</button>
-        <button v-if="showRoomCodeField" class="underlineButton" @click="toggleHostGame">Host Game</button>
-        <button v-if="!showRoomCodeField" class="currentPageButton" @click="toggleHostGame">Host Game</button>
+        <button :class="buttonClass('host')" @click="toggleGameMode">Host Game</button>
+        <button :class="buttonClass('join')" @click="toggleGameMode">Join Game</button>
       </div>
       <div v-if="showRoomCodeField" class="form-group">
         <label for="roomCode">Room code:</label>
@@ -32,51 +30,59 @@ export default {
       showRoomCodeField: true,
       name: '',
       code: ''
-    };
+    }
   },
   created() {
     if (this.name === '') {
-      this.name = this.$userStore.name;
-    } 
-    this.$clueStore.clear();
-    this.$gameStore.clear();
+      this.name = this.$userStore.name
+    }
+    this.$clueStore.clear()
+    this.$gameStore.clear()
+  },
+  computed: {
+    buttonClass() {
+      return (type) => {
+        if (type === 'host') {
+          return this.showRoomCodeField ? 'currentPageButton' : 'underlineButton'
+        } else if (type === 'join') {
+          return !this.showRoomCodeField ? 'currentPageButton' : 'underlineButton'
+        }
+      }
+    }
   },
   methods: {
-    toggleHostGame() {
-      this.showRoomCodeField = false;
-    },
-    toggleJoinGame() {
-      this.showRoomCodeField = true;
+    toggleGameMode() {
+      this.showRoomCodeField = !this.showRoomCodeField
     },
     toggleBack() {
-      this.$router.push('/landing');
+      this.$router.push('/landing')
     },
     async startGame() {
-      this.$loading.yes();
+      this.$loading.yes()
       if (this.showRoomCodeField) {
-        await this.joinGame();
+        await this.joinGame()
       } else {
-        await this.createGame();
+        await this.createGame()
       }
-      this.$loading.no();
+      this.$loading.no()
     },
     async createGame() {
       try {
-        await this.$gameStore.hostGame(this.name);
-        this.$router.push('/lobby');
+        await this.$gameStore.hostGame(this.name)
+        this.$router.push('/lobby')
       } catch (e) {
-        console.log(e);
-        alert('Failed to make game');
+        console.log(e)
+        alert('Failed to make game')
       }
     },
     async joinGame() {
       if (this.code.length !== 6) {
-        console.log('Invalid code');
+        console.log('Invalid code')
         this.$error('Invalid code, please try again!')
-        return;
+        return
       }
-      await this.$gameStore.joinGame(this.name, this.code);
-      this.$router.push('/lobby');
+      await this.$gameStore.joinGame(this.name, this.code)
+      this.$router.push('/lobby')
       this.$success('Game joined!')
     }
   }
@@ -98,7 +104,9 @@ export default {
   font-weight: 600;
   text-align: center;
   cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
   width: 10rem;
   border-radius: 1rem;
   margin-bottom: 1rem;
