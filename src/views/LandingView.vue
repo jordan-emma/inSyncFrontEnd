@@ -9,7 +9,7 @@
         @close="toggleModal"
       />
       <div class="back">
-        <button class="rounded-button" @click="logOut">Log Out</button>
+        <button class="rounded-button floating-button2" @click="logOut">Log Out</button>
       </div>
       <div class="logo">
         <img src="../images/insyncLogo.png" alt="logo"/>
@@ -115,16 +115,6 @@ p {
   }
   50% {
     transform: translateY(3px);
-  }
-}
-
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-5px);
   }
 }
 
