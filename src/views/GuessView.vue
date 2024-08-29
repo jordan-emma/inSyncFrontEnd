@@ -48,7 +48,7 @@ export default {
     $gameStore: {
       deep: true,
       handler() {
-        this.clueId = this.$gameStore.game.current_clue_id
+        this.clueId = this.$gameStore.game?.current_clue_id
       }
     },
     $clueStore: {
