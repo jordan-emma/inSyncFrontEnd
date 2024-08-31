@@ -1,24 +1,40 @@
 <template>
   <div>
     <div class="pageHeading">
-      <h2>{{ clueGiverName }} Clue: {{ prompt }}</h2>
+      <h2>
+        {{ clueGiverName }} Clue: {{ prompt }}
+      </h2>
     </div>
     <div class="slider-wrapper">
-      <p>{{ clueObject.low }}</p>
-      <Slider :max="clueObject.max_value" :value="clueObject.guess_value" @value-updated="setGuessValue" :disabled="!canEdit" />
-      <p>{{ clueObject.high }}</p>
+      <p aria-label="Low range value">{{ clueObject.low }}</p>
+      <Slider
+        :max="clueObject.max_value"
+        :value="clueObject.guess_value"
+        @value-updated="setGuessValue"
+        :disabled="!canEdit"
+        aria-label="Guess slider"
+      />
+      <p aria-label="High range value">{{ clueObject.high }}</p>
     </div>
     <div class="button-container">
-      <button v-if='canEdit' class="rounded-button" @click="closeClue">Submit</button>
+      <button
+        v-if='canEdit'
+        class="rounded-button"
+        @click="closeClue"
+        aria-label="Submit your guess"
+      >
+        Submit
+      </button>
       <message-alert
         :show="!canEdit"
         messageText="Shhh! this is your clue... Don't give any hints"
         :messageIcon="alertIcon"
+        aria-label="Alert message: This is your clue, don't give any hints"
       />
     </div>
   </div>
-
 </template>
+
 
 <script>
 import Slider from '@/components/slider.vue'
@@ -55,7 +71,11 @@ export default {
     }
   },
   async created() {
-    this.alertIcon = (await import('@/images/quietIcon.png')).default;
+    try {
+      this.alertIcon = (await import('@/images/quietIcon.png')).default;
+    } catch (e) {
+      this.$error('Error loading alert icon');
+    }
   },
   methods: {
     async setGuessValue(guess_value) {
@@ -65,7 +85,7 @@ export default {
           throw 'Failed to update guess value';
         }
       } catch (e) {
-        console.log(e);
+        this.$error('Error updating guess value');
       }
     },
     async closeClue() {
@@ -75,7 +95,7 @@ export default {
           throw 'Failed to close clue';
         }
       } catch (e) {
-        console.log(e);
+        this.$error('Failed to close clue');
       }
     }
   }
