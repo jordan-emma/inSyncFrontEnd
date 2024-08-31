@@ -2,7 +2,11 @@
   <div class="purpleBackground">
     <div class="pageContainer">
       <div class="back">
-        <button class="rounded-button" @click="toggleBack" aria-label="Exit current page">
+        <button
+          class="rounded-button"
+          @click="toggleBack"
+          aria-label="Exit current page"
+        >
           Exit
         </button>
       </div>
@@ -31,7 +35,11 @@
           />
         </div>
         <div class="button-container">
-          <button class="rounded-button" @click="getClue(true)" aria-label="Get a new clue scale">
+          <button
+            class="rounded-button"
+            @click="getClue(true)"
+            aria-label="Get a new clue scale"
+          >
             New Scale
           </button>
           <button
