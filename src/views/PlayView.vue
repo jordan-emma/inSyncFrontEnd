@@ -118,7 +118,7 @@ export default {
   color: white;
   border: none;
   padding: 0.9rem 0;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 600;
   text-align: center;
   cursor: pointer;
@@ -129,5 +129,8 @@ export default {
   border-radius: 1rem;
   margin-bottom: 1rem;
   outline: none;
+}
+.underlineButton{
+  font-size: 1.3rem;
 }
 </style>
