@@ -13,14 +13,14 @@
       <div class="underlineButtonContainer">
         <button
           :class="buttonClass('join')"
-          @click="toggleGameMode"
+          @click="showRoomCodeField = true"
           aria-label="Switch to Join Game mode"
         >
           Join Game
         </button>
         <button
           :class="buttonClass('host')"
-          @click="toggleGameMode"
+          @click="showRoomCodeField = false"
           aria-label="Switch to Host Game mode"
         >
           Host Game
@@ -68,9 +68,6 @@ export default {
     }
   },
   methods: {
-    toggleGameMode() {
-      this.showRoomCodeField = !this.showRoomCodeField
-    },
     toggleBack() {
       this.$router.push('/landing')
     },
